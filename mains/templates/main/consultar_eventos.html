@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <h2>Basic HTML Table</h2>
+  <table style="width:100%">
+    <tr>
+      <th>Tipo de evento</th>
+      <th>Nome</th>
+      <th>Estado</th>
+      <th>Descricao</th>
+      <th>Data</th>
+      <th>Hora</th>
+      <th>Duracao</th>
+      <th>Local</th>
+      <th>Valor</th>
+      <th>Evento pagoid</th>
+    </tr>
+    {% for e in Eventos %}
+    <tr>
+      <td>{{e.tipo_de_eventoid.nome}}</td>
+      <td>{{e.nome}}</td>
+      <td>{{e.estado}}</td>
+      <td>{{e.descrição}}</td>
+      <td>{{e.data}}</td>
+      <td>{{e.hora}}</td>
+      <td>{{e.duração}}</td>
+      <td>{{e.local}}</td>
+      <td>{{e.valor}}</td>
+      <td>{{e.evento_pagoid}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+</body>
+
+</html>
