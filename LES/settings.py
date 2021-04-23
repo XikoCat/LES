@@ -40,10 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Evento',
-    'Formulário',
-    'Inscrição',
+    'Formulario',
+    'InscriÃ§ao',
     'Recurso',
-    'mains',
+    'main',
 ]
 
 MIDDLEWARE = [

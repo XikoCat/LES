@@ -59,8 +59,8 @@ class Utilizador(models.Model):
 
 class UtilizadorMensagem(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    utilizadorid = models.ForeignKey(Utilizador, models.SET_NULL, default=None, null=True, db_column='UtilizadorID')  # Field name made lowercase.
-    mensagemid = models.ForeignKey(Mensagem, models.SET_NULL, default=None, null=True, db_column='MensagemID')  # Field name made lowercase.
+    utilizadorid = models.ForeignKey('Utilizador', models.SET_NULL, default=None, null=True, db_column='UtilizadorID')  # Field name made lowercase.
+    mensagemid = models.ForeignKey('Mensagem', models.SET_NULL, default=None, null=True, db_column='MensagemID')  # Field name made lowercase.
 
     class Meta:
         managed = True

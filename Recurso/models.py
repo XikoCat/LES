@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class Campus(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     nome = models.CharField(db_column='Nome', unique=True, max_length=255, blank=True, null=True)  # Field name made lowercase.
