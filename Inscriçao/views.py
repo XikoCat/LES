@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from Pergunta.models import Inscrição
+from .models import Inscrição
 
 # Create your views here.
 

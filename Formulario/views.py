@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Pergunta
 
-# Create your views here.
+def consultar_perguntas(request):
+	return render(request, "main/consultar_perguntas.html", {'Pergunta' : Pergunta.objects.all})
