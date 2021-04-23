@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from Pergunta.models import Evento
+from .models import Evento
 
 # Create your views here.
 
