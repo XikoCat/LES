@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Formulario',
     'Inscriçao',
     'Recurso',
+    'Utilizadores',
     'main',
 ]
 

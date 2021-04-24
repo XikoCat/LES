@@ -3,7 +3,7 @@ from django.db import models
 class Evento(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     tipo_de_eventoid = models.ForeignKey('TipoDeEvento', models.SET_NULL, default=None, null=True, db_column='Tipo de eventoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    proponenteutilizadorid = models.ForeignKey('main.Proponente', models.SET_NULL, default=None, null=True, db_column='ProponenteUtilizadorID')  # Field name made lowercase.
+    proponenteutilizadorid = models.ForeignKey('Utilizadores.Proponente', models.SET_NULL, default=None, null=True, db_column='ProponenteUtilizadorID')  # Field name made lowercase.
     formularioinscriçãoid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, db_column='FormulárioInscriçãoID')  # Field name made lowercase.
     formulariofeedbackid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, related_name = 'feedback', db_column='FormulárioFeedbackID')  # Field name made lowercase.
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)  # Field name made lowercase.

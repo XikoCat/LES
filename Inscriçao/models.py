@@ -11,7 +11,7 @@ class Feedback(models.Model):
 class Inscrição(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     eventoid = models.ForeignKey('Evento.Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
-    participanteutilizadorid = models.ForeignKey('main.Participante', models.SET_NULL, default=None, null=True, db_column='ParticipanteUtilizadorID')  # Field name made lowercase.
+    participanteutilizadorid = models.ForeignKey('Utilizadores.Participante', models.SET_NULL, default=None, null=True, db_column='ParticipanteUtilizadorID')  # Field name made lowercase.
     utilizador_eventoid = models.IntegerField(db_column='Utilizador_EventoID')  # Field name made lowercase.
     checkin = models.IntegerField(db_column='CheckIn')  # Field name made lowercase.
     valido = models.IntegerField(db_column='Valido')  # Field name made lowercase.

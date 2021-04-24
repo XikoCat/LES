@@ -25,6 +25,7 @@ urlpatterns = [
     path('inscriçao/', include('Inscriçao.urls')),
     #Dario
     path('recurso/', include('Recurso.urls')),
-
+    
+    path('user/', include('Utilizadores.urls')),
     path('admin/', admin.site.urls),
 ]
