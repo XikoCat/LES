@@ -1,7 +1,6 @@
 from django.db import models
 
 class Formulário(models.Model):
-    #from Evento.models import Evento
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     tipo_de_eventoid = models.ForeignKey('Evento.TipoDeEvento', models.SET_NULL, default=None, null=True, db_column='Tipo de eventoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     tipo_de_formulárioid = models.ForeignKey('TipoDeFormulário', models.SET_NULL, default=None, null=True, db_column='Tipo de FormulárioID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
@@ -14,7 +13,7 @@ class Formulário(models.Model):
 
 class FormulárioPergunta(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    formulárioid = models.OneToOneField('Formulário', models.SET_NULL, default=None, null=True, db_column='FormulárioID')  # Field name made lowercase.
+    formulárioid = models.OneToOneField(Formulário, models.SET_NULL, default=None, null=True, db_column='FormulárioID')  # Field name made lowercase.
     perguntaid = models.OneToOneField('Pergunta', models.SET_NULL, default=None, null=True, db_column='PerguntaID')  # Field name made lowercase.
 
     class Meta:
@@ -32,6 +31,8 @@ class OpçãoDeResposta(models.Model):
         db_table = 'Opção de resposta'
 
 
+
+
 class Pergunta(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     pergunta = models.CharField(db_column='Pergunta', max_length=255, blank=True, null=True)  # Field name made lowercase.
@@ -44,7 +45,7 @@ class Pergunta(models.Model):
 
 class Resposta(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    perguntaid = models.ForeignKey('Pergunta', models.SET_NULL, default=None, null=True, db_column='PerguntaID')  # Field name made lowercase.
+    perguntaid = models.ForeignKey('Formulario.Pergunta', models.SET_NULL, default=None, null=True, db_column='PerguntaID')  # Field name made lowercase.
     eventoid = models.ForeignKey('Evento.Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
     inscriçãoid = models.ForeignKey('Inscriçao.Inscrição', models.SET_NULL, default=None, null=True, db_column='InscriçãoID')  # Field name made lowercase.
     feedbackid = models.ForeignKey('Inscriçao.Feedback', models.SET_NULL, default=None, null=True, db_column='FeedbackID')  # Field name made lowercase.

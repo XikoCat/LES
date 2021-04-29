@@ -14,12 +14,14 @@
   <h2>Basic HTML Table</h2>
   <table style="width:100%">
     <tr>
+      <th>Campus</th>
       <th>Edificio</th>
       <th>Sala</th>
       <th>Lugares</th>
     </tr>
     {% for s in Sala %}
     <tr>
+      <td>{{s.campusid.nome}}</td>
       <td>{{s.edificioid.nome}}</td>
       <td>{{s.recursoid.nome}}</td>
       <td>{{s.lugares}}</td>

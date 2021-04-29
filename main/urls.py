@@ -16,3 +16,11 @@ Including another URLconf
 from django.urls import path
 from . import views
 app_name = "main"
+
+urlpatterns = [
+	path("", views.homepage, name="homepage"),
+	path("consultar_eventos", views.consultar_eventos, name="consultar_eventos"),
+    path("perguntas", views.consultar_perguntas, name="consultar_perguntas"),
+    path("consultar_salas", views.consultar_salas, name="consultar_salas"),
+    path("consultar_inscrições", views.consultar_inscrições, name="consultar_inscrições"),
+]

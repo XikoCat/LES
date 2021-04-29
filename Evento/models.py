@@ -3,9 +3,9 @@ from django.db import models
 class Evento(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     tipo_de_eventoid = models.ForeignKey('TipoDeEvento', models.SET_NULL, default=None, null=True, db_column='Tipo de eventoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    proponenteutilizadorid = models.ForeignKey('Utilizadores.Proponente', models.SET_NULL, default=None, null=True, db_column='ProponenteUtilizadorID')  # Field name made lowercase.
-    formularioinscriçãoid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, db_column='FormulárioInscriçãoID')  # Field name made lowercase.
-    formulariofeedbackid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, related_name = 'feedback', db_column='FormulárioFeedbackID')  # Field name made lowercase.
+    proponenteutilizadorid = models.ForeignKey('main.Proponente', models.SET_NULL, default=None, null=True, db_column='ProponenteUtilizadorID')  # Field name made lowercase.
+    formulárioinscriçãoid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, db_column='FormulárioInscriçãoID')  # Field name made lowercase.
+    formuláriofeedbackid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, related_name = 'feedback', db_column='FormulárioFeedbackID')  # Field name made lowercase.
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)  # Field name made lowercase.
     estado = models.CharField(db_column='Estado', max_length=255, blank=True, null=True)  # Field name made lowercase.
     descrição = models.CharField(db_column='Descrição', max_length=255, blank=True, null=True)  # Field name made lowercase.
@@ -36,7 +36,7 @@ class CertificadoDeParticipação(models.Model):
         
 class PedidoDeRecurso(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    eventoid = models.ForeignKey('Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
+    eventoid = models.ForeignKey(Evento, models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
     tipo_de_recursoid = models.ForeignKey('Recurso.TipoDeRecurso', models.SET_NULL, default=None, null=True, db_column='Tipo de recursoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     quantidade = models.IntegerField(db_column='Quantidade')  # Field name made lowercase.
     dia_inicial = models.DateField(db_column='Dia inicial', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
@@ -53,7 +53,7 @@ class PedidoDeRecurso(models.Model):
 
 class Requisição(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    eventoid = models.OneToOneField('Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
+    eventoid = models.OneToOneField('Evento.Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
     recursoid = models.OneToOneField('Recurso.Recurso', models.SET_NULL, default=None, null=True, db_column='RecursoID')  # Field name made lowercase.
     dia_inicial = models.DateField(db_column='Dia inicial', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     hora_inicial = models.TimeField(db_column='Hora inicial', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
