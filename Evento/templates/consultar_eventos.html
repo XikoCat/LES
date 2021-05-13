@@ -10,13 +10,6 @@
 
   <style>
 
-   .dropdown {
-   padding-left: 20px;
-}
-    
-   .dropdown.menu{
-   padding-left: 20px;
-}
   td {
   text-align: center;
   height: 30px;
@@ -32,15 +25,17 @@
 
   <h2 style = "text-align: center">Eventos</h2>
 
+
+
   <br>
- <div class="dropdown">
+ <div class="dropdown container-fluid">
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
     Tipos de Eventos
   </button>
-  <div class="dropdown-menu">
+  <div class="dropdown-menu container-fluid">
     <a class="dropdown-item" href="{% url 'Evento:consultar_eventos_all' %}">All</a>
     {% for c in TipoDeEvento %}
-      <a class="dropdown-item" href="{% url 'Evento:consultar_eventos' c.id %}">{{c.nome}}</a>
+      <br><a class="dropdown-item" href="{% url 'Evento:consultar_eventos' c.id %}">{{c.nome}}</a>
     {% endfor %}
   </div>
 </div>
@@ -52,12 +47,7 @@
       <th>Tipo de evento</th>
       <th>Estado</th>
       <th>Descricao</th>
-      <th>Data</th>
-      <th>Hora</th>
-      <th>Duracao</th>
-      <th>Local</th>
-      <th>Valor</th>
-      <th>Evento pagoid</th>
+      <th>Cancelar</th>
     </tr>
     {% for e in Eventos %}
     <tr>
@@ -65,12 +55,7 @@
       <td>{{e.tipo_de_eventoid.nome}}</td>
       <td>{{e.estado}}</td>
       <td>{{e.descrição}}</td>
-      <td>{{e.data}}</td>
-      <td>{{e.hora}}</td>
-      <td>{{e.duração}}</td>
-      <td>{{e.local}}</td>
-      <td>{{e.valor}}</td>
-      <td>{{e.evento_pagoid}}</td>
+      <td><a href="{% url 'Evento:cancelar_evento' e.id %}" class="card-link">Cancelar Evento</a></td>
     </tr>
     {% endfor %}
   </table>

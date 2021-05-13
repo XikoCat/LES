@@ -31,26 +31,15 @@
     <li class="list-group-item">{{Evento.tipo_de_eventoid.nome}}</li>
     <li class="list-group-item">{{Evento.data}}</li>
     <li class="list-group-item">{{Evento.hora}}</li>
-    <li class="list-group-item">{{Evento.duração}}</li>
-    <li class="list-group-item">{{Evento.local}}</li>
-    <li class="list-group-item">{{Evento.valor}}</li>
-    <li class="list-group-item">{{Evento.evento_pagoid}}</li>
+    <li class="list-group-item">Duração: {{Evento.duração}}</li>
+    <li class="list-group-item">Local: {{Evento.local}}</li>
+    <li class="list-group-item">Valor: {{Evento.valor}}€</li>
   </ul>
   <div class="card-body">
     <a href="{% url 'Evento:cancelar_evento' Evento.id %}" class="card-link">Cancelar Evento</a>
     <a href="{% url 'Evento:consultar_eventos_all' %}" class="card-link">Voltar</a>
   </div>
 </div>
-
-<td>{{e.tipo_de_eventoid.nome}}</td>
-      <td>{{e.estado}}</td>
-      <td>{{e.descrição}}</td>
-      <td>{{e.data}}</td>
-      <td>{{e.hora}}</td>
-      <td>{{e.duração}}</td>
-      <td>{{e.local}}</td>
-      <td>{{e.valor}}</td>
-      <td>{{e.evento_pagoid}}</td>
 
 </body>
 

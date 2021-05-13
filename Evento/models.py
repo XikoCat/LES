@@ -1,5 +1,7 @@
 from django.db import models
 
+'id', 'tipo_de_eventoid', 'nome', 'estado', 'descrição', 'data', 'hora', 'duração', 'local', 'valor', 'evento_pagoid' 
+
 class Evento(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     tipo_de_eventoid = models.ForeignKey('TipoDeEvento', models.SET_NULL, default=None, null=True, db_column='Tipo de eventoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
