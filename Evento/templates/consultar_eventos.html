@@ -7,15 +7,49 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <style>
+
+   .dropdown {
+   padding-left: 20px;
+}
+    
+   .dropdown.menu{
+   padding-left: 20px;
+}
+  td {
+  text-align: center;
+  height: 30px;
+}
+  th {
+  text-align: center;
+  height: 30px;
+}
+  </style>
 </head>
 
 <body>
 
-  <h2>Basic HTML Table</h2>
+  <h2 style = "text-align: center">Eventos</h2>
+
+  <br>
+ <div class="dropdown">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    Tipos de Eventos
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="{% url 'Evento:consultar_eventos_all' %}">All</a>
+    {% for c in TipoDeEvento %}
+      <a class="dropdown-item" href="{% url 'Evento:consultar_eventos' c.id %}">{{c.nome}}</a>
+    {% endfor %}
+  </div>
+</div>
+<br>
+
   <table style="width:100%">
     <tr>
-      <th>Tipo de evento</th>
       <th>Nome</th>
+      <th>Tipo de evento</th>
       <th>Estado</th>
       <th>Descricao</th>
       <th>Data</th>
@@ -27,8 +61,8 @@
     </tr>
     {% for e in Eventos %}
     <tr>
+      <td><a href = "{% url 'Evento:visualizar_evento' e.id %}">{{e.nome}}</a></td>
       <td>{{e.tipo_de_eventoid.nome}}</td>
-      <td>{{e.nome}}</td>
       <td>{{e.estado}}</td>
       <td>{{e.descrição}}</td>
       <td>{{e.data}}</td>

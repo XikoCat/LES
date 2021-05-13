@@ -23,7 +23,7 @@ class Evento(models.Model):
 
 class CertificadoDeParticipação(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    eventoid = models.ForeignKey('Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
+    #eventoid = models.ForeignKey('Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
     nome_evento = models.CharField(db_column='Nome evento', max_length=255, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     data_emissão = models.DateField(db_column='Data emissão', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     nome_participante = models.CharField(db_column='Nome participante', max_length=255, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
