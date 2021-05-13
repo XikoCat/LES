@@ -26,7 +26,7 @@ class Pagamento(models.Model):
     divida = models.FloatField(db_column='Divida')  # Field name made lowercase.
     data = models.DateField(db_column='Data', blank=True, null=True)  # Field name made lowercase.
     hora = models.TimeField(db_column='Hora', blank=True, null=True)  # Field name made lowercase.
-    inscriçãoid = models.ForeignKey(Inscrição, models.SET_NULL, default=None, null=True, db_column='InscriçãoID')  # Field name made lowercase.
+    inscriçãoid = models.ForeignKey('Inscrição', models.SET_NULL, default=None, null=True, db_column='InscriçãoID')  # Field name made lowercase.
 
     class Meta:
         managed = True

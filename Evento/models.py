@@ -25,7 +25,7 @@ class Evento(models.Model):
 
 class CertificadoDeParticipação(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    #eventoid = models.ForeignKey('Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
+    eventoid = models.ForeignKey('Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
     nome_evento = models.CharField(db_column='Nome evento', max_length=255, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     data_emissão = models.DateField(db_column='Data emissão', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     nome_participante = models.CharField(db_column='Nome participante', max_length=255, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
@@ -38,7 +38,7 @@ class CertificadoDeParticipação(models.Model):
         
 class PedidoDeRecurso(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    eventoid = models.ForeignKey(Evento, models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
+    eventoid = models.ForeignKey('Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
     tipo_de_recursoid = models.ForeignKey('Recurso.TipoDeRecurso', models.SET_NULL, default=None, null=True, db_column='Tipo de recursoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     quantidade = models.IntegerField(db_column='Quantidade')  # Field name made lowercase.
     dia_inicial = models.DateField(db_column='Dia inicial', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
@@ -75,7 +75,3 @@ class TipoDeEvento(models.Model):
     class Meta:
         managed = True
         db_table = 'Tipo de evento'
-
-
-
-    

@@ -13,7 +13,7 @@ class Formulário(models.Model):
 
 class FormulárioPergunta(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    formulárioid = models.OneToOneField(Formulário, models.SET_NULL, default=None, null=True, db_column='FormulárioID')  # Field name made lowercase.
+    formulárioid = models.OneToOneField('Formulário', models.SET_NULL, default=None, null=True, db_column='FormulárioID')  # Field name made lowercase.
     perguntaid = models.OneToOneField('Pergunta', models.SET_NULL, default=None, null=True, db_column='PerguntaID')  # Field name made lowercase.
 
     class Meta:
@@ -71,5 +71,3 @@ class TipoDePergunta(models.Model):
     class Meta:
         managed = True
         db_table = 'Tipo de pergunta'
-
-
