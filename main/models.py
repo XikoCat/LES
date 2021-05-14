@@ -7,6 +7,21 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+class Utilizador(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True) 
+    nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True) 
+    email = models.CharField(db_column='Email', max_length=255, blank=False, null=True, unique=True) 
+    telefone = models.CharField(db_column='Telefone', max_length=255, blank=True, null=True)  
+    username = models.CharField(db_column='Username', max_length=255, blank=False, null=True, unique=True)
+    password = models.CharField(db_column='Password', max_length=255, blank=False, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Utilizador'
+    
+    def __str__(self):
+        return str(self.nome)
+
 
 class Administrador(models.Model):
     utilizadorid = models.OneToOneField('Utilizador', models.DO_NOTHING, db_column='UtilizadorID', primary_key=True) 
@@ -14,6 +29,31 @@ class Administrador(models.Model):
     class Meta:
         managed = True
         db_table = 'Administrador'
+    
+    def __str__(self):
+        return str(self.utilizadorid)
+
+class Participante(models.Model):
+    utilizadorid = models.OneToOneField('Utilizador', models.DO_NOTHING, db_column='UtilizadorID', primary_key=True) 
+
+    class Meta:
+        managed = True
+        db_table = 'Participante'
+    
+    def __str__(self):
+        return str(self.utilizadorid)
+
+
+class Proponente(models.Model):
+    utilizadorid = models.OneToOneField('Utilizador', models.DO_NOTHING, db_column='UtilizadorID', primary_key=True) 
+
+    class Meta:
+        managed = True
+        db_table = 'Proponente'
+    
+    def __str__(self):
+        return str(self.utilizadorid)
+
 
 class Mensagem(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True) 
@@ -27,35 +67,6 @@ class Mensagem(models.Model):
     class Meta:
         managed = True
         db_table = 'Mensagem'
-
-class Participante(models.Model):
-    utilizadorid = models.OneToOneField('Utilizador', models.DO_NOTHING, db_column='UtilizadorID', primary_key=True) 
-
-    class Meta:
-        managed = True
-        db_table = 'Participante'
-
-
-class Proponente(models.Model):
-    utilizadorid = models.OneToOneField('Utilizador', models.DO_NOTHING, db_column='UtilizadorID', primary_key=True) 
-
-    class Meta:
-        managed = True
-        db_table = 'Proponente'
-
-
-class Utilizador(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True) 
-    nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True) 
-    email = models.CharField(db_column='Email', max_length=255, blank=True, null=True) 
-    telefone = models.CharField(db_column='Telefone', max_length=255, blank=True, null=True) 
-    password = models.CharField(db_column='Password', max_length=255, blank=True, null=True) 
-    username = models.CharField(db_column='Username', max_length=255, blank=True, null=True) 
-
-    class Meta:
-        managed = True
-        db_table = 'Utilizador'
-
 
 class UtilizadorMensagem(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True) 

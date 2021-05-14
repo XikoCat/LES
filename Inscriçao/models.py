@@ -19,6 +19,9 @@ class Inscrição(models.Model):
     class Meta:
         managed = True
         db_table = 'Inscrição'
+    
+    def __str__(self):
+        return str(self.id)
 
 
 class Pagamento(models.Model):
