@@ -19,16 +19,13 @@ from django.urls import path, include
 urlpatterns = [
     #Ricardo
     path('Formulario/', include('Formulario.urls')),
-    path('F/', include('Formulario.urls')),
+
     #Filipe
     path('Evento/', include('Evento.urls')),
-    path('E/', include('Evento.urls')),
     #Guilherme
     path('Inscricao/', include('Inscriçao.urls')),
-    path('I/', include('Inscriçao.urls')),
     #Dario
     path('Recurso/', include('Recurso.urls')),
-    path('R/', include('Recurso.urls')),
 
     path('admin/', admin.site.urls),
 ]
