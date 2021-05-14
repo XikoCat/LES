@@ -28,8 +28,10 @@
       </tr>
       {% for i in Inscrição %}
       <tr>
+        {% if not evento %}
         <td>{{i.eventoid.nome}}</td>
-        <td>{{i.ParticipanteUtilizadorID}}</td>
+        {% endif %}
+        <td>{{i.participanteutilizadorid.utilizadorid.nome}}</td>
         <td>{{i.checkin}}</td>
         <td>{{i.valido}}</td>
       </tr>
