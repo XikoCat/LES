@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  {% if evento %}
+  <h2>Inscrições de {{evento.nome}}</h2>
+  {% else %}
+  <h2>Todas as Inscrições</h2>
+  {% endif %}
+  <div class="container">
+    <table style="width:100%">
+      <tr>
+        {% if not evento %}
+        <th>Evento</th>
+        {% endif %}
+        <th>Participante</th>
+        <th>CheckIn</th>
+        <th>Valido</th>
+      </tr>
+      {% for i in Inscrição %}
+      <tr>
+        <td>{{i.eventoid.nome}}</td>
+        <td>{{i.ParticipanteUtilizadorID}}</td>
+        <td>{{i.checkin}}</td>
+        <td>{{i.valido}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+</body>
+
+</html>

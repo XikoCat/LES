@@ -18,5 +18,10 @@ from . import views
 app_name = "Inscriçao"
 
 urlpatterns = [
-    path("consultar_inscrições", views.consultar_inscrições, name="consultar_inscrições"),
+    #DEFAULT PATH
+    path("", views.consultar_inscrições_all, name="consultar_inscrições"),
+
+    #Consultar inscrições
+    path("consultar_inscrições/<evento_id>", views.consultar_inscrições, name="consultar_inscrições"),
+    path("consultar_inscrições", views.consultar_inscrições_all, name="consultar_inscrições_all"),
 ]
