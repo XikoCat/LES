@@ -1,24 +1,29 @@
 from django.db import models
 
-class Feedback(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True) 
-    inscriçãoid = models.ForeignKey('Inscrição', models.DO_NOTHING, db_column='InscriçãoID') 
-
-    class Meta:
-        managed = True
-        db_table = 'Feedback'
 
 class Inscrição(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True) 
     eventoid = models.ForeignKey('Evento.Evento', models.SET_NULL, default=None, null=True, db_column='EventoID') 
     participanteutilizadorid = models.ForeignKey('main.Participante', models.SET_NULL, default=None, null=True, db_column='ParticipanteUtilizadorID') 
     #utilizador_eventoid = models.IntegerField(db_column='Utilizador_EventoID') 
-    checkin = models.IntegerField(db_column='CheckIn') 
-    valido = models.IntegerField(db_column='Valido') 
+    checkin = models.BooleanField(db_column='CheckIn') 
+    valido = models.BooleanField(db_column='Valido') 
 
     class Meta:
         managed = True
         db_table = 'Inscrição'
+    
+    def __str__(self):
+        return str(self.id)
+
+
+class Feedback(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True) 
+    inscriçãoid = models.ForeignKey('Inscrição', models.DO_NOTHING, db_column='InscriçãoID')
+    
+    class Meta:
+        managed = True
+        db_table = 'Feedback'
     
     def __str__(self):
         return str(self.id)
@@ -34,3 +39,6 @@ class Pagamento(models.Model):
     class Meta:
         managed = True
         db_table = 'Pagamento'
+    
+    def __str__(self):
+        return str(self.id)

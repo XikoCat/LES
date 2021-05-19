@@ -11,11 +11,9 @@
 
 <body>
 
-  {% if evento %}
-  <h2>Inscrições de {{evento.nome}}</h2>
-  {% else %}
-  <h2>Todas as Inscrições</h2>
-  {% endif %}
+  <h2>{% if evento %}Inscrições de {{evento.nome}}
+  {% else %}Todas as Inscrições
+  {% endif %}</h2>
   <div class="container">
     <table style="width:100%">
       <tr>
@@ -23,8 +21,9 @@
         <th>Evento</th>
         {% endif %}
         <th>Participante</th>
+        <th>Divida</th>
         <th>CheckIn</th>
-        <th>Valido</th>
+        <th>Válido</th>
       </tr>
       {% for i in Inscrição %}
       <tr>
@@ -32,8 +31,15 @@
         <td>{{i.eventoid.nome}}</td>
         {% endif %}
         <td>{{i.participanteutilizadorid.utilizadorid.nome}}</td>
+        <td>
+          {% for d in Dividas %}
+            {% if d.inscriçãoid == i %}
+              {{d.divida}}€
+            {% endif %}
+          {% endfor %}
+        </td>
         <td>{{i.checkin}}</td>
-        <td>{{i.valido}}</td>
+        <td>{% if i.valido == 0 %}NÃO{% else %}SIM{% endif %}</td>
       </tr>
       {% endfor %}
     </table>
