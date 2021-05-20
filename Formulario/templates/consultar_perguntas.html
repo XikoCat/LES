@@ -17,11 +17,18 @@
       <th>Tipo de Pergunta</th>
       <th>Pergunta</th>
       <th>Respostas:</th>
+      <th>Remover</th>
     </tr>
     {% for p in Pergunta %}
     <tr>
       <td>{{p.tipo_de_perguntaid.nome}}</td>
       <td>{{p.pergunta}}</td>
+      <td></td>
+      <td>
+        <div class="card-body">
+          <a href="{% url 'Formulario:remover_pergunta' p.id %}" class="card-link">Remover</a>
+        </div>
+      </td>
     </tr>
     {% endfor %}
   </table>

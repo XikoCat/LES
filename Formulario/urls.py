@@ -19,4 +19,6 @@ app_name = "Formulario"
 
 urlpatterns = [
 	path("consultar_perguntas", views.consultar_perguntas, name="consultar_perguntas"),
+    #path("criar_perguntas", views.criar_perguntas, name="criar_perguntas"),
+    path("remover_perguntas/<pergunta_id>", views.remover_pergunta, name="remover_pergunta"),
 ]

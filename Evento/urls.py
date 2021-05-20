@@ -28,4 +28,6 @@ urlpatterns = [
     path("criar_evento", views.criar_evento, name="criar_evento"),
 
 	path("cancelar_evento/<evento_id>", views.cancelar_evento, name="cancelar_evento"),
+
+	path("editar_evento/<evento_id>", views.editar_evento, name="editar_evento"),
 ]

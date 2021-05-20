@@ -3,7 +3,7 @@ from .models import Evento, TipoDeEvento
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
-from .forms import criar_evento_form
+from .forms import evento_form
 
 # Create your views here.
 
@@ -28,21 +28,31 @@ def visualizar_evento(request, evento_id):
 def criar_evento(request):
     submitted = False
     if request.method == "POST":
-        form = criar_evento_form(request.POST)
+        form = evento_form(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/Evento/criar_evento?submitted=True')
     else:
-        form = criar_evento_form
+        form = evento_form
         if 'submitted' in request.GET:
             submitted = True
     return render(request, 'criar_evento.html', {'form' : form, 'submitted' : submitted})
-
 
 
 def cancelar_evento(request, evento_id):
     Evento_view = Evento.objects.get(pk = evento_id)
     Evento_view.delete()
     return redirect('Evento:consultar_eventos_all')
+
+
+def editar_evento(request, evento_id):
+    Evento_view = Evento.objects.get(pk = evento_id)
+    form = evento_form(request.POST or None, instance = Evento_view)
+    if form.is_valid():
+        form.save()
+        return redirect('Evento:consultar_eventos_all')
+
+    return render(request, 'editar_evento.html', {'Evento' : Evento_view, 
+                                                  'form' : form})
 
     
