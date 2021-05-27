@@ -11,27 +11,42 @@
 
 <body>
 
-  <h2>Basic HTML Table</h2>
-  <table style="width:100%">
-    <tr>
-      <th>Tipo de Pergunta</th>
-      <th>Pergunta</th>
-      <th>Respostas:</th>
-      <th>Remover</th>
-    </tr>
-    {% for p in Pergunta %}
-    <tr>
-      <td>{{p.tipo_de_perguntaid.nome}}</td>
-      <td>{{p.pergunta}}</td>
-      <td></td>
-      <td>
-        <div class="card-body">
+  <div class="container-fluid">
+    <h2>Perguntas</h2>
+    <h4><a class="btn" href="{% url 'Formulario:add_pergunta' %}">Add pergunta</a></h4>
+    <table style="width:100%">
+      <tr>
+        <th>Pergunta</th>
+        <th>Tipo de Pergunta</th>
+        <th>Respostas:</th>
+        <th>Opções</th>
+      </tr>
+      {% for p in Pergunta %}
+      <tr>
+        <td>{{p.pergunta}}</td>
+        <td>{{p.tipo_de_perguntaid.nome}}</td>
+        <td class="dropdown">
+          {% if p.tipo_de_perguntaid.id == 1 %}
+          <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Ver respostas
+            <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            {% for or in OpcaoResposta %}
+            {% if or.perguntaid == p %}
+            <li><a>{{or}}</a></li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </td>
+        <td>
+          <a href="#" class="card-link">Editar</a>
+          <a> | </a>
           <a href="{% url 'Formulario:remover_pergunta' p.id %}" class="card-link">Remover</a>
-        </div>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 
 </body>
 
