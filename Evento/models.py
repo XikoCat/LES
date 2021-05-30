@@ -50,9 +50,7 @@ class PedidoDeRecurso(models.Model):
     dia_final = models.DateField(db_column='Dia final', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     hora_final = models.TimeField(db_column='Hora final', blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters.
     capacidade = models.IntegerField(db_column='Capacidade', blank=True, null=True)  # Field name made lowercase.
-    tipo_de_equipamentoid = models.ForeignKey('Recurso.TipoDeEquipamento', models.SET_NULL, default=None, null=True, db_column='Tipo de equipamentoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    tipo_de_serviçoid = models.ForeignKey('Recurso.TipoDeServiço', models.SET_NULL, default=None, null=True, db_column='Tipo de serviçoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-
+    
     class Meta:
         managed = True
         db_table = 'Pedido de recurso'

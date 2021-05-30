@@ -20,8 +20,7 @@ class Edificio(models.Model):
         db_table = 'Edificio'
 
 class Equipamento(models.Model):
-    recursoid = models.OneToOneField('Recurso', models.DO_NOTHING, db_column='RecursoID', primary_key=True) 
-    tipo_de_equipamentoid = models.ForeignKey('TipoDeEquipamento', models.DO_NOTHING, db_column='Tipo de equipamentoID') 
+    recursoid = models.OneToOneField('Recurso', models.DO_NOTHING, db_column='RecursoID', primary_key=True)
 
     class Meta:
         managed = True
@@ -46,35 +45,17 @@ class Sala(models.Model):
         db_table = 'Sala'
 
 class Serviço(models.Model):
-    recursoid = models.OneToOneField(Recurso, models.DO_NOTHING, db_column='RecursoID', primary_key=True) 
-    tipo_de_serviçoid = models.ForeignKey('TipoDeServiço', models.SET_NULL, default=None, null=True, db_column='Tipo de serviçoID') 
+    recursoid = models.OneToOneField(Recurso, models.DO_NOTHING, db_column='RecursoID', primary_key=True)
 
     class Meta:
         managed = True
         db_table = 'Serviço'
 
-class TipoDeEquipamento(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True) 
-    nome = models.IntegerField(db_column='Nome', unique=True, blank=True, null=True) 
-
-    class Meta:
-        managed = True
-        db_table = 'Tipo de equipamento'
-
 
 class TipoDeRecurso(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True) 
-    nome = models.IntegerField(db_column='Nome', unique=True, blank=True, null=True) 
+    nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)
 
     class Meta:
         managed = True
         db_table = 'Tipo de recurso'
-
-
-class TipoDeServiço(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True) 
-    nome = models.IntegerField(db_column='Nome', unique=True, blank=True, null=True) 
-
-    class Meta:
-        managed = True
-        db_table = 'Tipo de serviço'
