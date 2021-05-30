@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+	<center>
+
+		<h1>Editar pergunta</h1>
+		<br>
+		<div class="container">
+			<h3>{{ pergunta }}</h3>
+		</div>
+		<br>
+		<ul>
+		{% for r in respostas %}
+		<li>{{r}} <a href="{% url 'Formulario:delete_resposta' pergunta.id r.id %}">X</a></li>
+		{% endfor %}
+		</ul>
+		<br>
+		<div class="container">
+			<form action="" method=POST>
+				{% csrf_token %}
+				{{ form.as_p }}
+
+				<input type="submit" value="Submit" class="btn btn-success">
+				<a href="{% url 'Formulario:consultar_perguntas' %}"><button type="button"
+						class="btn btn-primary">Voltar</button></a><br><br>
+
+
+			</form>
+		</div>
+	</center>
+
+</body>
+
+</html>
