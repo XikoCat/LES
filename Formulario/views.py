@@ -30,7 +30,10 @@ def remover_pergunta(request, pergunta_id):
     Pergunta_view = Pergunta.objects.get(pk = pergunta_id)
     Pergunta_view.delete()
     return redirect("Formulario:consultar_perguntas")
-    
+
+
+
+  
 
 def add_opcao_resposta(request, pergunta_id):
     pergunta = get_object_or_404(Pergunta, id = pergunta_id)

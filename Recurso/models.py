@@ -29,11 +29,19 @@ class Equipamento(models.Model):
 class Recurso(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True) 
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True) 
-    estado = models.CharField(db_column='Estado', max_length=255, blank=True, null=True) 
+    estado = models.ForeignKey('Recurso_estado', models.DO_NOTHING, default=None, null=False, db_column='Estado')
 
     class Meta:
         managed = True
         db_table = 'Recurso'
+
+class Recurso_estado(models.Model):
+    id = models.AutoField(db_column='ID', primary_key=True) 
+    Estado = models.CharField(db_column='Estado', max_length=255, blank=True, null=True) 
+
+    class Meta:
+        managed = True
+        db_table = 'Recurso_estado'
 
 class Sala(models.Model):
     recursoid = models.OneToOneField(Recurso, models.DO_NOTHING, db_column='RecursoID', primary_key=True) 
