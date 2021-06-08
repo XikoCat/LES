@@ -23,5 +23,5 @@ class opcao_resposta_form(ModelForm):
         )
 
         labels = {
-            'opção': ('Nova resposta'),
+            'opção': ('Resposta'),
         }

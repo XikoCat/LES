@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <h2>Equipamentos table</h2>
+  <br>
+  <a href="{% url 'Recurso:consultar_salas' %}">Consulte os salas</a>
+  <br>
+  <a href="{% url 'Recurso:consultar_serviços' %}">Consulte os serviços</a>
+  <br>
+  <br>
+  <div class="dropdown container-fluid">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    Filtrar Equipamentos
+  </button>
+  <div class="dropdown-menu container-fluid">
+    <a class="dropdown-item" href="{% url 'Recurso:consultar_equipamentos' %}">All</a>
+    {% for t in tipos %}
+      <br><a class="dropdown-item" href="{% url 'Recurso:omitir_equipamentos_view' t.id %}">{{t.Estado}}</a>
+    {% endfor %}
+  </div>
+</div>
+<br>
+  <table style="width:100%">
+    <tr>
+      <th>Equipamentos</th>
+      <th>Estado</th>
+      <th>Opções</th>
+    </tr>
+    {% for e in equipamentos %}
+    <tr>
+      <td>{{e.recursoid.nome}}</td>
+      <td>{{e.recursoid.estado}}</td>
+      <td>
+        <a href="{% url 'Recurso:alterar_equipamentos_view' e.recursoid.id %}">Alterar</a>
+        <a> | </a>
+        <a href="{% url 'Recurso:remover_equipamentos_view' e.recursoid.id %}">Remover</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <br>
+
+  <a href="{% url 'Recurso:adicionar_equipamentos_view' %}">Adicione um equipamento</a>
+  
+
+</body>
+
+</html>

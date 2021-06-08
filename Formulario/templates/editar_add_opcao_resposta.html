@@ -13,7 +13,7 @@
 
 	<center>
 
-		<h1>Adicionar opções de resposta</h1>
+		<h1>Editar opção de resposta</h1>
 		<br>
 		<div class="container-fluid">
 			<h3>{{ pergunta }}</h3>
@@ -21,7 +21,12 @@
 		<br>
 		<ul>
 		{% for r in respostas %}
-		<li>{{r}} 
+		<li>
+			{% if rid == r.id %}
+				Editing: {{r}} 
+			{% else %}
+				{{r}}
+			{% endif %}	
 			<a href="{% url 'Formulario:delete_resposta' pergunta.id r.id %}">Eliminar</a>
 			<a> | </a>
 			<a href="{% url 'Formulario:editar_opcao_resposta' pergunta.id r.id %}">Editar</a>

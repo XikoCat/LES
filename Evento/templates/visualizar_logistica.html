@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+   <style>
+
+  td {
+  text-align: center;
+  height: 30px;
+}
+  th {
+  text-align: center;
+  height: 30px;
+}
+  </style>
+
+</head>
+
+<br><br><br>
+
+<table class="table">
+    <tr>
+      <th>Evento</th>
+      <th>Tipo de recurso</th>
+      <th>Quantidade</th>
+      <th>Dia inicial</th>
+      <th>Dia final</th>
+      <th>Hora inicial</th>
+      <th>Hora final</th>
+      <th>Capacidade</th>
+      <th>Ações</th>
+    </tr>
+    {% for l in Logistica %}
+    <tr>
+      <td>{{l.eventoid.nome}}</td>
+      <td>{{l.tipo_de_recursoid.nome}}</td>
+      <td>{{l.quantidade}}</td>
+      <td>{{l.dia_inicial}}</td>
+      <td>{{l.dia_final}}</td>   
+      <td>{{l.hora_inicial}}</td> 
+      <td>{{l.hora_final}}</td> 
+      <td>{{l.capacidade}}</td> 
+      <td> <a href="{% url 'Evento:cancelar_logistica' l.id %}">Cancelar Logistica</a><br>
+          <a href="{% url 'Evento:editar_logistica' l.id %}">Editar Logistica</a><br>
+      </td>    
+    </tr>
+    {% endfor %}
+  </table>
+
+  <center><a href="{% url 'Evento:consultar_eventos_all' %}"><button type="button" class="btn btn-primary">Voltar</button></a><br><br></center>
+
+</body>
+
+</html>

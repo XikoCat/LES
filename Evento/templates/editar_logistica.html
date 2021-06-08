@@ -13,20 +13,17 @@
 <body>
 	<center>
 	<h1 style="text-align: center">Editar Evento</h1>
-	
-		
 	<div class = "container">
 	<form action="" method=POST>
 		{% csrf_token %}
 		{{ form.as_p }}
 		
 	<input type="submit" value="Guardar" class="btn btn-secondary">
-	<a href="{% url 'Evento:consultar_eventos_all' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+	<a href="{% url 'Evento:visualizar_logistica' Logistica.eventoid.id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
 	<br><br>
 
 	<form>
 	</div>
-		
 </center>
 
 

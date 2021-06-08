@@ -11,23 +11,49 @@
 
 <body>
 
-  <h2>Basic HTML Table</h2>
+  <h2>Salas table</h2>
+  <br>
+  <a href="{% url 'Recurso:consultar_serviços' %}">Consulte os serviços</a>
+  <br>
+  <a href="{% url 'Recurso:consultar_equipamentos' %}">Consulte os equipamentos</a>
+  <br>
+  <br>
+  <div class="dropdown container-fluid">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    Filtrar Salas
+  </button>
+  <div class="dropdown-menu container-fluid">
+    <a class="dropdown-item" href="{% url 'Recurso:consultar_salas' %}">All</a>
+    {% for e in edificios %}
+      <br><a class="dropdown-item" href="{% url 'Recurso:omitir_salas_view' e.id %}">{{e.nome}}</a>
+    {% endfor %}
+  </div>
+</div>
+<br>
   <table style="width:100%">
     <tr>
       <th>Campus</th>
       <th>Edificio</th>
       <th>Sala</th>
       <th>Lugares</th>
+      <th>Opções</th>
     </tr>
-    {% for s in Sala %}
+    {% for s in salas %}
     <tr>
-      <td>{{s.campusid.nome}}</td>
+      <td>{{s.edificioid.campusid.nome}}</td>
       <td>{{s.edificioid.nome}}</td>
       <td>{{s.recursoid.nome}}</td>
       <td>{{s.lugares}}</td>
+      <td>
+        <a href="{% url 'Recurso:alterar_salas_view' s.recursoid.id %}">Alterar</a>
+        <a> | </a>
+        <a href="{% url 'Recurso:remover_salas_view' s.recursoid.id %}">Remover</a>
+      </td>
     </tr>
     {% endfor %}
   </table>
+
+  <a href="{% url 'Recurso:adicionar_salas_view' %}">Adicione uma sala</a>
 
 </body>
 

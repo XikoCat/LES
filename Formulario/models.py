@@ -24,7 +24,7 @@ class FormulárioPergunta(models.Model):
 
 class OpçãoDeResposta(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
-    perguntaid = models.ForeignKey('Pergunta', models.SET_NULL, default=None, null=True, db_column='PerguntaID')
+    perguntaid = models.ForeignKey('Pergunta', models.CASCADE, default=None, null=True, db_column='PerguntaID')
     opção = models.CharField(db_column='Opção', max_length=255, blank=True, null=True)
 
     class Meta:

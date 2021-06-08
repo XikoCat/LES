@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <h2>Formulários</h2>
+    <h4><a class="btn" href="">Add Formulário</a></h4>
+    <table style="width:100%">
+      <tr>
+        <th>Nome</th>
+        <th>Tipo de Formulário</th>
+        <th>Tipo de Evento</th>
+        <th>Estado</th>
+        <th>Opção</th>
+      </tr>
+      {% for f in Formulario %}
+      <tr>
+        <td>{{p.nome}}</td>
+        <td>{{p.tipo_de_formulárioid.nome}}</td>
+        <td>{{p.tipo_de_eventoid.nome}}</td>
+        <td>{{p.publico}}</td>
+        <td>
+          <a href="" class="card-link">Editar</a>
+          <a> | </a>
+          <a href="" class="card-link">Remover</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+</body>
+
+</html>

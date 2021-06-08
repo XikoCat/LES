@@ -1,23 +1,22 @@
-from django import forms
 from django.forms import ModelForm
-from .models import Evento
+from .models import *
 
-
-#Add an event
-class evento_form(ModelForm):
-	class Meta:
-		model = Evento
-		fields = ('tipo_de_eventoid', 'nome', 'estado', 'descrição', 'data', 'hora', 'duração', 'local', 'valor', 'evento_pagoid')
-
-		widgets = {
-			'tipo_de_eventoid' : forms.Select(attrs={'class' : 'form-control'}),
-			'nome' : forms.TextInput(attrs={'class' : 'form-control'}),
-			'estado' : forms.TextInput(attrs={'class' : 'form-control'}),
-			'descrição' : forms.TextInput(attrs={'class' : 'form-control'}),
-			'data' : forms.DateInput(attrs={'class' : 'form-control'}),
-			'hora' : forms.TimeInput(attrs={'class' : 'form-control'}),
-			'duração' : forms.TextInput(attrs={'class' : 'form-control'}),
-			'local' : forms.TextInput(attrs={'class' : 'form-control'}),
-			'valor' : forms.NumberInput(attrs={'class' : 'form-control'}),
-			'evento_pagoid' : forms.NumberInput(attrs={'class' : 'form-control'}),
-		}
+class salas_form(ModelForm):
+    class Meta:
+        model = Sala
+        fields = ('edificioid', 'lugares')
+        
+class edificios_form(ModelForm):
+    class Meta:
+        model = Edificio
+        fields = ('id', 'campusid', 'nome',)
+        
+class campus_form(ModelForm):
+    class Meta:
+        model = Campus
+        fields = ('nome', 'morada')
+        
+class recursos_form(ModelForm):
+    class Meta:
+        model = Recurso
+        fields = ('nome', 'estado')
