@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect, response
 from .models import *
+from Evento.models import *
 from .forms import *
 
 
@@ -74,4 +75,20 @@ def editar_opcao_resposta(request, pergunta_id, resposta_id):
 
 
 def consultar_formularios(request):
+	return render(request, "consultar_formularios.html", {'Formulario' : Formulário.objects.all,})
+
+
+def add_formulario(request):
+    if request.method == "POST":
+        form = novo_formulario_form(request.POST)
+        if form.is_valid():
+            new_form = Formulário(tipo_de_eventoid = get_object_or_404(TipoDeEvento, id = form.data['tipo_de_eventoid']), tipo_de_formulárioid = get_object_or_404(TipoDeFormulário, id = form.data['tipo_de_formulárioid']), nome = form.data['nome'], publico = True)
+            formulario = new_form.save()
+            return HttpResponseRedirect('/Formulario/add_pergunta?submitted=True') 
+    else:
+        form = novo_formulario_form
+    return render(request, "add_formulario.html", {'form' : form})
+
+#TODO
+def visualizar_formulario(request):
 	return render(request, "consultar_formularios.html", {'Formulario' : Formulário.objects.all,})

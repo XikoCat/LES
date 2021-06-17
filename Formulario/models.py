@@ -5,7 +5,7 @@ class Formulário(models.Model):
     tipo_de_eventoid = models.ForeignKey('Evento.TipoDeEvento', models.SET_NULL, default=None, null=True, db_column='Tipo de eventoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     tipo_de_formulárioid = models.ForeignKey('TipoDeFormulário', models.SET_NULL, default=None, null=True, db_column='Tipo de FormulárioID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)
-    publico = models.IntegerField(db_column='Publico')
+    publico = models.BooleanField(db_column='Publico')
 
     class Meta:
         managed = True
@@ -16,6 +16,7 @@ class FormulárioPergunta(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
     formulárioid = models.OneToOneField(Formulário, models.SET_NULL, default=None, null=True, db_column='FormulárioID')
     perguntaid = models.OneToOneField('Pergunta', models.SET_NULL, default=None, null=True, db_column='PerguntaID')
+    pos = models.IntegerField(models.SET_NULL, default=None, null=True, db_column='Pos')
 
     class Meta:
         managed = True

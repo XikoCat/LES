@@ -25,5 +25,11 @@ urlpatterns = [
     path("delete_resposta/<pergunta_id>/<resposta_id>", views.delete_resposta, name="delete_resposta"),
     path("editar_perguntas/<pergunta_id>", views.editar_pergunta, name="editar_pergunta"),
     path("editar_opcao_resposta/<pergunta_id>/<resposta_id>", views.editar_opcao_resposta, name="editar_opcao_resposta"),
+    
     path("consultar_formularios", views.consultar_formularios, name="consultar_formularios"),
+    
+    path("add_formulario", views.add_formulario, name="add_formulario"),
+    # editar formulario
+    # eliminar formulario
+    path("visualizar_formulario", views.visualizar_formulario, name="visualizar_formulario"),
 ]

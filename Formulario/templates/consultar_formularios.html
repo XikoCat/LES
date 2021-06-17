@@ -13,7 +13,7 @@
 
   <div class="container-fluid">
     <h2>Formulários</h2>
-    <h4><a class="btn" href="">Add Formulário</a></h4>
+    <h4><a class="btn" href="{% url 'Formulario:add_formulario' %}">Add Formulário</a></h4>
     <table style="width:100%">
       <tr>
         <th>Nome</th>
@@ -24,10 +24,16 @@
       </tr>
       {% for f in Formulario %}
       <tr>
-        <td>{{p.nome}}</td>
-        <td>{{p.tipo_de_formulárioid.nome}}</td>
-        <td>{{p.tipo_de_eventoid.nome}}</td>
-        <td>{{p.publico}}</td>
+        <td>{{f.nome}}</td>
+        <td>{{f.tipo_de_formulárioid}}</td>
+        <td>{{f.tipo_de_eventoid}}</td>
+        <td>
+          {% if f.publico == True %}
+            Publico
+          {% else %}
+            Não está Publico
+          {% endif %}
+        </td>
         <td>
           <a href="" class="card-link">Editar</a>
           <a> | </a>
