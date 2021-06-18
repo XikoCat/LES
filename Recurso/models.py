@@ -60,7 +60,7 @@ class Recurso_estado(models.Model):
 
 class Sala(models.Model):
     recursoid = models.OneToOneField(Recurso, models.DO_NOTHING, verbose_name='Sala', db_column='RecursoID', primary_key=True)  # Field name made lowercase.
-    edificioid = models.ForeignKey(Edificio, models.SET_NULL, default=None, null=True, db_column='EdificioID')  # Field name made lowercase.
+    edificioid = models.ForeignKey(Edificio, models.SET_NULL, verbose_name='Edificio', default=None, null=True, db_column='EdificioID')  # Field name made lowercase.
     lugares = models.IntegerField(db_column='Lugares', blank=True, null=True)  # Field name made lowercase.
 
     def __str__(self):

@@ -31,10 +31,16 @@ class novo_formulario_form(ModelForm):
         model = Formulário
         fields = (
             'nome',
+            'tipo_de_formulárioid',
             'tipo_de_eventoid',
-            'tipo_de_formulárioid'
+            
         )
         labels = {
-            'tipo_de_eventoid': ('Tipo de evento'),
             'tipo_de_formulárioid': ('Tipo de formulário'),
+            'tipo_de_eventoid': ('Tipo de evento'),
+            
         }
+
+    def __init__(self,data = None, *args, **kwargs):
+        super(novo_formulario_form, self).__init__(data, *args, **kwargs)
+        if data and data.get('tipo_de_formulárioid', None) == self. 

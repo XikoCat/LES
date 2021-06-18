@@ -15,6 +15,10 @@
         <h1>Adicione uma Sala</h1>
         {% csrf_token %}
 
+        {% if errorState == True %}
+          {{ error }}
+        {% endif %}
+
         {{ r_form.as_p }}
         {{ s_form.as_p }}
 

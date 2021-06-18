@@ -88,7 +88,3 @@ def add_formulario(request):
     else:
         form = novo_formulario_form
     return render(request, "add_formulario.html", {'form' : form})
-
-#TODO
-def visualizar_formulario(request):
-	return render(request, "consultar_formularios.html", {'Formulario' : Formulário.objects.all,})

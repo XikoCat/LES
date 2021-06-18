@@ -9,13 +9,19 @@ def consultar_salas(request):
 
 def adicionar_salas(request):
     submitted = False
+    error = "Sala já existe"
+    errorState = False
     if request.method == "POST":
         r_form = recursos_form(request.POST)
         s_form = salas_form(request.POST)
         if s_form.is_valid() and r_form.is_valid():
-            new_id = r_form.save()
-            new_sala = Sala(recursoid = new_id, edificioid = get_object_or_404(Edificio, id = s_form.data['edificioid']), lugares = s_form.data['lugares'])
-            new_sala.save()
+            if Recurso.objects.filter(nome = r_form.data['nome']).exists():
+                errorState = True
+                return render(request, "adicionar_salas.html", {'s_form':s_form, 'r_form':r_form, 'submitted':submitted, 'error':error, 'errorState':errorState})
+            else:
+                new_id = r_form.save()
+                new_sala = Sala(recursoid = new_id, edificioid = get_object_or_404(Edificio, id = s_form.data['edificioid']), lugares = s_form.data['lugares'])
+                new_sala.save()
             return HttpResponseRedirect('/Recurso/consultar_salas?submitted=True')
     else:
         r_form = recursos_form()
@@ -35,13 +41,20 @@ def omitir_salas(request, omitirid):
                                                     'edificios': Edificio.objects.all()})
 
 def alterar_salas(request, alterarid):
+    error = "Sala já existe"
+    errorState = False
     sala_change = Sala.objects.get(pk = alterarid)
     recurso_change = Recurso.objects.get(pk = alterarid)
     s_form = salas_form(request.POST or None, instance=sala_change)
     r_form = recursos_form(request.POST or None, instance=recurso_change)
     if s_form.is_valid() and r_form.is_valid():
-        r_form.save()
-        s_form.save()
+        if Recurso.objects.filter(nome = r_form.data['nome']).exists():
+            errorState = True
+            return render(request, "alterar_sala.html", {'sala_change': sala_change, 'recurso_change': recurso_change, 
+                                                        's_form':s_form, 'r_form':r_form, 'error':error, 'errorState':errorState})
+        else:
+            r_form.save()
+            s_form.save()
         return redirect('Recurso:consultar_salas')
     return render(request, "alterar_sala.html", {'sala_change': sala_change, 'recurso_change': recurso_change, 's_form':s_form, 'r_form':r_form})
 
@@ -52,12 +65,18 @@ def consultar_serviços(request):
 
 def adicionar_serviços(request):
     submitted = False
+    error = "Serviço já existe"
+    errorState = False
     if request.method == "POST":
         r_form = recursos_form(request.POST)
         if r_form.is_valid():
-            new_rid = r_form.save()
-            new_serviço = Serviço(recursoid = new_rid)
-            new_serviço.save()
+            if Recurso.objects.filter(nome = r_form.data['nome']).exists():
+                errorState = True
+                return render(request, "adicionar_serviços.html", {'r_form':r_form, 'submitted':submitted, 'error':error, 'errorState':errorState})
+            else:
+                new_rid = r_form.save()
+                new_serviço = Serviço(recursoid = new_rid)
+                new_serviço.save()
             return HttpResponseRedirect('/Recurso/consultar_serviços?submitted=True')
     else:
         r_form = recursos_form()
@@ -76,10 +95,17 @@ def omitir_serviços(request, omitirid):
                                                     'tipos': Recurso_estado.objects.all()})
     
 def alterar_serviços(request, alterarid):
+    error = "Serviço já existe"
+    errorState = False
     recurso_change = Recurso.objects.get(pk = alterarid)
     r_form = recursos_form(request.POST or None, instance=recurso_change)
     if r_form.is_valid():
-        r_form.save()
+        if Recurso.objects.filter(nome = r_form.data['nome']).exists():
+            errorState = True
+            return render(request, "alterar_serviços.html", {'r_form':r_form, 'recurso_change':recurso_change, 
+                                                             'error':error, 'errorState':errorState})
+        else:
+            r_form.save()
         return redirect('Recurso:consultar_serviços')
     return render(request, "alterar_serviços.html", {'recurso_change': recurso_change, 'r_form':r_form})
 
@@ -90,12 +116,18 @@ def consultar_equipamentos(request):
 
 def adicionar_equipamentos(request):
     submitted = False
+    error = "Equipamento já existe"
+    errorState = False
     if request.method == "POST":
         r_form = recursos_form(request.POST)
         if r_form.is_valid():
-            new_rid = r_form.save()
-            new_serviço = Equipamento(recursoid = new_rid)
-            new_serviço.save()
+            if Recurso.objects.filter(nome = r_form.data['nome']).exists():
+                errorState = True
+                return render(request, "adicionar_equipamentos.html", {'r_form':r_form, 'submitted':submitted, 'error':error, 'errorState':errorState})
+            else:
+                new_rid = r_form.save()
+                new_serviço = Equipamento(recursoid = new_rid)
+                new_serviço.save()
             return HttpResponseRedirect('/Recurso/consultar_equipamentos?submitted=True')
     else:
         r_form = recursos_form()
@@ -114,9 +146,16 @@ def omitir_equipamentos(request, omitirid):
                                                             'tipos': Recurso_estado.objects.all()})
     
 def alterar_equipamentos(request, alterarid):
+    error = "Equipamento já existe"
+    errorState = False
     recurso_change = Recurso.objects.get(pk = alterarid)
     r_form = recursos_form(request.POST or None, instance=recurso_change)
     if r_form.is_valid():
-        r_form.save()
+        if Recurso.objects.filter(nome = r_form.data['nome']).exists():
+            errorState = True
+            return render(request, "alterar_equipamentos.html", {'r_form':r_form, 'recurso_change': recurso_change, 
+                                                                 'error':error, 'errorState':errorState})
+        else:
+            r_form.save()
         return redirect('Recurso:consultar_equipamentos')
     return render(request, "alterar_equipamentos.html", {'recurso_change': recurso_change, 'r_form':r_form})
