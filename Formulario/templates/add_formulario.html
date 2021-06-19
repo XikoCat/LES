@@ -19,15 +19,48 @@
 				{% csrf_token %}
 				{{ form.as_p }}
 
-				<input type="submit" value="Submit" class="btn btn-success">
+				<input type="submit" value="Next" class="btn btn-success">
 				<a href="{% url 'Formulario:consultar_formularios' %}"><button type="button"
 						class="btn btn-primary">Voltar</button></a><br><br>
 
 
 			</form>
 		</div>
-	</center>
 
+
+		<script>
+
+			$('#id_tipo_de_eventoid').hide();
+			$('#id_tipo_de_eventoid').removeAttr('required');
+
+			var obj = document.querySelector("label[for='id_tipo_de_eventoid']");
+			obj.style.display = "none";
+			obj.style.visibility = "hidden";
+
+
+			$("#id_tipo_de_formulárioid").change(
+				function () {
+					if ($(this).val() == 2) {
+						$('#id_tipo_de_eventoid').show();
+						$('#id_tipo_de_eventoid').attr('required', '');
+
+						var obj = document.querySelector("label[for='id_tipo_de_eventoid']");
+						obj.style.display = "block";
+						obj.style.visibility = "visible";
+					}
+					else {
+						$('#id_tipo_de_eventoid').hide();
+						$('#id_tipo_de_eventoid').removeAttr('required');
+
+						var obj = document.querySelector("label[for='id_tipo_de_eventoid']");
+						obj.style.display = "none";
+						obj.style.visibility = "hidden";
+					}
+				}
+			);
+
+		</script>
+	</center>
 </body>
 
 </html>

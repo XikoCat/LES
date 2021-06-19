@@ -31,5 +31,5 @@ urlpatterns = [
     path("add_formulario", views.add_formulario, name="add_formulario"),
     # editar formulario
     # eliminar formulario
-    path("visualizar_formulario", views.visualizar_formulario, name="visualizar_formulario"),
+    #path("visualizar_formulario", views.visualizar_formulario, name="visualizar_formulario"),
 ]
