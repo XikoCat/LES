@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+	<center>
+		<div class="container-fluid">
+			<h2>Perguntas do Formulário "{{formulario.nome}}"</h2>
+			<h4><a class="btn" href="{% url 'Formulario:consultar_perguntas' 1 formulario.id %}">Adicionar perguntas</a>
+			</h4>
+			<table style="width:100%">
+				<tr>
+					<th>Pergunta</th>
+					<th>Tipo de Pergunta</th>
+					<th>Respostas:</th>
+					<th>Opções</th>
+				</tr>
+				{% for p in perguntas %}
+				<tr>
+					<td>{{p.pergunta}}</td>
+					<td>{{p.nome}}</td>
+					<td class="dropdown">
+						{% if p.tipo_de_perguntaid.id == 1 %}
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Ver
+							respostas
+							<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							{% for or in OpcaoResposta %}
+							{% if or.perguntaid == p %}
+							<li><a>{{or}}</a></li>
+							{% endif %}
+							{% endfor %}
+						</ul>
+						{% endif %}
+					</td>
+					<td>
+						<a href="{% url 'Formulario:editar_pergunta' p.id formulario.id %}" class="card-link">Editar</a>
+						<a> | </a>
+						<a href="{% url 'Formulario:remover_pergunta_do_formulario' p.id formulario.id %}"
+							class="card-link">Remover</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</center>
+
+</body>
+
+</html>

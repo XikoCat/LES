@@ -2,7 +2,7 @@ from django.db import models
 
 class Formulário(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
-    tipo_de_eventoid = models.ForeignKey('Evento.TipoDeEvento', models.SET_NULL, default=None, null=True, db_column='Tipo de eventoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tipo_de_eventoid = models.ForeignKey('Evento.TipoDeEvento', models.SET_NULL, default=None, null=True, blank=True, db_column='Tipo de eventoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     tipo_de_formulárioid = models.ForeignKey('TipoDeFormulário', models.SET_NULL, default=None, null=True, db_column='Tipo de FormulárioID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)
     publico = models.BooleanField(db_column='Publico')
@@ -40,7 +40,7 @@ class Pergunta(models.Model):
     pergunta = models.CharField(db_column='Pergunta', max_length=255, blank=True, null=True)
     obrigatório = models.BooleanField(db_column='Obrigatório')
     tipo_de_perguntaid = models.ForeignKey('TipoDePergunta', models.SET_NULL, default=None, null=True, db_column='Tipo de perguntaID')
-    numero_maximo_de_escolhas = models.IntegerField(models.SET_NULL, default =None, null=True, db_column='NumeroMaximoDeEscolhas')
+    numero_maximo_de_escolhas = models.IntegerField(db_column='NumeroMaximoDeEscolhas', default =None, null=True)
     temporario = models.BooleanField(default=False, db_column='temporario')
 
     class Meta:

@@ -29,13 +29,22 @@
 
 
 		<script>
+			if ($("#id_tipo_de_formulárioid").val() != 2) {
+				$('#id_tipo_de_eventoid').hide();
+				$('#id_tipo_de_eventoid').removeAttr('required');
 
-			$('#id_tipo_de_eventoid').hide();
-			$('#id_tipo_de_eventoid').removeAttr('required');
+				var obj = document.querySelector("label[for='id_tipo_de_eventoid']");
+				obj.style.display = "none";
+				obj.style.visibility = "hidden";
+			}
+			else {
+				$('#id_tipo_de_eventoid').show();
+				$('#id_tipo_de_eventoid').attr('required', '');
 
-			var obj = document.querySelector("label[for='id_tipo_de_eventoid']");
-			obj.style.display = "none";
-			obj.style.visibility = "hidden";
+				var obj = document.querySelector("label[for='id_tipo_de_eventoid']");
+				obj.style.display = "block";
+				obj.style.visibility = "visible";
+			}
 
 
 			$("#id_tipo_de_formulárioid").change(
@@ -55,6 +64,7 @@
 						var obj = document.querySelector("label[for='id_tipo_de_eventoid']");
 						obj.style.display = "none";
 						obj.style.visibility = "hidden";
+						document.getElementById("id_tipo_de_eventoid").value = ""
 					}
 				}
 			);

@@ -16,7 +16,12 @@
 		<br>
 		{% if submitted %}
 			A pergunta foi editada com sucesso!
-			<br><br><a class="btn btn-primary" href="{% url 'Formulario:consultar_perguntas' %}" role="button">Voltar</a>
+			<br><br>
+			{% if formulario_id == "None" %}
+			<a class="btn btn-primary" href="{% url 'Formulario:consultar_perguntas' 0 formulario_id %}" role="button">Voltar</a>
+				{% else %}
+				<a class="btn btn-primary" href="{% url 'Formulario:consultar_perguntas' 1 formulario_id %}" role="button">Voltar</a>
+					{% endif %}
 		{% else %}
 
 		<div class = "container">
@@ -25,7 +30,16 @@
 			{{ p_form.as_p }}
 			
 			<input type="submit" value="Submit" class="btn btn-success">
-			<a href="{% url 'Formulario:consultar_perguntas' %}"><button type="button" class="btn btn-primary">Voltar</button></a><br><br>
+
+			
+			{% if formulario_id == "None" %}
+			<a href="{% url 'Formulario:consultar_perguntas' 0 formulario_id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+				{% else %}
+				<a href="{% url 'Formulario:consultar_perguntas' 1 formulario_id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+					{% endif %}
+					
+			
+			<br><br>
 
 
 		</form>

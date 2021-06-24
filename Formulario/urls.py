@@ -18,18 +18,24 @@ from . import views
 app_name = "Formulario"
 
 urlpatterns = [
-	path("consultar_perguntas", views.consultar_perguntas, name="consultar_perguntas"),
-    path("add_pergunta", views.add_pergunta, name="add_pergunta"),
-    path("add_opcao_resposta/<pergunta_id>", views.add_opcao_resposta, name="add_opcao_resposta"),
-    path("remover_perguntas/<pergunta_id>", views.remover_pergunta, name="remover_pergunta"),
-    path("delete_resposta/<pergunta_id>/<resposta_id>", views.delete_resposta, name="delete_resposta"),
-    path("editar_perguntas/<pergunta_id>", views.editar_pergunta, name="editar_pergunta"),
-    path("editar_opcao_resposta/<pergunta_id>/<resposta_id>", views.editar_opcao_resposta, name="editar_opcao_resposta"),
+    path("consultar_perguntas/<id>/<formulario_id>", views.consultar_perguntas, name="consultar_perguntas"),
+    path("add_pergunta/<formulario_id>", views.add_pergunta, name="add_pergunta"),
+    path("add_opcao_resposta/<pergunta_id>/<formulario_id>", views.add_opcao_resposta, name="add_opcao_resposta"),
+    path("remover_perguntas/<pergunta_id>/<formulario_id>", views.remover_pergunta, name="remover_pergunta"),
+    path("delete_resposta/<pergunta_id>/<resposta_id>/<formulario_id>", views.delete_resposta, name="delete_resposta"),
+    path("editar_perguntas/<pergunta_id>/<formulario_id>", views.editar_pergunta, name="editar_pergunta"),
+    path("editar_opcao_resposta/<pergunta_id>/<resposta_id>/<formulario_id>", views.editar_opcao_resposta, name="editar_opcao_resposta"),
     
     path("consultar_formularios", views.consultar_formularios, name="consultar_formularios"),
     
     path("add_formulario", views.add_formulario, name="add_formulario"),
-    # editar formulario
-    # eliminar formulario
-    #path("visualizar_formulario", views.visualizar_formulario, name="visualizar_formulario"),
+    path("add_pergunta_ao_formulario/<formulario_id>", views.add_pergunta_ao_formulario, name="add_pergunta_ao_formulario"),
+    path("editar_formulario/<formulario_id>", views.editar_formulario, name="editar_formulario"),
+    path("eliminar_formulario/<formulario_id>", views.eliminar_formulario, name="eliminar_formulario"),
+    path("alterar_estado_formulario/<formulario_id>", views.alterar_estado_formulario, name="alterar_estado_formulario"),
+    path("add_pergunta_ao_formulario_action/<pergunta_id>/<formulario_id>", views.add_pergunta_ao_formulario_action, name="add_pergunta_ao_formulario_action"),
+
+    path("remover_pergunta_do_formulario/<pergunta_id>/<formulario_id>", views.remover_pergunta_do_formulario, name="remover_pergunta_do_formulario"),
+    path("editar_pergunta_do_formulario/<pergunta_id>/<formulario_id>", views.editar_pergunta_do_formulario, name="editar_pergunta_do_formulario"),
+    
 ]

@@ -10,16 +10,24 @@
 </head>
 
 <body>
-
+  <center>
   <div class="container-fluid">
     <h2>Perguntas</h2>
-    <h4><a class="btn" href="{% url 'Formulario:add_pergunta' %}">Add pergunta</a></h4>
+      <h4><a class="btn" href="{% url 'Formulario:add_pergunta' formulario_id %}">Criar nova pergunta</a></h4>
+      {% if id == '1' %}
+      <h4><a class="btn" href="{% url 'Formulario:add_pergunta_ao_formulario' formulario_id %}">Voltar</a></h4>
+      {% endif %}
+
     <table style="width:100%">
       <tr>
         <th>Pergunta</th>
         <th>Tipo de Pergunta</th>
         <th>Respostas:</th>
-        <th>Opções</th>
+        {% if id == '1' %}
+          <th>Adicionar</th>
+        {% else %}
+          <th>Opções</th>
+        {% endif %}
       </tr>
       {% for p in Pergunta %}
       <tr>
@@ -31,23 +39,27 @@
             <span class="caret"></span></button>
           <ul class="dropdown-menu">
             {% for or in OpcaoResposta %}
-            {% if or.perguntaid == p %}
-            <li><a>{{or}}</a></li>
-            {% endif %}
+              {% if or.perguntaid == p %}
+                <li><a>{{or}}</a></li>
+              {% endif %}
             {% endfor %}
           </ul>
           {% endif %}
         </td>
         <td>
-          <a href="{% url 'Formulario:editar_pergunta' p.id %}" class="card-link">Editar</a>
+          {% if id == '1' %}
+            <a href="{% url 'Formulario:add_pergunta_ao_formulario_action' p.id formulario_id %}" class="card-link">Adicionar</a>
+            <a> | </a>
+          {% endif %}
+          <a href="{% url 'Formulario:editar_pergunta' p.id formulario_id %}" class="card-link">Editar</a>
           <a> | </a>
-          <a href="{% url 'Formulario:remover_pergunta' p.id %}" class="card-link">Remover</a>
+          <a href="{% url 'Formulario:remover_pergunta' p.id formulario_id %}" class="card-link">Remover</a>  
         </td>
       </tr>
       {% endfor %}
     </table>
   </div>
-
+</center>
 </body>
 
 </html>

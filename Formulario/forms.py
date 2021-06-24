@@ -31,6 +31,7 @@ class novo_formulario_form(ModelForm):
 
     class Meta:
         model = Formulário
+        tipo_de_eventoid = forms.CharField(required=True)
         fields = (
             'nome',
             'tipo_de_formulárioid',
