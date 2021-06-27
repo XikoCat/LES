@@ -14,8 +14,8 @@
 	<center>
 		<div class="container-fluid">
 			<h2>Perguntas do Formulário "{{formulario.nome}}"</h2>
-			<h4><a class="btn" href="{% url 'Formulario:consultar_perguntas' 1 formulario.id %}">Adicionar perguntas</a>
-			</h4>
+			<h4><a class="btn" href="{% url 'Formulario:consultar_perguntas' 1 formulario.id %}">Adicionar perguntas</a></h4>
+			<h4><a class="btn" href="{% url 'Formulario:consultar_formularios' %}">Voltar</a></h4>
 			<table style="width:100%">
 				<tr>
 					<th>Pergunta</th>
@@ -42,7 +42,7 @@
 						{% endif %}
 					</td>
 					<td>
-						<a href="{% url 'Formulario:editar_pergunta' p.id formulario.id %}" class="card-link">Editar</a>
+						<a href="{% url 'Formulario:editar_pergunta_do_formulario' p.id formulario.id %}" class="card-link">Editar</a>
 						<a> | </a>
 						<a href="{% url 'Formulario:remover_pergunta_do_formulario' p.id formulario.id %}"
 							class="card-link">Remover</a>

@@ -14,8 +14,8 @@ class Formulário(models.Model):
 
 class FormulárioPergunta(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
-    formulárioid = models.OneToOneField('Formulário' , on_delete=models.CASCADE, db_column='FormulárioID')
-    perguntaid = models.OneToOneField('Pergunta', on_delete=models.CASCADE, db_column='PerguntaID')
+    formulárioid = models.ForeignKey('Formulário' , on_delete=models.CASCADE, db_column='FormulárioID')
+    perguntaid = models.ForeignKey('Pergunta', on_delete=models.CASCADE, db_column='PerguntaID')
     pos = models.IntegerField(models.SET_NULL, default=None, null=True, db_column='Pos')
 
     class Meta:

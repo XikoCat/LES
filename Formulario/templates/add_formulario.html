@@ -12,7 +12,11 @@
 <body>
 
 	<center>
-		<h1>Criar um Formulario</h1>
+		{% if state == True %}
+			<h1>Editar Formulário</h1>
+		{% else %}
+			<h1>Criar Formulário</h1>
+		{% endif %}
 		<br>
 		<div class="container">
 			<form action="" method=POST>

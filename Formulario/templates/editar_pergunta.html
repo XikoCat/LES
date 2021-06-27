@@ -31,12 +31,16 @@
 			
 			<input type="submit" value="Submit" class="btn btn-success">
 
-			
-			{% if formulario_id == "None" %}
-			<a href="{% url 'Formulario:consultar_perguntas' 0 formulario_id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+			{% if state == True %}
+				<a href="{% url 'Formulario:add_pergunta_ao_formulario' formulario_id %}"><button type="button"
+					class="btn btn-primary">Voltar</button></a>
+			{% else %}
+				{% if formulario_id == "None" %}
+					<a href="{% url 'Formulario:consultar_perguntas' 0 formulario_id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
 				{% else %}
-				<a href="{% url 'Formulario:consultar_perguntas' 1 formulario_id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
-					{% endif %}
+					<a href="{% url 'Formulario:consultar_perguntas' 1 formulario_id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+				{% endif %}
+			{% endif %}
 					
 			
 			<br><br>
