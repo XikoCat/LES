@@ -7,7 +7,7 @@ from .models import Evento, PedidoDeRecurso
 class evento_form(ModelForm):
 	class Meta:
 		model = Evento
-		fields = ('tipo_de_eventoid', 'nome', 'descrição', 'data', 'hora', 'duração', 'local', 'valor', 'evento_pagoid')
+		fields = ('tipo_de_eventoid', 'nome', 'descrição', 'data', 'hora', 'duração', 'locais', 'valor', 'evento_pagoid')
 
 		labels = {
             'tipo_de_eventoid': ('Tipo de Evento'),

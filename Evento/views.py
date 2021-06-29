@@ -104,4 +104,10 @@ def cancelar_logistica(request, logistica_id):
     Logistica_view = PedidoDeRecurso.objects.get(pk = logistica_id)
     Logistica_view.delete()
     return redirect('Evento:consultar_eventos_all')
+
+def submeter_logistica(request, logistica_id):
+    Logistica_view = PedidoDeRecurso.objects.get(pk = logistica_id)
+    Logistica_view.estado='Submetido'
+    Logistica_view.save()
+    return redirect('Evento:consultar_eventos_all')
     

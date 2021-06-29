@@ -41,4 +41,6 @@ urlpatterns = [
     path("editar_logistica/<logistica_id>", views.editar_logistica, name="editar_logistica"),
 
     path("cancelar_logistica/<logistica_id>", views.cancelar_logistica, name="cancelar_logistica"),
+
+     path("submeter_logistica/<logistica_id>", views.submeter_logistica, name="submeter_logistica"),
 ]

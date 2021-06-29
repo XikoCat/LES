@@ -36,6 +36,7 @@
       <th>Hora inicial</th>
       <th>Hora final</th>
       <th>Capacidade</th>
+      <th>Estado</th>
       <th>Ações</th>
     </tr>
     {% for l in Logistica %}
@@ -48,8 +49,10 @@
       <td>{{l.hora_inicial}}</td> 
       <td>{{l.hora_final}}</td> 
       <td>{{l.capacidade}}</td> 
+      <td>{{l.estado}}</td> 
       <td> <a href="{% url 'Evento:cancelar_logistica' l.id %}">Cancelar Logistica</a><br>
-          <a href="{% url 'Evento:editar_logistica' l.id %}">Editar Logistica</a><br>
+           <a href="{% url 'Evento:editar_logistica' l.id %}">Editar Logistica</a><br>
+           <a href="{% url 'Evento:submeter_logistica' l.id %}">Submeter Logistica</a><br>
       </td>    
     </tr>
     {% endfor %}
