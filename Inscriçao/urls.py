@@ -15,13 +15,29 @@ Including another URLconf
 """
 from django.urls import path
 from . import views
+
 app_name = "Inscriçao"
 
 urlpatterns = [
-    #DEFAULT PATH
-    path("", views.consultar_inscrições_all, name="consultar_inscrições"),
-
-    #Consultar inscrições
-    path("consultar_inscrições/<evento_id>", views.consultar_inscrições, name="consultar_inscrições"),
-    path("consultar_inscrições", views.consultar_inscrições_all, name="consultar_inscrições_all"),
+    # DEFAULT PATH
+    path("", views.consultar_inscricoes_all, name="consultar_inscricoes"),
+    
+    # Info Inscrições
+    path(
+        "info_inscricoes/<evento_id>",
+        views.info_inscricoes,
+        name="info_inscricoes",
+    ),
+    
+    # Consultar inscrições
+    path(
+        "consultar_inscricoes/<evento_id>",
+        views.consultar_inscricoes,
+        name="consultar_inscricoes",
+    ),
+    path(
+        "consultar_inscricoes",
+        views.consultar_inscricoes_all,
+        name="consultar_inscricoes_all",
+    ),
 ]

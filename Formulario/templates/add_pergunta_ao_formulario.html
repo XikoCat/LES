@@ -26,7 +26,7 @@
 				{% for p in perguntas %}
 				<tr>
 					<td>{{p.pergunta}}</td>
-					<td>{{p.nome}}</td>
+					<td>{{p.tipo_de_perguntaid.nome}}</td>
 					<td class="dropdown">
 						{% if p.tipo_de_perguntaid.id == 1 %}
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Ver
