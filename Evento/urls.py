@@ -42,5 +42,14 @@ urlpatterns = [
 
     path("cancelar_logistica/<logistica_id>", views.cancelar_logistica, name="cancelar_logistica"),
 
-     path("submeter_logistica/<logistica_id>", views.submeter_logistica, name="submeter_logistica"),
+    path("submeter_logistica/<logistica_id>", views.submeter_logistica, name="submeter_logistica"),
+    path("validar_logistica/<logistica_id>", views.validar_logistica, name="validar_logistica"),
+    
+    path("atribuir_sala/<evento_id>", views.atribuir_sala, name="atribuir_sala"),
+    path("atribuir_equipamento/<evento_id>", views.atribuir_equipamento, name="atribuir_equipamento"),
+    path("atribuir_serviço/<evento_id>", views.atribuir_serviço, name="atribuir_serviço"),
+    
+    path("cancelar_atribuir_sala/<removeid>", views.cancelar_atribuiçao_sala, name="cancelar_atribuir_sala"),
+    path("cancelar_atribuir_equipamento/<removeid>", views.cancelar_atribuiçao_equipamento, name="cancelar_atribuir_equipamento"),
+    path("cancelar_atribuir_serviço/<removeid>", views.cancelar_atribuiçao_serviço, name="cancelar_atribuir_serviço"),
 ]

@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from .models import *
 
@@ -5,6 +6,11 @@ class salas_form(ModelForm):
     class Meta:
         model = Sala
         fields = ('edificioid', 'lugares')
+
+        widgets = {
+			'edificioid' : forms.Select(attrs={'class' : 'form-control'}),
+			'lugares' : forms.TextInput(attrs={'class' : 'form-control'}),
+		}
         
 class edificios_form(ModelForm):
     class Meta:
@@ -20,3 +26,8 @@ class recursos_form(ModelForm):
     class Meta:
         model = Recurso
         fields = ('nome', 'estado')
+
+        widgets = {
+			'nome' : forms.TextInput(attrs={'class' : 'form-control'}),
+			'estado' : forms.Select(attrs={'class' : 'form-control'}),
+		}

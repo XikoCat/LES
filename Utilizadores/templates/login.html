@@ -1,0 +1,38 @@
+{% extends 'app.html' %}
+
+{% block title %}- Login {% endblock title %}
+
+{% block content %}
+{% load static %}
+
+<div class="center">
+    <h1>Login utilizador</h1>
+    <br><br>
+    {% if error_message %}
+        <p>{{error_message}}</p>
+        <br>
+    {% endif %}
+    <form action="" method=POST>
+        {% csrf_token %}
+        <div class = "container">
+            <div class="fieldWrapper">
+                <label for="{{ form.username.id_username }}">Username:</label>
+                <br>
+                {{ form.username }}
+            </div> 
+            <div class="fieldWrapper">
+                <label for="{{ form.password.id_password }}">Password:</label>
+                <br>
+                {{ form.password }}
+            </div>
+            <br>
+
+            <button type="submit" class="btn btn-success">Register</button>
+        
+            <a href="{% url 'home' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+            <br><br>
+        </div>
+        Se já tiver uma conta, pode fazer <a href=""><strong>login</strong></a>
+    </form>
+</div>
+{% endblock content %}

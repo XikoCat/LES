@@ -24,6 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-7!%@@td42%$a9i1(1(2mw&4=wkr=!o+of3xhok_!gcw@jysg$z'
 
+# STATICFILES_DIRS is for development
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -44,6 +54,7 @@ INSTALLED_APPS = [
     'Inscriçao',
     'Recurso',
     'main',
+    'Utilizadores',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +72,7 @@ ROOT_URLCONF = 'LES.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [(os.path.join(BASE_DIR, 'templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,4 +1,3 @@
-from Recurso.models import Equipamento
 from django.db import models
 
  
@@ -6,7 +5,7 @@ from django.db import models
 class Evento(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)   
     tipo_de_eventoid = models.ForeignKey('TipoDeEvento', models.SET_NULL, default=None, null=True, db_column='Tipo de eventoID')      
-    proponenteutilizadorid = models.ForeignKey('main.Proponente', models.SET_NULL, default=None, null=True, db_column='ProponenteUtilizadorID')   
+    proponenteutilizadorid = models.ForeignKey('Utilizadores.Proponente', models.SET_NULL, default=None, null=True, db_column='ProponenteUtilizadorID')   
     formulárioinscriçãoid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, db_column='FormulárioInscriçãoID')   
     formuláriofeedbackid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, related_name = 'feedback', db_column='FormulárioFeedbackID')   
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)   
@@ -14,11 +13,7 @@ class Evento(models.Model):
     descrição = models.CharField(db_column='Descrição', max_length=255, blank=True, null=True)   
     data = models.DateField(db_column='Data', blank=True, null=True)   
     hora = models.TimeField(db_column='Hora', blank=True, null=True)   
-    duração = models.IntegerField(db_column='Duração', blank=True, null=True)   
-    
-    locais = models.ForeignKey('EventoLocais', models.SET_NULL, default=None, null=True, db_column='locais')
-    equipamentos = models.ForeignKey('EventoEquipamentos', models.SET_NULL, default=None, null=True, db_column='equipamentos')
-    servicos = models.ForeignKey('EventoServicos', models.SET_NULL, default=None, null=True, db_column='servicos')
+    duração = models.IntegerField(db_column='Duração', blank=True, null=True)
 
     valor = models.FloatField(db_column='Valor')   
     evento_pagoid = models.IntegerField(db_column='Evento pagoID')      
@@ -33,20 +28,20 @@ class Evento(models.Model):
 
 class EventoLocais(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
-    eventoId = models.ForeignKey('Evento', models.SET_NULL, null=True, db_column='Evento')
-    localId = models.ForeignKey('Recurso.Sala', models.SET_NULL, null=True, db_column='Local')
+    eventoId = models.ForeignKey('Evento', models.SET_NULL, verbose_name='Evento', null=True, db_column='Evento')
+    localId = models.ForeignKey('Recurso.Sala', models.SET_NULL, verbose_name='Sala', null=True, db_column='Local')
 
 
 class EventoEquipamentos(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
-    eventoId = models.ForeignKey('Evento', models.SET_NULL, null=True, db_column='Evento')
-    equipamentoId = models.ForeignKey('Recurso.Equipamento', models.SET_NULL, null=True, db_column='Equipamento')
+    eventoId = models.ForeignKey('Evento', models.SET_NULL, verbose_name='Evento', null=True, db_column='Evento')
+    equipamentoId = models.ForeignKey('Recurso.Equipamento', models.SET_NULL, verbose_name='equipamento', null=True, db_column='Equipamento')
 
 
 class EventoServicos(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
-    eventoId = models.ForeignKey('Evento', models.SET_NULL, null=True, db_column='Evento')
-    servicoId = models.ForeignKey('Recurso.Serviço', models.SET_NULL, null=True, db_column='Servico')
+    eventoId = models.ForeignKey('Evento', models.SET_NULL, verbose_name='Evento', null=True, db_column='Evento')
+    servicoId = models.ForeignKey('Recurso.Serviço', models.SET_NULL, verbose_name='serviço', null=True, db_column='Servico')
 
 
 class CertificadoDeParticipação(models.Model):
@@ -72,7 +67,7 @@ class PedidoDeRecurso(models.Model):
     hora_inicial = models.TimeField(db_column='Hora inicial', blank=True, null=True)      
     dia_final = models.DateField(db_column='Dia final', blank=True, null=True)      
     hora_final = models.TimeField(db_column='Hora final', blank=True, null=True)      
-    capacidade = models.IntegerField(db_column='Capacidade', blank=True, null=True)   
+    capacidade = models.IntegerField(db_column='Capacidade', blank=True, null=True, default=None)   
     estado = models.CharField(db_column='Estado', max_length=255, blank=True, default="Não submetido" , null=True)
 
     class Meta:

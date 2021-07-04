@@ -24,11 +24,14 @@
 
 </head>
 
-<br><br><br>
+<br>
+
+<center><h1>{{Evento.nome}}</h1></center>
+
+<br>
 
 <table class="table">
     <tr>
-      <th>Evento</th>
       <th>Tipo de recurso</th>
       <th>Quantidade</th>
       <th>Dia inicial</th>
@@ -41,7 +44,6 @@
     </tr>
     {% for l in Logistica %}
     <tr>
-      <td>{{l.eventoid.nome}}</td>
       <td>{{l.tipo_de_recursoid.nome}}</td>
       <td>{{l.quantidade}}</td>
       <td>{{l.dia_inicial}}</td>
@@ -52,7 +54,12 @@
       <td>{{l.estado}}</td> 
       <td> <a href="{% url 'Evento:cancelar_logistica' l.id %}">Cancelar Logistica</a><br>
            <a href="{% url 'Evento:editar_logistica' l.id %}">Editar Logistica</a><br>
-           <a href="{% url 'Evento:submeter_logistica' l.id %}">Submeter Logistica</a><br>
+           {% if l.estado == "Não submetido" %}
+            <a href="{% url 'Evento:submeter_logistica' l.id %}">Submeter Logistica</a><br>
+           {% endif %}
+           {% if l.estado == "Submetido" %}
+            <a href="{% url 'Evento:validar_logistica' l.id %}">Validar Logistica</a><br>
+           {% endif %}
       </td>    
     </tr>
     {% endfor %}

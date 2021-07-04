@@ -48,13 +48,8 @@ def alterar_salas(request, alterarid):
     s_form = salas_form(request.POST or None, instance=sala_change)
     r_form = recursos_form(request.POST or None, instance=recurso_change)
     if s_form.is_valid() and r_form.is_valid():
-        if Recurso.objects.filter(nome = r_form.data['nome']).exists():
-            errorState = True
-            return render(request, "alterar_sala.html", {'sala_change': sala_change, 'recurso_change': recurso_change, 
-                                                        's_form':s_form, 'r_form':r_form, 'error':error, 'errorState':errorState})
-        else:
-            r_form.save()
-            s_form.save()
+        r_form.save()
+        s_form.save()
         return redirect('Recurso:consultar_salas')
     return render(request, "alterar_sala.html", {'sala_change': sala_change, 'recurso_change': recurso_change, 's_form':s_form, 'r_form':r_form})
 
@@ -100,12 +95,7 @@ def alterar_serviços(request, alterarid):
     recurso_change = Recurso.objects.get(pk = alterarid)
     r_form = recursos_form(request.POST or None, instance=recurso_change)
     if r_form.is_valid():
-        if Recurso.objects.filter(nome = r_form.data['nome']).exists():
-            errorState = True
-            return render(request, "alterar_serviços.html", {'r_form':r_form, 'recurso_change':recurso_change, 
-                                                             'error':error, 'errorState':errorState})
-        else:
-            r_form.save()
+        r_form.save()
         return redirect('Recurso:consultar_serviços')
     return render(request, "alterar_serviços.html", {'recurso_change': recurso_change, 'r_form':r_form})
 
@@ -151,11 +141,6 @@ def alterar_equipamentos(request, alterarid):
     recurso_change = Recurso.objects.get(pk = alterarid)
     r_form = recursos_form(request.POST or None, instance=recurso_change)
     if r_form.is_valid():
-        if Recurso.objects.filter(nome = r_form.data['nome']).exists():
-            errorState = True
-            return render(request, "alterar_equipamentos.html", {'r_form':r_form, 'recurso_change': recurso_change, 
-                                                                 'error':error, 'errorState':errorState})
-        else:
-            r_form.save()
+        r_form.save()
         return redirect('Recurso:consultar_equipamentos')
     return render(request, "alterar_equipamentos.html", {'recurso_change': recurso_change, 'r_form':r_form})

@@ -1,32 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+{% block title %}- Adicionar Serviço {% endblock title %}
 
-<body>
+{% block content %}
+{% load static %}
+<div class="center">
   <form action="" method="POST">
-    <center>
-        <h1>Adicione um Serviço</h1>
-        {% csrf_token %}
+      <h1>Adicione um serviço</h1>
+      {% csrf_token %}
 
-        {% if errorState == True %}
-          {{ error }}
-        {% endif %}
+      {% if errorState == True %}
+        {{ error }}
+      {% endif %}
 
-        {{ r_form.as_p }}
+      <div class="fieldWrapper" >
+        <label for="{{ form.nome.id_nome }}">Nome:</label>
+        <br>
+        {{ r_form.nome }}
+    </div>
+    <div class="fieldWrapper">
+        <label for="{{ r_form.estado.id_estado }}">Estado:</label>
+        <br>
+        {{ r_form.estado }}
+    </div>
+    <br>
+      <input type="submit" value="submit" class="btn btn-primary"></input>
 
-        <input type="submit" value="submit" class="btn btn-primary"></input>
-    </center>
-  </form>
+      <a href="{% url 'Recurso:consultar_serviços' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+</form>
+</div>
 
-<a href="{% url 'Recurso:consultar_serviços' %}">Consulte os serviços</a>
-
-</body>
-
-</html>
+{% endblock content %}
