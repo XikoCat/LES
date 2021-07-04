@@ -7,12 +7,7 @@
 <div class="center">
   <h1>Consultar Salas</h1>
 </div>
-  <br>
-  <a href="{% url 'Recurso:consultar_serviços' %}">Consulte os serviços</a>
-  <br>
-  <a href="{% url 'Recurso:consultar_equipamentos' %}">Consulte os equipamentos</a>
-  <br>
-  <br>
+  <br><br>
   <div class="dropdown container-fluid">
     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
       Filtrar Salas
@@ -24,6 +19,9 @@
       {% endfor %}
     </div>
   </div>
+  <a href="{% url 'Recurso:adicionar_salas_view' %}">
+    <button type="button" class="btn btn-primary">Adicione uma sala</button>
+  </a>
   <br><br>
   <table class="table" style="width:100%">
     <tr>
@@ -57,6 +55,4 @@
     </tr>
     {% endfor %}
   </table>
-
-  <a href="{% url 'Recurso:adicionar_salas_view' %}">Adicione uma sala</a>
 {% endblock content %}

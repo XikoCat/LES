@@ -1,28 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+{% block title %}- Atribuir Serviço {% endblock title %}
 
-<body>
-  <form action="" method="POST">
-    <center>
+{% block content %}
+{% load static %}
+<div class="center">
+    <form action="" method="POST">
         <h1>Atribua serviços ao evento</h1>
+        <br><br>
         {% csrf_token %}
 
         {{ form.as_p }}
 
+        <br>
         <input type="submit" value="submit" class="btn btn-primary"></input>
-    </center>
+
+        <a href="{% url 'Evento:consultar_eventos_all' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
   </form>
+</div>
 
-<a href="{% url 'Evento:consultar_eventos_all' %}">Consulte os eventos</a>
-
-</body>
-
-</html>
+{% endblock content %}

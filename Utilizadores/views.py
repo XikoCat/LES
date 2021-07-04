@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, response
 from .models import *
 from django.contrib import messages
 from .form import *
+from django.contrib.auth import login, logout, authenticate
 
 
 
@@ -23,9 +24,10 @@ def register(request):
         elif(Utilizador.objects.filter(email = form.data['email'])):
                 error_message = 'This email already exists'
         elif form.is_valid():
-            
                 user = form.save()
-                #login(request, user)
+                participante = Participante(utilizadorid = user).save()
+                proponente = Proponente(utilizadorid = user).save()
+                login(request, user)
                 return redirect("/")
         return render(
             request,

@@ -7,7 +7,7 @@ from .models import *
 class evento_form(ModelForm):
 	class Meta:
 		model = Evento
-		fields = ('tipo_de_eventoid', 'nome', 'descrição', 'data', 'hora', 'duração', 'valor', 'evento_pagoid')
+		fields = ('tipo_de_eventoid', 'nome', 'descrição', 'data', 'hora', 'duração', 'valor')
 
 		labels = {
             'tipo_de_eventoid': ('Tipo de Evento'),
@@ -21,7 +21,6 @@ class evento_form(ModelForm):
 			'hora' : forms.TimeInput(attrs={'class' : 'form-control'}),
 			'duração' : forms.NumberInput(attrs={'class' : 'form-control'}),
 			'valor' : forms.NumberInput(attrs={'class' : 'form-control'}),
-			'evento_pagoid' : forms.NumberInput(attrs={'class' : 'form-control'}),
 		}
 
 #Add logistic
@@ -53,12 +52,25 @@ class atribuir_sala_form(ModelForm):
 		model = EventoLocais
 		fields = ('localId', )
 
+		widgets = {
+			'localId' : forms.Select(attrs={'class' : 'form-control'}),
+		}
+
+
 class atribuir_equipamento_form(ModelForm):
 	class Meta:
 		model = EventoEquipamentos
 		fields = ('equipamentoId', )
 
+		widgets = {
+			'equipamentoId' : forms.Select(attrs={'class' : 'form-control'}),
+		}
+
 class atribuir_serviço_form(ModelForm):
 	class Meta:
 		model = EventoServicos
 		fields = ('servicoId', )
+
+		widgets = {
+			'servicoId' : forms.Select(attrs={'class' : 'form-control'}),
+		}

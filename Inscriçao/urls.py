@@ -33,4 +33,11 @@ urlpatterns = [
         views.consultar_inscricoes_all,
         name="consultar_inscricoes_all",
     ),
+
+    # Criar Inscrição
+    path(
+        "criar_inscricao/<evento_id>",
+        views.criar_inscricao,
+        name="criar_inscricao",
+    ),
 ]

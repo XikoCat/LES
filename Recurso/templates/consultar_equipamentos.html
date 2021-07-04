@@ -7,12 +7,7 @@
 <div class="center">
   <h1>Consultar Equipamentos</h1>
 </div>
-  <br>
-  <a href="{% url 'Recurso:consultar_salas' %}">Consulte os salas</a>
-  <br>
-  <a href="{% url 'Recurso:consultar_serviços' %}">Consulte os serviços</a>
-  <br>
-  <br>
+  <br><br>
   <div class="dropdown container-fluid">
   <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
     Filtrar Equipamentos
@@ -24,6 +19,9 @@
     {% endfor %}
   </div>
 </div>
+<a href="{% url 'Recurso:adicionar_equipamentos_view' %}">
+  <button type="button" class="btn btn-primary">Adicione um equipamento</button>
+</a>
 
 <br><br>
   <table class="table" style="width:100%">
@@ -55,7 +53,5 @@
   </table>
 
   <br>
-
-  <a href="{% url 'Recurso:adicionar_equipamentos_view' %}">Adicione um equipamento</a>
   
 {% endblock content %}
