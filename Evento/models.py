@@ -12,8 +12,9 @@ class Evento(models.Model):
     hora = models.TimeField(db_column='Hora', blank=True, null=True)   
     duração = models.FloatField(db_column='Duração', blank=True, null=True)
 
-    valor = models.FloatField(db_column='Valor')   
-    evento_pagoid = models.IntegerField(db_column='Evento pagoID', default=None)      
+    valor = models.FloatField(db_column='Valor')
+    evento_pagoid = models.IntegerField(models.SET_NULL, default=None, null=True, db_column='Evento pagoID')
+
 
     def __str__(self):
         return self.nome

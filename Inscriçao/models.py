@@ -5,7 +5,6 @@ class Inscrição(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True) 
     eventoid = models.ForeignKey('Evento.Evento', models.DO_NOTHING, db_column='EventoID') 
     participanteutilizadorid = models.ForeignKey('Utilizadores.Participante', models.DO_NOTHING, db_column='ParticipanteUtilizadorID') 
-    #utilizador_eventoid = models.IntegerField(db_column='Utilizador_EventoID') 
     checkin = models.BooleanField(db_column='CheckIn') 
     valido = models.BooleanField(db_column='Valido') 
 

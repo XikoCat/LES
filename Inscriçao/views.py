@@ -46,18 +46,20 @@ def criar_inscricao(request, evento_id):
         pergunta_str = p.perguntaid.pergunta
         pergunta_must = p.perguntaid.obrigatório
         pergunta_tipo = p.perguntaid.tipo_de_perguntaid.id
+        pergunta_max_choices = None
+        pergunta_length = None
 
-        #se pergunta tipo == 1
-        pergunta_max_choices = p.perguntaid.numero_maximo_de_escolhas
+        if pergunta_tipo == 1:
+            pergunta_max_choices = p.perguntaid.numero_maximo_de_escolhas
 
-        #se pergunta tipo == 2
-        pergunta_length = 16
+        if pergunta_tipo == 2:
+            pergunta_length = 16
 
-        #se pergunta tipo == 3
-        pergunta_length = 128
+        if pergunta_tipo == 3:
+            pergunta_length = 128
 
-        #se pergunta tipo == 4
-        pergunta_length = 512
+        if pergunta_tipo == 4:
+            pergunta_length = 512
 
         template = {
             "str": pergunta_str,
