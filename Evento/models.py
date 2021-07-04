@@ -10,10 +10,10 @@ class Evento(models.Model):
     descrição = models.CharField(db_column='Descrição', max_length=255, blank=True, null=True)   
     data = models.DateField(db_column='Data', blank=True, null=True)   
     hora = models.TimeField(db_column='Hora', blank=True, null=True)   
-    duração = models.IntegerField(db_column='Duração', blank=True, null=True)
+    duração = models.FloatField(db_column='Duração', blank=True, null=True)
 
     valor = models.FloatField(db_column='Valor')   
-    evento_pagoid = models.IntegerField(db_column='Evento pagoID')      
+    evento_pagoid = models.IntegerField(db_column='Evento pagoID', default=None)      
 
     def __str__(self):
         return self.nome
