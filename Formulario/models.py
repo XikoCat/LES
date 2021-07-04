@@ -6,6 +6,7 @@ class Formulário(models.Model):
     tipo_de_formulárioid = models.ForeignKey('TipoDeFormulário', models.SET_NULL, default=None, null=True, db_column='Tipo de FormulárioID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)
     publico = models.BooleanField(db_column='Publico')
+    evento_id = models.ForeignKey('Evento.Evento', models.SET_NULL, default=None, null=True, blank=True, db_column='Evento')
 
     class Meta:
         managed = True

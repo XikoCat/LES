@@ -22,12 +22,13 @@ urlpatterns = [
     # DEFAULT PATH
     path("", views.consultar_inscricoes_all, name="consultar_inscricoes"),
     
-    # Info Inscrições
+    # Abrir Inscrições em Evento
     path(
-        "info_inscricoes/<evento_id>",
-        views.info_inscricoes,
-        name="info_inscricoes",
+        "abrir_inscricoes/<evento_id>",
+        views.abrir_inscricoes,
+        name="abrir_inscricoes",
     ),
+
     
     # Consultar inscrições
     path(

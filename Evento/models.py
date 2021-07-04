@@ -1,13 +1,10 @@
 from django.db import models
 
- 
 
 class Evento(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)   
     tipo_de_eventoid = models.ForeignKey('TipoDeEvento', models.SET_NULL, default=None, null=True, db_column='Tipo de eventoID')      
     proponenteutilizadorid = models.ForeignKey('Utilizadores.Proponente', models.SET_NULL, default=None, null=True, db_column='ProponenteUtilizadorID')   
-    formulárioinscriçãoid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, db_column='FormulárioInscriçãoID')   
-    formuláriofeedbackid = models.ForeignKey('Formulario.Formulário', models.SET_NULL, default=None, null=True, related_name = 'feedback', db_column='FormulárioFeedbackID')   
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)   
     estado = models.CharField(db_column='Estado', max_length=255, blank=True, default="Não submetido" , null=True)   
     descrição = models.CharField(db_column='Descrição', max_length=255, blank=True, null=True)   
