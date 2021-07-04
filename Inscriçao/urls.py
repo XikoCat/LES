@@ -21,15 +21,7 @@ app_name = "Inscriçao"
 urlpatterns = [
     # DEFAULT PATH
     path("", views.consultar_inscricoes_all, name="consultar_inscricoes"),
-    
-    # Abrir Inscrições em Evento
-    path(
-        "abrir_inscricoes/<evento_id>",
-        views.abrir_inscricoes,
-        name="abrir_inscricoes",
-    ),
-
-    
+        
     # Consultar inscrições
     path(
         "consultar_inscricoes/<evento_id>",
