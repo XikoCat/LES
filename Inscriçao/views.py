@@ -32,17 +32,12 @@ def info_inscricoes(request, evento_id):
 
     evento = get_object_or_404(Evento, id=evento_id)
     
-    if str(evento).find("Not Found") != -1:
-        not_found = True
-	
-    print(not_found)
     # Obter formulário de Inscrição para o evento 'evento_id'
 
     return render(
         request,
         "info_inscricoes.html",
         {
-			"not_found": not_found,
             "evento": evento,
         },
     )
