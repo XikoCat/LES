@@ -1,6 +1,7 @@
 from Formulario.models import Formulário
 from django.db.models.deletion import SET_NULL
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Inscrição, Pagamento
 from Evento.models import Evento
@@ -27,29 +28,4 @@ def consultar_inscricoes(request, evento_id):
 
 # Visualizar todas as inscrições en todos os eventos
 def consultar_inscricoes_all(request):
-    return redirect("/Inscricao/consultar_inscricoes/all")
-
-
-# Visualizar formulario de inscrição
-def info_inscricoes(request, evento_id):
-
-    evento = get_object_or_404(Evento, id=evento_id)
-    
-    # Obter formulário de Inscrição para o evento 'evento_id'
-    form_inscricao = evento.formulárioinscriçãoid
-
-    return render(
-        request,
-        "info_inscricoes.html",
-        {
-            "evento": evento,
-            "form_inscricao": form_inscricao,
-        },
-    )
-
-def abrir_inscricoes(request, evento_id):
-    evento = get_object_or_404(Evento, id=evento_id)
-    inscricao = evento.formulárioinscriçãoid
-    if inscricao is set:
-        inscricao.publico = True
-    return HttpResponseRedirect('/')
+    return redirect("/Inscricao/consultar_inscricoes/all")  

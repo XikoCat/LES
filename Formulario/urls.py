@@ -26,9 +26,9 @@ urlpatterns = [
     path("editar_pergunta/<pergunta_id>/<formulario_id>", views.editar_pergunta, name="editar_pergunta"),
     path("editar_opcao_resposta/<pergunta_id>/<resposta_id>/<formulario_id>", views.editar_opcao_resposta, name="editar_opcao_resposta"),
     
-    path("consultar_formularios", views.consultar_formularios, name="consultar_formularios"),
+    path("consultar_formularios/<evento_id>", views.consultar_formularios, name="consultar_formularios"),
     
-    path("add_formulario", views.add_formulario, name="add_formulario"),
+    path("add_formulario/<evento_id>", views.add_formulario, name="add_formulario"),
     path("add_pergunta_ao_formulario/<formulario_id>", views.add_pergunta_ao_formulario, name="add_pergunta_ao_formulario"),
     path("editar_formulario/<formulario_id>", views.editar_formulario, name="editar_formulario"),
     path("eliminar_formulario/<formulario_id>", views.eliminar_formulario, name="eliminar_formulario"),

@@ -12,8 +12,10 @@
 <body>
   <center>
   <div class="container-fluid">
-    <h2>Formulários</h2>
-    <h4><a class="btn" href="{% url 'Formulario:add_formulario' %}">Add Formulário</a></h4>
+    <h2>Formulários do evento {{evento.nome}}</h2>
+    <a class="btn" href="{% url 'Formulario:add_formulario' evento.id %}">Add Formulário</a>
+    <br>
+    <a class="btn" href="{% url 'Evento:consultar_eventos_all' %}">voltar</a>
     <table style="width:100%">
       <tr>
         <th>Nome</th>

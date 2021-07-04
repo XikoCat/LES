@@ -15,7 +15,7 @@
 		<div class="container-fluid">
 			<h2>Perguntas do Formulário "{{formulario.nome}}"</h2>
 			<h4><a class="btn" href="{% url 'Formulario:consultar_perguntas' 1 formulario.id %}">Adicionar perguntas</a></h4>
-			<h4><a class="btn" href="{% url 'Formulario:consultar_formularios' %}">Voltar</a></h4>
+			<h4><a class="btn" href="{% url 'Formulario:consultar_formularios' formulario.evento_id.id%}">Voltar</a></h4>
 			<table style="width:100%">
 				<tr>
 					<th>Pergunta</th>
