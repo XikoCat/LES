@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+{% block title %}- Adicionar Formulário {% endblock title %}
 
-<body>
-
-	<center>
+{% block content %}
+{% load static %}
+	<div class="center">
 
 		<h1>Editar opção de resposta</h1>
 		<br>
@@ -39,6 +32,7 @@
 				{% csrf_token %}
 				{{ form.as_p }}
 
+				<br><br>
 				<input type="submit" value="Submit" class="btn btn-success">
 				{% if state == True %}
 				<a href="{% url 'Formulario:add_pergunta_ao_formulario' formulario_id %}"><button type="button"
@@ -53,13 +47,8 @@
 				{% endif %}
 				{% endif %}
 
-				<br><br>
-
 
 			</form>
 		</div>
-	</center>
-
-</body>
-
-</html>
+	</div>
+	{% endblock content %}

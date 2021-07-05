@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+{% block title %}- Editar Logistica {% endblock title %}
 
-<body>
-  <center>
+{% block content %}
+{% load static %}
   <div class="container-fluid">
-    <h2>Formulários do evento {{evento.nome}}</h2>
-    <a class="btn" href="{% url 'Formulario:add_formulario' evento.id %}">Add Formulário</a>
+    <div class="center">
+      <h1>Formulários do evento {{evento.nome}}</h1>
+    </div>
     <br>
-    <a class="btn" href="{% url 'Evento:consultar_eventos_all' %}">voltar</a>
-    <table style="width:100%">
+    <a href="{% url 'Formulario:add_formulario' evento.id %}"><button type="button" class="btn btn-primary">Add Formulário</button></a>
+    <a href="{% url 'Evento:consultar_eventos_all' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+    <br><br>
+    <table class="table">
       <tr>
         <th>Nome</th>
         <th>Tipo de Formulário</th>
@@ -53,7 +49,6 @@
       {% endfor %}
     </table>
   </div>
-</center>
 <script>
   function clicked(e)
   {
@@ -62,6 +57,4 @@
       }
   }
   </script>
-</body>
-
-</html>
+{% endblock content %}

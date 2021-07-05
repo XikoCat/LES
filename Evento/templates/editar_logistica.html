@@ -1,31 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
+{% block title %}- Editar Logistica {% endblock title %}
 
-<body>
-	<center>
+{% block content %}
+{% load static %}
+<div class="center">
 	<h1 style="text-align: center">Editar Evento</h1>
-	<div class = "container">
+	<br><br>
 	<form action="" method=POST>
 		{% csrf_token %}
 		{{ form.as_p }}
-		
-	<input type="submit" value="Guardar" class="btn btn-secondary">
-	<a href="{% url 'Evento:visualizar_logistica' Logistica.eventoid.id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
-	<br><br>
+	
+		<br><br>
+		<input type="submit" value="Guardar" class="btn btn-secondary">
+		<a href="{% url 'Evento:visualizar_logistica' Logistica.eventoid.id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
 
 	<form>
-	</div>
-</center>
-
-
-
-</body>
+</div>
+{% endblock content %}

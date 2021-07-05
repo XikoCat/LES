@@ -21,12 +21,17 @@ app_name = "Inscriçao"
 urlpatterns = [
     # DEFAULT PATH
     path("", views.consultar_inscricoes_all, name="consultar_inscricoes"),
-        
+       
     # Consultar inscrições
     path(
-        "consultar_inscricoes/<evento_id>",
-        views.consultar_inscricoes,
-        name="consultar_inscricoes",
+        "consultar_inscricoes/<user_id>",
+        views.consultar_inscricoes_user,
+        name="consultar_inscricoes_user",
+    ),
+    path(
+        "consultar_inscricoes_evento/<evento_id>",
+        views.consultar_inscricoes_evento,
+        name="consultar_inscricoes_evento",
     ),
     path(
         "consultar_inscricoes",
@@ -40,4 +45,12 @@ urlpatterns = [
         views.criar_inscricao,
         name="criar_inscricao",
     ),
+
+    # Remover Inscrição
+    path(
+        "remover_inscricao/<inscricao_id>",
+        views.remover_inscricao,
+        name="remover_inscricao",
+    ),
+
 ]

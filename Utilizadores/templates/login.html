@@ -1,12 +1,12 @@
 {% extends 'app.html' %}
 
-{% block title %}- Login {% endblock title %}
+{% block title %}- Registar {% endblock title %}
 
 {% block content %}
 {% load static %}
 
 <div class="center">
-    <h1>Login utilizador</h1>
+    <h1>Registar novo utilizador</h1>
     <br><br>
     {% if error_message %}
         <p>{{error_message}}</p>
@@ -19,7 +19,7 @@
                 <label for="{{ form.username.id_username }}">Username:</label>
                 <br>
                 {{ form.username }}
-            </div> 
+            </div>
             <div class="fieldWrapper">
                 <label for="{{ form.password.id_password }}">Password:</label>
                 <br>
@@ -27,12 +27,12 @@
             </div>
             <br>
 
-            <button type="submit" class="btn btn-success">Register</button>
+            <button type="submit" class="btn btn-success">Login</button>
         
             <a href="{% url 'home' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
             <br><br>
         </div>
-        Se já tiver uma conta, pode fazer <a href=""><strong>login</strong></a>
+        Se ainda não tiver uma conta, pode <a href=""><strong>resgistar-se</strong></a>
     </form>
 </div>
 {% endblock content %}

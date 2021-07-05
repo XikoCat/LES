@@ -13,8 +13,30 @@
 
   <h2>{{formulario.nome}}</h2>
 
-  {{perguntas}}
-
+  {% if message != None %}
+  {{message}}
+  {% else %}
+  <form action="" method=POST>
+    {% csrf_token %}
+    {% for p in perguntas %}
+    <br>
+    <label for="{{p.str}}">{{p.str}}</label>
+    <br>
+    {% if p.type == 1 %}
+    {% for ans in p.answer_options %}
+    <input type="checkbox" id="{{p.str}}" name="{{p.str}}" value="{{ans}}">
+    <label for="{{ans}}">{{ans}}</label>
+    {% endfor %}
+    {% else %}
+    <input type="text" id="{{p.str}}" name="{{p.str}}" maxlength="{{p.answer_length}}" size="{{p.answer_length}}"{% if p.required %} required{% endif %}>
+    {% endif %}
+    <br>
+    {% endfor %}
+    <input type="submit" value="Submeter" class="btn btn-success">
+    <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user_id %}" role="button">Voltar</a>
+  </form>
+  
+  {% endif %}
 </body>
 
 </html>

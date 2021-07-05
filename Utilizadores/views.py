@@ -4,6 +4,8 @@ from .models import *
 from django.contrib import messages
 from .form import *
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.hashers import make_password, check_password
+
 
 
 
@@ -19,16 +21,19 @@ def consultar_utilizadores(request):
 def register(request):
     if request.method == "POST":
         form = user_form(request.POST)
+        error_message = None
         if(Utilizador.objects.filter(username = form.data['username'])):
-                error_message = 'This username already exists'
+            error_message = 'Este username já existe'
         elif(Utilizador.objects.filter(email = form.data['email'])):
-                error_message = 'This email already exists'
+            error_message = 'Este email já existe'
         elif form.is_valid():
-                user = form.save()
-                participante = Participante(utilizadorid = user).save()
-                proponente = Proponente(utilizadorid = user).save()
-                login(request, user)
-                return redirect("/")
+            user = form.save()
+            user.password=make_password(user.password)
+            user.save()
+            Participante(utilizadorid = user).save()
+            Proponente(utilizadorid = user).save()
+            login(request, user)
+            return redirect("/")
         return render(
             request,
             "register.html",
@@ -46,15 +51,21 @@ def register(request):
         },
     )
 
-def login(request):
+def login_action(request):
+
     if request.method == "POST":
         form = login_form(request.POST)
-        if(Utilizador.objects.filter(username = form.data['username'])):
-                error_message = 'This username already exists'
-        elif(Utilizador.objects.filter(email = form.data['email'])):
-                error_message = 'This email already exists'
-        elif form.is_valid():
-                return redirect("/")
+        utilizador = Utilizador.objects.filter(username = form.data['username'])
+        error_message = None
+        if(not utilizador):
+            error_message = 'Este username não existe'
+        elif not check_password(form.data['password'], utilizador[0].password):
+            error_message = 'A password inserida é incorreta'
+        else:
+            user = authenticate(username=form.data['username'], password= form.data['password'])
+            if user is not None:
+                login(request, user)
+            return redirect("/")
         return render(
             request,
             "login.html",
@@ -71,3 +82,7 @@ def login(request):
             "form": form
         },
     )
+
+def logout_action(request):
+    logout(request)
+    return redirect("/")

@@ -16,6 +16,12 @@ class pergunta_form(ModelForm):
             'tipo_de_perguntaid': ('Tipo de pergunta')
         }
 
+        widgets = {
+			'pergunta' : forms.TextInput(attrs={'class' : 'form-control'}),
+            'tipo_de_perguntaid' : forms.Select(attrs={'class' : 'form-control'}),
+		}
+
+
 class opcao_resposta_form(ModelForm):
     class Meta:
         model = OpçãoDeResposta
@@ -26,6 +32,10 @@ class opcao_resposta_form(ModelForm):
         labels = {
             'opção': ('Resposta'),
         }
+
+        widgets = {
+			'opção' : forms.TextInput(attrs={'class' : 'form-control'}),
+		}
         
 class novo_formulario_form(ModelForm):
 
@@ -41,3 +51,9 @@ class novo_formulario_form(ModelForm):
             'tipo_de_formulárioid': ('Tipo de formulário'),
             'tipo_de_eventoid': ('Tipo de evento'),
         }
+
+        widgets = {
+			'nome' : forms.TextInput(attrs={'class' : 'form-control'}),
+            'tipo_de_formulárioid' : forms.Select(attrs={'class' : 'form-control'}),
+            'tipo_de_eventoid' : forms.Select(attrs={'class' : 'form-control'}),
+		}

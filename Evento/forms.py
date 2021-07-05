@@ -34,6 +34,7 @@ class logistica_form(ModelForm):
             'eventoid': ('Evento'),
             'tipo_de_recursoid': ('Tipo de Recurso'),
             'quantidade': ('Quantidade desejada'),
+            'capacidade': ('Capacidade (caso seja uma sala)')
         }
 
 		widgets = {

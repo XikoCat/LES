@@ -2,11 +2,11 @@ from django.db import models
 
 
 class Inscrição(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True) 
-    eventoid = models.ForeignKey('Evento.Evento', models.DO_NOTHING, db_column='EventoID') 
-    participanteutilizadorid = models.ForeignKey('Utilizadores.Participante', models.DO_NOTHING, db_column='ParticipanteUtilizadorID') 
-    checkin = models.BooleanField(db_column='CheckIn') 
-    valido = models.BooleanField(db_column='Valido') 
+    id = models.AutoField(db_column='ID', primary_key=True)
+    eventoid = models.ForeignKey('Evento.Evento', models.DO_NOTHING, db_column='EventoID')
+    participanteutilizadorid = models.ForeignKey('Utilizadores.Participante', models.DO_NOTHING, db_column='ParticipanteUtilizadorID')
+    checkin = models.BooleanField(db_column='CheckIn')
+    valido = models.BooleanField(db_column='Valido')
 
     class Meta:
         managed = True

@@ -277,13 +277,14 @@ def remover_pergunta_do_formulario(request, pergunta_id, formulario_id):
 def editar_pergunta_do_formulario(request, pergunta_id, formulario_id):
     submitted = False
     pergunta_edit = Pergunta.objects.get(pk=pergunta_id)
+    formulario =get_object_or_404(Formulário, id=formulario_id)
     p_form = pergunta_form(request.POST or None, instance=pergunta_edit)
     state = True
     if request.method == "POST":
         if p_form.is_valid():
             if pergunta_edit.temporario == False:
                 obr = request.POST.get('obrigatório', pergunta_edit.obrigatório)      
-                formulario_pergunta = FormulárioPergunta.objects.get(perguntaid=pergunta_id)
+                formulario_pergunta = FormulárioPergunta.objects.all().filter( perguntaid = pergunta_edit, formulárioid = formulario)
                 formulario_pergunta.delete()
                 new_pergunta = Pergunta(
                     pergunta = p_form.data["pergunta"],

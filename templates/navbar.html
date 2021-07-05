@@ -16,22 +16,8 @@
   <div class="navbar-menu">
     <div class="navbar-start">
       {% if tipo_de_utilizador == 'Administrador'%}
-        <a href="{% url 'Utilizadores:consultar_utilizadores' %}" class="navbar-item">
-          Utilizadores
+        <a href="" class="navbar-item">
         </a>
-        <a href="{% url 'Evento:consultar_eventos_all' %}" class="navbar-item">
-          Eventos
-        </a>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            Recurso
-          </a>
-          <div class="navbar-dropdown">
-            <a href="{% url 'Recurso:consultar_serviços' %}" class="navbar-item">Serviços</a>
-            <a href="{% url 'Recurso:consultar_salas' %}" class="navbar-item">Salas</a>
-            <a href="{% url 'Recurso:consultar_equipamentos' %}" class="navbar-item">Equipamentos</a>
-          </div>
-        </div>
       {% elif tipo_de_utilizador == 'Participante'%}
           <a href="" class="navbar-item">
           </a>
@@ -49,7 +35,6 @@
           <div class="navbar-dropdown">
             <a href="{% url 'Evento:consultar_eventos_all' %}" class="navbar-item">Consultar Eventos</a>
             <a href="{% url 'Evento:criar_evento' %}" class="navbar-item">Criar Evento</a>
-            <a href="{% url 'Evento:criar_logistica' %}" class="navbar-item">Criar Logística</a>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
@@ -62,19 +47,31 @@
             <a href="{% url 'Recurso:consultar_equipamentos' %}" class="navbar-item">Equipamentos</a>
           </div>
         </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Formulário
+          </a>
+          <div class="navbar-dropdown">
+            <a href="" class="navbar-item">Formulários</a>
+            <a href="{% url 'Formulario:consultar_perguntas' 0 None %}" class="navbar-item">Perguntas</a>
+          </div>
+        </div>
       {% endif %}
     </div>
     <div class="navbar-end">
       <div class="navbar-item">
-        {% if tipo_de_utilizador == 'Administrador' %}
+        {% if user.is_authenticated %}
           <a href="" class="navbar-item">
-            Perfil {{tipo_de_utilizador}}
+            Perfil {{user.username}}
+          </a>
+          <a href="{% url 'Utilizadores:logout' %}" class="navbar-item">
+            Logout
           </a>
         {% elif tipo_de_utilizador == '' %}
           <a href="{% url 'Utilizadores:register' %}" class="navbar-item">
             Criar uma conta
           </a>
-          <a href="" class="navbar-item">
+          <a href="{% url 'Utilizadores:login' %}" class="navbar-item">
             Login
           </a>
         {% endif %}

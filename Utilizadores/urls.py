@@ -20,6 +20,7 @@ app_name = "Utilizadores"
 urlpatterns = [
     path('consultar_utilizadores', views.consultar_utilizadores,name='consultar_utilizadores'),
     path('register', views.register,name='register'),
-    path('login', views.register,name='login')
+    path('login', views.login_action,name='login'),
+    path('logout', views.logout_action,name='logout'),
 ]
 

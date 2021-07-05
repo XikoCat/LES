@@ -16,6 +16,13 @@ class user_form(ModelForm):
             'password',
         )
 
+        def save(self, commit=True):
+            user = super(user_form, self).save(commit=False)
+
+            if commit:
+                user.save()
+            return user
+
 class login_form(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta:

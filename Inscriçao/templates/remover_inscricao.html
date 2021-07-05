@@ -10,28 +10,15 @@
 </head>
 
 <body>
-
-  <h2>Inscrições de {{evento.nome}}</h2>
-
-  {% if form_inscricao == None %}
-    Este evento não tem nenhum formulário de Inscrições.
-    <br>
-    <a href="{% url 'Formulario:add_formulario' %}">Criar formulário</a>
-
-
+  {% if message != None %}
+  {{message}}
   {% else %}
-
-    <br>
-    Ver formulário como participante.
-    <br>
-    Editar formulario
-    <br>
-    Remover formulario
-    <br>
-    publicar formulário
-    <br>
-    (se estiver publico) esconder formulário
-
+  Tem a certeza que pretende remover a inscrição de {{inscricao.participanteutilizadorid}} para o evento {{inscricao.eventoid}}?
+  <form method=POST>
+    {% csrf_token %}
+    <input type="submit" value="Remover" class="btn btn-success">
+    <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user_id %}" role="button">Voltar</a>
+  </form>
   {% endif %}
 </body>
 

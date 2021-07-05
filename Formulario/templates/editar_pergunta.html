@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+{% block title %}- Adicionar Formulário {% endblock title %}
 
-<body>
-
-  <center>
+{% block content %}
+{% load static %}
+	<div class="center">
 		<h1>Editar uma pergunta</h1>
 		<br>
 		{% if submitted %}
+			<br>
 			A pergunta foi editada com sucesso!
 			<br><br>
 			{% if state == True %}
@@ -29,11 +23,14 @@
 			{% endif %}
 		{% else %}
 
+			<br>
 			<div class = "container">
 			<form action="" method=POST>
 				{% csrf_token %}
 				{{ p_form.as_p }}
 			
+				<br>
+
 				<input type="submit" value="Submit" class="btn btn-success">
 
 				{% if state == True %}
@@ -50,8 +47,5 @@
 			</form>
 			</div>
 		{% endif %}
-	</center>
-
-</body>
-
-</html>
+	</div>
+	{% endblock content %}

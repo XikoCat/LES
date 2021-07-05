@@ -1,24 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+{% block title %}- Adicionar Formulário {% endblock title %}
 
-<body>
-  <center>
+{% block content %}
+{% load static %}
   <div class="container-fluid">
-    <h2>Perguntas</h2>
-      <h4><a class="btn" href="{% url 'Formulario:add_pergunta' formulario_id %}">Criar nova pergunta</a></h4>
+    <div class="center">
+      <h1>Perguntas</h1>
+    </div>
+    <br>  
+      <a href="{% url 'Formulario:add_pergunta' formulario_id %}"><button type="button" class="btn btn-primary">Criar nova pergunta</button></a>
       {% if id == '1' %}
-      <h4><a class="btn" href="{% url 'Formulario:add_pergunta_ao_formulario' formulario_id %}">Voltar</a></h4>
+      <a href="{% url 'Formulario:add_pergunta_ao_formulario' formulario_id %}"><button type="button" class="btn btn-primary">Voltar</button></a>
       {% endif %}
-
-    <table style="width:100%">
+    <br><br>
+    <table class = "table">
       <tr>
         <th>Pergunta</th>
         <th>Tipo de Pergunta</th>
@@ -61,7 +57,4 @@
       {% endfor %}
     </table>
   </div>
-</center>
-</body>
-
-</html>
+	{% endblock content %}
