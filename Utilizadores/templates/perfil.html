@@ -1,0 +1,31 @@
+{% extends 'app.html' %}
+
+{% block title %}- Perfil {% endblock title %}
+
+{% block content %}
+{% load static %}
+
+<div class="center">
+    <div class="card" style="width: 500px; text-align: center;">
+      <div class="card-body">
+        <h1 class="card-title">Perfil do utilizador {{user.username}}</h1>
+        <br>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Nome: {{user.nome}}</li>
+        <li class="list-group-item">Email: {{user.email}}</li>
+        <li class="list-group-item">Telefone: {{user.telefone}}</li>
+        <li class="list-group-item">Tipo de perfil: {{user.TipoUtilizador}}</li>
+      </ul>
+      <div class="card-body">
+        <a href="{% url 'home' %}" class="card-link"><button type="button" class="btn btn-primary">Voltar</button></a>
+        {% if user.TipoUtilizador == 'Participante' %}
+            <a href="{% url 'Utilizadores:change_perfil' %}" class="card-link"><button type="button" class="btn btn-primary">Tornar-se Proponente</button></a>
+        {% endif %}
+        {% if user.TipoUtilizador == 'Proponente' %}
+            <a href="{% url 'Utilizadores:change_perfil' %}" class="card-link"><button type="button" class="btn btn-primary">Tornar-se Participante</button></a>
+        {% endif %}
+      </div>
+    </div>
+</div>
+{% endblock content %}

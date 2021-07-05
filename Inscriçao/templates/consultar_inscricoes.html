@@ -25,6 +25,7 @@
         {% endif %}
         <th>Divida</th>
         <th>CheckIn</th>
+        <th>CheckIn ID</th>
         <th>Válido</th>
         <th>Opçoes</th>
       </tr>
@@ -44,14 +45,12 @@
           {% endfor %}
         </td>
         <td>{{i.checkin}}</td>
+        <td>{{i.id}}</td>
         <td>{% if i.valido == 0 %}NÃO{% else %}SIM{% endif %}</td>
         <td>
           <a href="{% url 'Inscriçao:consultar' i.id %}">Ver</a>
           <a href="{% url 'Inscriçao:editar' i.id %}">Editar</a>
           <a href="{% url 'Inscriçao:remover' i.id %}">Cancelar</a>
-          {% if i.checkin == False %} 
-          <a href="{% url 'Inscriçao:checkin' i.id %}">Check-in</a>
-          {% endif %} 
         </td>
       </tr>
       {% endfor %}

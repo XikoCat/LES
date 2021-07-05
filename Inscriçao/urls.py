@@ -71,7 +71,7 @@ urlpatterns = [
     ),
     # Checkin Inscrição
     path(
-        "checkin/<inscricao_id>",
+        "checkin",
         views.checkin,
         name="checkin",
     ),

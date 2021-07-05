@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <h2>{{formulario.nome}}</h2>
+
+  {% if message != None %}
+  {{message}}
+  {% endif %}
+  
+  <form action="" method=POST>
+    {% csrf_token %}
+    <br>
+    <label for="inscricao_id">ID da Inscrição</label>
+    <br>
+    <input type="number" id="inscricao_id" name="inscricao_id" maxlength="10" size="10" required>
+    <br>
+    <br>
+    <input type="submit" value="Submeter" class="btn btn-success">
+    <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_all' %}" role="button">Voltar</a>
+  </form>
+  
+
+</body>
+
+</html>

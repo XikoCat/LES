@@ -60,7 +60,7 @@ def consultar_inscricoes_user(request, user_id):
 
 # Visualizar todas as inscrições en todos os eventos
 def consultar_inscricoes_all(request):
-    return redirect("/Inscricao/consultar_inscricoes_evento/all")
+    return redirect("/Inscricao/consultar_evento/all")
 
 def consultar(request, inscricao_id):
     if not Inscrição.objects.filter(id=inscricao_id).exists():
@@ -140,29 +140,46 @@ def editar(request, inscricao_id):
     perguntas_list = (
         FormulárioPergunta.objects.all().filter(formulárioid=formulario).order_by("pos")
     )
-    perguntas = get_perguntas(perguntas_list, inscricao=inscricao)
 
-    return render(
-        request,
-        "inscricao.html",
-        {
-            "metodo": "editar",
-            "formulario": formulario,
-            "perguntas": perguntas,
-            "inscricao": inscricao,
-        },
-    )
+    if request.method != "POST":
+        perguntas = get_perguntas(perguntas_list, inscricao=inscricao)
 
+        return render(
+            request,
+            "inscricao.html",
+            {
+                "metodo": "editar",
+                "formulario": formulario,
+                "perguntas": perguntas,
+                "inscricao": inscricao,
+            },
+        )
+    else:
+        Resposta.objects.filter(inscriçãoid=inscricao).delete()
+        post = querydict_to_dict(request.POST)
 
-def querydict_to_dict(query_dict):
-    data = {}
-    for key in query_dict.keys():
-        v = query_dict.getlist(key)
-        if len(v) == 1:
-            v = v[0]
-        data[key] = v
-    return data
+        for p in perguntas_list:
+            pergunta = p.perguntaid
+            if pergunta.pergunta in post:
+                answer = post[pergunta.pergunta]
+                if isinstance(answer, list):
+                    for a in answer:
+                        Resposta(
+                            perguntaid=pergunta,
+                            eventoid=evento,
+                            inscriçãoid=inscricao,
+                            resposta=a,
+                        ).save()
+                else:
+                    Resposta(
+                        perguntaid=pergunta,
+                        eventoid=evento,
+                        inscriçãoid=inscricao,
+                        resposta=answer,
+                    ).save()
 
+        message = "Inscrição alterada com sucesso!!"
+        return render(request, "criar_inscricao.html", {"message": message})
 
 # Criar uma inscrição
 def criar(request, evento_id):
@@ -229,7 +246,6 @@ def criar(request, evento_id):
             pergunta = p.perguntaid
             if pergunta.pergunta in post:
                 answer = post[pergunta.pergunta]
-                print(f"{pergunta} : {answer}")
                 if isinstance(answer, list):
                     for a in answer:
                         Resposta(
@@ -287,24 +303,56 @@ def validar(request, inscricao_id):
         message = "A Inscrição foi validada com sucesso"
         return render(request, "action_inscricao.html", {"message": message})
 
-def checkin(request, inscricao_id):
-    if not Inscrição.objects.filter(id=inscricao_id).exists():
-        message = "A Inscrição que pretende fazer o check in não existe"
-        return render(request, "inscricao.html", {"message": message})
-
-    inscricao = Inscrição.objects.get(id=inscricao_id)
+def checkin(request):
     if request.method != "POST":
         return render(
             request,
-            "action_inscricao.html",
-            {"inscricao": inscricao, "action": "checkin"},
+            "checkin.html",
+            {},
         )
     else:
-        inscricao.checkin = not inscricao.checkin
+        post = querydict_to_dict(request.POST)
+
+        inscricao_id = post["inscricao_id"]
+
+        if not Inscrição.objects.filter(id=inscricao_id).exists():
+            message = "ERRO! A Inscrição que pretende fazer o check-in não existe"
+            return render(request,
+                "checkin.html",
+                {"message": message},
+            )
+        inscricao = Inscrição.objects.get(id=inscricao_id)
+
+        if inscricao.checkin == True:
+            message = "Erro! A esta inscrição já tem o check in!"
+            return render(request,
+                "checkin.html",
+                {"message": message},
+            )
+
+        inscricao.checkin = True
         inscricao.save()
 
-        message = "Check in da inscrição efetuado com sucesso"
-        return render(request, "action_inscricao.html", {"message": message})
+        message = "Sucesso!"
+        return render(request,
+            "checkin.html",
+            {"message": message},
+        )
+        
+    #
+    #inscricao = Inscrição.objects.get(id=inscricao_id)
+    #if request.method != "POST":
+    #    return render(
+    #        request,
+    #        "action_inscricao.html",
+    #        {"inscricao": inscricao, "action": "checkin"},
+    #    )
+    #else:
+    #    inscricao.checkin = not inscricao.checkin
+    #    inscricao.save()
+    #
+    #    message = "Check in da inscrição efetuado com sucesso"
+    #    return render(request, "action_inscricao.html", {"message": message})
 
 def get_perguntas(perguntas_list, inscricao = None):
     perguntas = []
@@ -356,3 +404,12 @@ def get_perguntas(perguntas_list, inscricao = None):
         }
         perguntas.append(template)
     return perguntas
+
+def querydict_to_dict(query_dict):
+    data = {}
+    for key in query_dict.keys():
+        v = query_dict.getlist(key)
+        if len(v) == 1:
+            v = v[0]
+        data[key] = v
+    return data

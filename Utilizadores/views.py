@@ -31,7 +31,6 @@ def register(request):
             user.password=make_password(user.password)
             user.save()
             Participante(utilizadorid = user).save()
-            Proponente(utilizadorid = user).save()
             login(request, user)
             return redirect("/")
         return render(
@@ -86,3 +85,21 @@ def login_action(request):
 def logout_action(request):
     logout(request)
     return redirect("/")
+
+
+def perfil(request):
+    return render(request,"perfil.html",{},)
+
+def change_perfil(request):
+
+    if(request.user.TipoUtilizador == 'Participante'):
+        request.user.TipoUtilizador = 'Proponente'
+        request.user.save()
+        proponente = Proponente.objects.filter(utilizadorid = request.user)
+        if(not proponente):
+            Proponente(utilizadorid = request.user).save()
+
+    elif(request.user.TipoUtilizador == 'Proponente'):
+        request.user.TipoUtilizador = 'Participante'
+        request.user.save()
+    return render(request,"perfil.html",{},)
