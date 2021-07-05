@@ -2,8 +2,8 @@ from django.db import models
 
 class Formulário(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
-    tipo_de_eventoid = models.ForeignKey('Evento.TipoDeEvento', models.SET_NULL, default=None, null=True, blank=True, db_column='Tipo de eventoID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
-    tipo_de_formulárioid = models.ForeignKey('TipoDeFormulário', models.SET_NULL, default=None, null=True, db_column='Tipo de FormulárioID')  # Field name made lowercase. Field renamed to remove unsuitable characters.
+    tipo_de_eventoid = models.ForeignKey('Evento.TipoDeEvento', models.SET_NULL, default=None, null=True, blank=True, db_column='Tipo de eventoID')
+    tipo_de_formulárioid = models.ForeignKey('TipoDeFormulário', models.SET_NULL, default=None, null=True, db_column='Tipo de FormulárioID')
     nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)
     publico = models.BooleanField(db_column='Publico')
     evento_id = models.ForeignKey('Evento.Evento', models.SET_NULL, default=None, null=True, blank=True, db_column='Evento')
@@ -17,7 +17,7 @@ class FormulárioPergunta(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)
     formulárioid = models.ForeignKey('Formulário' , on_delete=models.CASCADE, db_column='FormulárioID')
     perguntaid = models.ForeignKey('Pergunta', on_delete=models.CASCADE, db_column='PerguntaID')
-    pos = models.IntegerField(models.SET_NULL, default=None, null=True, db_column='Pos')
+    pos = models.IntegerField(models.SET_NULL, default=0, null=True, db_column='Pos')
 
     class Meta:
         managed = True
@@ -53,12 +53,12 @@ class Pergunta(models.Model):
 
 
 class Resposta(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    perguntaid = models.ForeignKey('Formulario.Pergunta', models.SET_NULL, default=None, null=True, db_column='PerguntaID')  # Field name made lowercase.
-    eventoid = models.ForeignKey('Evento.Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')  # Field name made lowercase.
-    inscriçãoid = models.ForeignKey('Inscriçao.Inscrição', models.SET_NULL, default=None, null=True, db_column='InscriçãoID')  # Field name made lowercase.
-    feedbackid = models.ForeignKey('Inscriçao.Feedback', models.SET_NULL, default=None, null=True, db_column='FeedbackID')  # Field name made lowercase.
-    resposta = models.CharField(db_column='Resposta', max_length=2048, blank=True, null=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='ID', primary_key=True)
+    perguntaid = models.ForeignKey('Formulario.Pergunta', models.SET_NULL, default=None, null=True, db_column='PerguntaID')
+    eventoid = models.ForeignKey('Evento.Evento', models.SET_NULL, default=None, null=True, db_column='EventoID')
+    inscriçãoid = models.ForeignKey('Inscriçao.Inscrição', models.SET_NULL, default=None, null=True, db_column='InscriçãoID')
+    feedbackid = models.ForeignKey('Inscriçao.Feedback', models.SET_NULL, default=None, null=True, db_column='FeedbackID')
+    resposta = models.CharField(db_column='Resposta', max_length=2048, blank=True, null=True)
 
     class Meta:
         managed = True
@@ -66,8 +66,8 @@ class Resposta(models.Model):
 
 
 class TipoDeFormulário(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='ID', primary_key=True)
+    nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)
 
     class Meta:
         managed = True
@@ -78,8 +78,8 @@ class TipoDeFormulário(models.Model):
 
 
 class TipoDePergunta(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
-    nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='ID', primary_key=True)
+    nome = models.CharField(db_column='Nome', max_length=255, blank=True, null=True)
 
     class Meta:
         managed = True

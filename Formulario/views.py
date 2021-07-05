@@ -207,20 +207,47 @@ def add_formulario(request, evento_id):
 
 def add_pergunta_ao_formulario(request, formulario_id):
     formulario = Formulário.objects.get(pk=formulario_id)
-    perguntas_id = FormulárioPergunta.objects.all().filter(formulárioid=formulario)
-    perguntas = []
-    for p in perguntas_id:
-        perguntas.append(p.perguntaid)
+    perguntas_id = FormulárioPergunta.objects.all().filter(formulárioid=formulario).order_by('pos')
     return render(
         request,
         "add_pergunta_ao_formulario.html",
         {
             "formulario": formulario,
-            "perguntas": perguntas,
+            "perguntas": perguntas_id,
             "OpcaoResposta": OpçãoDeResposta.objects.all,
         },
     )
 
+def pergunta_move_up(request, pergunta_id, formulario_id):
+    formulario = Formulário.objects.get(pk=formulario_id)
+    pergunta = Pergunta.objects.get(pk=pergunta_id)
+    pergunta_form = FormulárioPergunta.objects.get(
+        formulárioid = formulario, perguntaid=pergunta)
+    
+    other_pergunta_form = FormulárioPergunta.objects.get(
+        formulárioid = formulario, pos = pergunta_form.pos-1)
+
+    other_pergunta_form.pos += 1
+    pergunta_form.pos -= 1
+    other_pergunta_form.save()
+    pergunta_form.save()
+    return redirect(f"/Formulario/add_pergunta_ao_formulario/{formulario.id}")
+
+
+def pergunta_move_down(request, pergunta_id, formulario_id):
+    formulario = Formulário.objects.get(pk=formulario_id)
+    pergunta = Pergunta.objects.get(pk=pergunta_id)
+    pergunta_form = FormulárioPergunta.objects.get(
+        formulárioid = formulario, perguntaid=pergunta)
+    
+    other_pergunta_form = FormulárioPergunta.objects.get(
+        formulárioid = formulario, pos = pergunta_form.pos+1)
+
+    other_pergunta_form.pos -= 1
+    pergunta_form.pos += 1
+    other_pergunta_form.save()
+    pergunta_form.save()
+    return redirect(f"/Formulario/add_pergunta_ao_formulario/{formulario.id}")
 
 def eliminar_formulario(request, formulario_id):
     Formulario_view = Formulário.objects.get(pk=formulario_id)
@@ -254,9 +281,11 @@ def alterar_estado_formulario(request, formulario_id):
 
 
 def add_pergunta_ao_formulario_action(request, pergunta_id, formulario_id):
+    count = len(FormulárioPergunta.objects.all().filter(formulárioid = formulario_id))
     pergunta_add = FormulárioPergunta(
         formulárioid=get_object_or_404(Formulário, id=formulario_id),
         perguntaid=get_object_or_404(Pergunta, id=pergunta_id),
+        pos=count+1
     )
     pergunta_add.save()
     return redirect(f"/Formulario/consultar_perguntas/{1}/{formulario_id}")

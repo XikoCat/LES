@@ -34,6 +34,8 @@ urlpatterns = [
     path("eliminar_formulario/<formulario_id>", views.eliminar_formulario, name="eliminar_formulario"),
     path("alterar_estado_formulario/<formulario_id>", views.alterar_estado_formulario, name="alterar_estado_formulario"),
     path("add_pergunta_ao_formulario_action/<pergunta_id>/<formulario_id>", views.add_pergunta_ao_formulario_action, name="add_pergunta_ao_formulario_action"),
+    path("pergunta_move_up/<pergunta_id>/<formulario_id>", views.pergunta_move_up, name="pergunta_move_up"),
+    path("pergunta_move_down/<pergunta_id>/<formulario_id>", views.pergunta_move_down, name="pergunta_move_down"),
 
     path("remover_pergunta_do_formulario/<pergunta_id>/<formulario_id>", views.remover_pergunta_do_formulario, name="remover_pergunta_do_formulario"),
     path("editar_pergunta_do_formulario/<pergunta_id>/<formulario_id>", views.editar_pergunta_do_formulario, name="editar_pergunta_do_formulario"),
