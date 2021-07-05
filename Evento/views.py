@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Evento, TipoDeEvento, PedidoDeRecurso
+from Utilizadores.models import *
 from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
@@ -24,6 +25,19 @@ def consultar_eventos_all(request):
     return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
                                                       'TipoDeEvento' : categories})
 
+def consultar_eventos_proponente(request):
+    categories = TipoDeEvento.objects.all()
+    proponente = Proponente.objects.get(utilizadorid = request.user)
+    Eventos = Evento.objects.filter(proponenteutilizadorid = proponente).order_by('data')
+    return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
+                                                      'TipoDeEvento' : categories})
+
+def consultar_eventos_validados(request):
+    categories = TipoDeEvento.objects.all()
+    Eventos = Evento.objects.filter(estado = 'Validado').order_by('data')
+    return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
+                                                      'TipoDeEvento' : categories})
+
 def visualizar_evento(request, evento_id):
     Evento_view = Evento.objects.get(pk = evento_id)
     Evento_Equipamentos_view = EventoEquipamentos.objects.filter(eventoId = evento_id)
@@ -38,7 +52,21 @@ def criar_evento(request):
     if request.method == "POST":
         form = evento_form(request.POST)
         if form.is_valid():
-            form.save()
+            new_form = Evento(
+                    tipo_de_eventoid=get_object_or_404(
+                        TipoDeEvento, id=form.data["tipo_de_eventoid"]
+                    ),
+                    proponenteutilizadorid=get_object_or_404(
+                        Proponente, utilizadorid=request.user
+                    ),
+                    nome=form.data["nome"],
+                    descrição=form.data["descrição"],
+                    data=form.data["data"],
+                    hora=form.data["hora"],
+                    duração=form.data["duração"],
+                    valor=form.data["valor"],
+                    )
+            new_form.save()
             return HttpResponseRedirect('/Evento/criar_evento?submitted=True')
     else:
         form = evento_form
