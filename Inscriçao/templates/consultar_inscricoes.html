@@ -11,9 +11,9 @@
 
 <body>
   <h2>{% if evento %}Inscrições de {{evento.nome}}
-  {% elif user %}Inscrições de {{user.utilizadorid}}
-  {% else %}Todas as Inscrições
-  {% endif %}</h2>
+    {% elif user %}Inscrições de {{user.utilizadorid}}
+    {% else %}Todas as Inscrições
+    {% endif %}</h2>
   <div class="container">
     <table style="width:100%">
       <tr>
@@ -26,6 +26,7 @@
         <th>Divida</th>
         <th>CheckIn</th>
         <th>Válido</th>
+        <th>Opçoes</th>
       </tr>
       {% for i in Inscrição %}
       <tr>
@@ -37,13 +38,16 @@
         {% endif %}
         <td>
           {% for d in Dividas %}
-            {% if d.inscriçãoid == i %}
-              {{d.divida}}€
-            {% endif %}
+          {% if d.inscriçãoid == i %}
+          {{d.divida}}€
+          {% endif %}
           {% endfor %}
         </td>
         <td>{{i.checkin}}</td>
         <td>{% if i.valido == 0 %}NÃO{% else %}SIM{% endif %}</td>
+        <td>
+          <a href="{% url 'Inscriçao:remover_inscricao' i.id %}">Remover</a>
+        </td>
       </tr>
       {% endfor %}
     </table>
