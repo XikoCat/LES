@@ -18,6 +18,7 @@
 			<br><br>
 			<table class = "table">
 				<tr>
+					<th>#</th>
 					<th>Pergunta</th>
 					<th>Tipo de Pergunta</th>
 					<th>Respostas:</th>
@@ -25,10 +26,18 @@
 				</tr>
 				{% for p in perguntas %}
 				<tr>
-					<td>{{p.pergunta}}</td>
-					<td>{{p.tipo_de_perguntaid.nome}}</td>
+					<td>{{p.pos}}
+						<a href="{% url 'Formulario:pergunta_move_up' p.perguntaid.id formulario.id %}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/></svg>
+						</a>
+						<a href="{% url 'Formulario:pergunta_move_down' p.perguntaid.id formulario.id %}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+						</a>
+					</td>
+					<td>{{p.perguntaid.pergunta}}</td>
+					<td>{{p.perguntaid.tipo_de_perguntaid.nome}}</td>
 					<td class="dropdown">
-						{% if p.tipo_de_perguntaid.id == 1 %}
+						{% if p.perguntaid.tipo_de_perguntaid.id == 1 %}
 						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Ver
 							respostas
 							<span class="caret"></span></button>
@@ -44,9 +53,9 @@
 						{% endif %}
 					</td>
 					<td>
-						<a href="{% url 'Formulario:editar_pergunta_do_formulario' p.id formulario.id %}" class="card-link">Editar</a>
+						<a href="{% url 'Formulario:editar_pergunta_do_formulario' p.perguntaid.id formulario.id %}" class="card-link">Editar</a>
 						<a> | </a>
-						<a href="{% url 'Formulario:remover_pergunta_do_formulario' p.id formulario.id %}"
+						<a href="{% url 'Formulario:remover_pergunta_do_formulario' p.perguntaid.id formulario.id %}"
 							class="card-link">Remover</a>
 					</td>
 				</tr>
