@@ -11,6 +11,7 @@ class evento_form(ModelForm):
 
 		labels = {
             'tipo_de_eventoid': ('Tipo de Evento'),
+            'duração' : ('Duração em horas')
         }
 
 		widgets = {

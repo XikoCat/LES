@@ -22,6 +22,8 @@ app_name = "Evento"
 urlpatterns = [
 	path("consultar_eventos/<cat_id>", views.consultar_eventos, name="consultar_eventos"),
 	path("consultar_eventos", views.consultar_eventos_all, name="consultar_eventos_all"),
+    path("consultar_eventos_proponente", views.consultar_eventos_proponente, name="consultar_eventos_proponente"),
+    path("consultar_eventos_validados", views.consultar_eventos_validados, name="consultar_eventos_validados"),
 
 	path("visualizar_evento/<evento_id>", views.visualizar_evento, name="visualizar_evento"),
 
