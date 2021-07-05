@@ -12,7 +12,7 @@ from Recurso.models import *
 def consultar_eventos(request, cat_id):
     categories = TipoDeEvento.objects.all()
     category = get_object_or_404(TipoDeEvento, id = cat_id)
-    Eventos = Evento.objects.filter(tipo_de_eventoid = category)
+    Eventos = Evento.objects.filter(tipo_de_eventoid = category).filter().order_by('data')
     Logisticas = PedidoDeRecurso.objects.all()
     return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
                                                       'Logisticas' : Logisticas,
@@ -20,7 +20,7 @@ def consultar_eventos(request, cat_id):
 
 def consultar_eventos_all(request):
     categories = TipoDeEvento.objects.all()
-    Eventos = Evento.objects.all()
+    Eventos = Evento.objects.filter().order_by('data')
     return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
                                                       'TipoDeEvento' : categories})
 

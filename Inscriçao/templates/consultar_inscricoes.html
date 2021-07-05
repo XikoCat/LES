@@ -49,7 +49,9 @@
           <a href="{% url 'Inscriçao:consultar' i.id %}">Ver</a>
           <a href="{% url 'Inscriçao:editar' i.id %}">Editar</a>
           <a href="{% url 'Inscriçao:remover' i.id %}">Cancelar</a>
+          {% if i.checkin == False %} 
           <a href="{% url 'Inscriçao:checkin' i.id %}">Check-in</a>
+          {% endif %} 
         </td>
       </tr>
       {% endfor %}

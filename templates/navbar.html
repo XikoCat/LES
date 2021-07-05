@@ -10,18 +10,6 @@
   <div class="navbar-menu">
     <div class="navbar-start">
       {% if tipo_de_utilizador == 'Administrador'%}
-        <a href="" class="navbar-item">
-        </a>
-      {% elif tipo_de_utilizador == 'Participante'%}
-          <a href="" class="navbar-item">
-          </a>
-      {% elif tipo_de_utilizador == 'Proponente'%}
-          <a href="" class="navbar-item"> 
-          </a>
-      {% else %}
-        <a href="{% url 'Utilizadores:consultar_utilizadores' %}" class="navbar-item">
-          Utilizadores
-        </a>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
             Eventos
@@ -31,6 +19,9 @@
             <a href="{% url 'Evento:criar_evento' %}" class="navbar-item">Criar Evento</a>
           </div>
         </div>
+        <a href="{% url 'Utilizadores:consultar_utilizadores' %}" class="navbar-item">
+          Utilizadores
+        </a>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
             Recurso
@@ -50,6 +41,21 @@
             <a href="{% url 'Formulario:consultar_perguntas' 0 None %}" class="navbar-item">Perguntas</a>
           </div>
         </div>
+      {% elif tipo_de_utilizador == 'Participante'%}
+          <a href="" class="navbar-item">
+          </a>
+      {% elif tipo_de_utilizador == 'Proponente'%}
+          <a href="" class="navbar-item"> 
+          </a>
+      {% else %}
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Eventos
+          </a>
+          <div class="navbar-dropdown">
+            <a href="{% url 'Evento:consultar_eventos_all' %}" class="navbar-item">Consultar Eventos</a>
+          </div>
+        </div>
       {% endif %}
     </div>
     <div class="navbar-end">
@@ -61,9 +67,9 @@
           <a href="{% url 'Utilizadores:logout' %}" class="navbar-item">
             Logout
           </a>
-        {% elif tipo_de_utilizador == '' %}
+        {% else %}
           <a href="{% url 'Utilizadores:register' %}" class="navbar-item">
-            Criar uma conta
+            Registar-se
           </a>
           <a href="{% url 'Utilizadores:login' %}" class="navbar-item">
             Login

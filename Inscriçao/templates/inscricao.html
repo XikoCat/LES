@@ -44,6 +44,9 @@
     <input type="submit" value="Submeter" class="btn btn-success">
     {% elif metodo == 'visualizar'%}
     <a class="btn btn-primary" href="{% url 'Inscriçao:editar' inscricao.id %}" role="button">Editar</a>
+    {% if inscricao.valido == False %}
+    <a class="btn btn-primary" href="{% url 'Inscriçao:validar' inscricao.id %}" role="button">Validar</a>
+    {% endif %}
     {% endif %}
     <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
   </form>

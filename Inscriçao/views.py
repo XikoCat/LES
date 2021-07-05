@@ -64,7 +64,7 @@ def consultar_inscricoes_all(request):
 
 def consultar(request, inscricao_id):
     if not Inscrição.objects.filter(id=inscricao_id).exists():
-        message = "A Inscrição que pretende remover não existe"
+        message = "A Inscrição que pretende consultar não existe"
         return render(request, "inscricao.html", {"message": message})
 
     inscricao = Inscrição.objects.get(id=inscricao_id)
@@ -109,8 +109,49 @@ def consultar(request, inscricao_id):
 
 
 def editar(request, inscricao_id):
-    message = "TODO"
-    return render(request, "inscricao.html", {"message": message})
+    if not Inscrição.objects.filter(id=inscricao_id).exists():
+        message = "A Inscrição que pretende Editar não existe"
+        return render(request, "inscricao.html", {"message": message})
+
+    inscricao = Inscrição.objects.get(id=inscricao_id)
+
+    evento = inscricao.eventoid
+    if not evento:
+        message = "O evento não existe"
+        return render(
+            request,
+            "inscricao.html",
+            {"message": message},
+        )
+
+    tipo_form_inscricao = get_object_or_404(TipoDeFormulário, id=1)
+    if not Formulário.objects.filter(
+        evento_id=evento, tipo_de_formulárioid=tipo_form_inscricao
+    ).exists():
+        message = "O evento não tem um formulário de incrições valido"
+        return render(
+            request,
+            "inscricao.html",
+            {"message": message},
+        )
+    formulario = Formulário.objects.get(
+        evento_id=evento, tipo_de_formulárioid=tipo_form_inscricao
+    )
+    perguntas_list = (
+        FormulárioPergunta.objects.all().filter(formulárioid=formulario).order_by("pos")
+    )
+    perguntas = get_perguntas(perguntas_list, inscricao=inscricao)
+
+    return render(
+        request,
+        "inscricao.html",
+        {
+            "metodo": "editar",
+            "formulario": formulario,
+            "perguntas": perguntas,
+            "inscricao": inscricao,
+        },
+    )
 
 
 def querydict_to_dict(query_dict):
