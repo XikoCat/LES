@@ -10,21 +10,18 @@
 </head>
 
 <body>
-  <div class="container">
-    {% if message != None %}
-    {{message}}
-    <br>
+  {% if message != None %}
+  {{message}}
+  <br>
+  <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
+  {% else %}
+  Tem a certeza que pretende {{action}} a inscrição de {{inscricao.participanteutilizadorid}} para o evento {{inscricao.eventoid}}?
+  <form method=POST>
+    {% csrf_token %}
+    <input type="submit" value="{{action}}" class="btn btn-success">
     <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
-    {% else %}
-    Tem a certeza que pretende {{action}} a inscrição de {{inscricao.participanteutilizadorid}} para o evento
-    {{inscricao.eventoid}}?
-    <form method=POST>
-      {% csrf_token %}
-      <input type="submit" value="{{action}}" class="btn btn-success">
-      <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
-    </form>
-    {% endif %}
-  </div>
+  </form>
+  {% endif %}
 </body>
 
 </html>

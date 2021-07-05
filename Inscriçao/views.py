@@ -319,7 +319,7 @@ def checkin(request):
             message = "ERRO! A Inscrição que pretende fazer o check-in não existe"
             return render(request,
                 "checkin.html",
-            {"message": message, "message_type": "warning"},
+                {"message": message},
             )
         inscricao = Inscrição.objects.get(id=inscricao_id)
 
@@ -327,7 +327,7 @@ def checkin(request):
             message = "Erro! A esta inscrição já tem o check in!"
             return render(request,
                 "checkin.html",
-            {"message": message, "message_type": "warning"},
+                {"message": message},
             )
 
         inscricao.checkin = True
@@ -336,8 +336,23 @@ def checkin(request):
         message = "Sucesso!"
         return render(request,
             "checkin.html",
-            {"message": message, "message_type": "success"},
+            {"message": message},
         )
+        
+    #
+    #inscricao = Inscrição.objects.get(id=inscricao_id)
+    #if request.method != "POST":
+    #    return render(
+    #        request,
+    #        "action_inscricao.html",
+    #        {"inscricao": inscricao, "action": "checkin"},
+    #    )
+    #else:
+    #    inscricao.checkin = not inscricao.checkin
+    #    inscricao.save()
+    #
+    #    message = "Check in da inscrição efetuado com sucesso"
+    #    return render(request, "action_inscricao.html", {"message": message})
 
 def get_perguntas(perguntas_list, inscricao = None):
     perguntas = []
