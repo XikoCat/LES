@@ -58,10 +58,59 @@ def consultar_inscricoes_user(request, user_id):
         },
     )
 
-
 # Visualizar todas as inscrições en todos os eventos
 def consultar_inscricoes_all(request):
     return redirect("/Inscricao/consultar_inscricoes_evento/all")
+
+def consultar(request, inscricao_id):
+    if not Inscrição.objects.filter(id=inscricao_id).exists():
+        message = "A Inscrição que pretende remover não existe"
+        return render(request, "inscricao.html", {"message": message})
+
+    inscricao = Inscrição.objects.get(id=inscricao_id)
+
+    evento = inscricao.eventoid
+    if not evento:
+        message = "O evento não existe"
+        return render(
+            request,
+            "inscricao.html",
+            {"message": message},
+        )
+
+    tipo_form_inscricao = get_object_or_404(TipoDeFormulário, id=1)
+    if not Formulário.objects.filter(
+        evento_id=evento, tipo_de_formulárioid=tipo_form_inscricao
+    ).exists():
+        message = "O evento não tem um formulário de incrições valido"
+        return render(
+            request,
+            "inscricao.html",
+            {"message": message},
+        )
+    formulario = Formulário.objects.get(
+        evento_id=evento, tipo_de_formulárioid=tipo_form_inscricao
+    )
+    perguntas_list = (
+        FormulárioPergunta.objects.all().filter(formulárioid=formulario).order_by("pos")
+    )
+    perguntas = get_perguntas(perguntas_list, inscricao=inscricao)
+
+    return render(
+        request,
+        "inscricao.html",
+        {
+            "metodo": "visualizar",
+            "formulario": formulario,
+            "perguntas": perguntas,
+            "inscricao": inscricao,
+        },
+    )
+
+
+def editar(request, inscricao_id):
+    message = "TODO"
+    return render(request, "inscricao.html", {"message": message})
 
 
 def querydict_to_dict(query_dict):
@@ -74,70 +123,58 @@ def querydict_to_dict(query_dict):
     return data
 
 
-# Visualizar todas as inscrições en todos os eventos
-def criar_inscricao(request, evento_id):
+# Criar uma inscrição
+def criar(request, evento_id):
 
     utilizador_id = request.user
-
     user = Participante.objects.get(utilizadorid=utilizador_id)
 
-    if Inscrição.objects.filter(participanteutilizadorid=user).exists():
+    if Inscrição.objects.filter(
+        participanteutilizadorid=user, eventoid=evento_id
+    ).exists():
         message = "Este utilizador já se encontra inscrito"
         return render(
             request,
-            "criar_inscricao.html",
-            {"message": message, "user_id": utilizador_id},
+            "inscricao.html",
+            {"message": message},
         )
 
-    evento = get_object_or_404(Evento, id=evento_id)
+    if not Evento.objects.filter(id=evento_id).exists():
+        message = "O evento não existe"
+        return render(
+            request,
+            "inscricao.html",
+            {"message": message},
+        )
+    evento = Evento.objects.get(id=evento_id)
+
     tipo_form_inscricao = get_object_or_404(TipoDeFormulário, id=1)
-    formulario = get_object_or_404(
-        Formulário, evento_id=evento, tipo_de_formulárioid=tipo_form_inscricao
+    if not Formulário.objects.filter(
+        evento_id=evento, tipo_de_formulárioid=tipo_form_inscricao, publico=True
+    ).exists():
+        message = "O evento não está a aceitar inscrições de momento"
+        return render(
+            request,
+            "inscricao.html",
+            {"message": message},
+        )
+    formulario = Formulário.objects.get(
+        evento_id=evento, tipo_de_formulárioid=tipo_form_inscricao, publico=True
     )
 
-    perguntas_list = FormulárioPergunta.objects.all().filter(formulárioid=formulario)
+    perguntas_list = (
+        FormulárioPergunta.objects.all().filter(formulárioid=formulario).order_by("pos")
+    )
 
     if request.method != "POST":
-        perguntas = []
-        for p in perguntas_list:
-            pergunta_tipo = p.perguntaid.tipo_de_perguntaid.id
-            pergunta_max_choices = None
-            pergunta_opcoes = []
-            pergunta_length = None
-
-            if pergunta_tipo == 1:
-                pergunta_max_choices = p.perguntaid.numero_maximo_de_escolhas
-                opcoes = OpçãoDeResposta.objects.all().filter(perguntaid=p.perguntaid)
-
-                for o in opcoes:
-                    pergunta_opcoes.append(o.opção)
-
-            if pergunta_tipo == 2:
-                pergunta_length = 16
-
-            if pergunta_tipo == 3:
-                pergunta_length = 128
-
-            if pergunta_tipo == 4:
-                pergunta_length = 512
-
-            template = {
-                "str": p.perguntaid.pergunta,
-                "required": p.perguntaid.obrigatório,
-                "type": pergunta_tipo,
-                "max_choices": pergunta_max_choices,
-                "answer_options": pergunta_opcoes,
-                "answer_length": pergunta_length,
-            }
-            perguntas.append(template)
+        perguntas = get_perguntas(perguntas_list)
 
         return render(
             request,
-            "criar_inscricao.html",
-            {"formulario": formulario, "perguntas": perguntas},
+            "inscricao.html",
+            {"metodo": "criar", "formulario": formulario, "perguntas": perguntas},
         )
     else:
-
         Inscrição(
             eventoid=evento, participanteutilizadorid=user, checkin=False, valido=False
         ).save()
@@ -149,9 +186,9 @@ def criar_inscricao(request, evento_id):
 
         for p in perguntas_list:
             pergunta = p.perguntaid
-
             if pergunta.pergunta in post:
                 answer = post[pergunta.pergunta]
+                print(f"{pergunta} : {answer}")
                 if isinstance(answer, list):
                     for a in answer:
                         Resposta(
@@ -171,19 +208,110 @@ def criar_inscricao(request, evento_id):
         message = "Inscrição criada com sucesso!!"
         return render(request, "criar_inscricao.html", {"message": message})
 
-
-def remover_inscricao(request, inscricao_id):
-
+def remover(request, inscricao_id):
     if not Inscrição.objects.filter(id=inscricao_id).exists():
         message = "A Inscrição que pretende remover não existe"
-        return render(request, "remover_inscricao.html", {"message": message})
+        return render(request, "inscricao.html", {"message": message})
 
     inscricao = Inscrição.objects.get(id=inscricao_id)
     if request.method != "POST":
-        return render(request, "remover_inscricao.html", {"inscricao": inscricao})
+        return render(
+            request,
+            "action_inscricao.html",
+            {"inscricao": inscricao, "action": "remover"},
+        )
     else:
         Resposta.objects.filter(inscriçãoid=inscricao).delete()
         inscricao.delete()
 
         message = "A Inscrição foi removida com sucesso"
-        return render(request, "remover_inscricao.html", {"message": message})
+        return render(request, "action_inscricao.html", {"message": message})
+
+def validar(request, inscricao_id):
+    if not Inscrição.objects.filter(id=inscricao_id).exists():
+        message = "A Inscrição que pretende validar não existe"
+        return render(request, "inscricao.html", {"message": message})
+
+    inscricao = Inscrição.objects.get(id=inscricao_id)
+    if request.method != "POST":
+        return render(
+            request,
+            "action_inscricao.html",
+            {"inscricao": inscricao, "action": "validar"},
+        )
+    else:
+        inscricao.valido = not inscricao.valido
+        inscricao.save()
+
+        message = "A Inscrição foi validada com sucesso"
+        return render(request, "action_inscricao.html", {"message": message})
+
+def checkin(request, inscricao_id):
+    if not Inscrição.objects.filter(id=inscricao_id).exists():
+        message = "A Inscrição que pretende fazer o check in não existe"
+        return render(request, "inscricao.html", {"message": message})
+
+    inscricao = Inscrição.objects.get(id=inscricao_id)
+    if request.method != "POST":
+        return render(
+            request,
+            "action_inscricao.html",
+            {"inscricao": inscricao, "action": "checkin"},
+        )
+    else:
+        inscricao.checkin = not inscricao.checkin
+        inscricao.save()
+
+        message = "Check in da inscrição efetuado com sucesso"
+        return render(request, "action_inscricao.html", {"message": message})
+
+def get_perguntas(perguntas_list, inscricao = None):
+    perguntas = []
+    for p in perguntas_list:
+        pergunta_tipo = p.perguntaid.tipo_de_perguntaid.id
+        pergunta_max_choices = None
+        pergunta_opcoes = []
+        pergunta_length = None
+        if pergunta_tipo == 1:
+            resposta = None
+            pergunta_max_choices = p.perguntaid.numero_maximo_de_escolhas
+            opcoes = OpçãoDeResposta.objects.all().filter(perguntaid=p.perguntaid)
+            for o in opcoes:
+                resposta = (
+                    Resposta.objects.all()
+                    .filter(
+                        inscriçãoid=inscricao,
+                        perguntaid=p.perguntaid,
+                        resposta=o.opção,
+                    )
+                    .exists()
+                )
+                opcao = {"str": o.opção, "selected": resposta}
+                pergunta_opcoes.append(opcao)
+        else:
+            if Resposta.objects.all().filter(
+                inscriçãoid=inscricao, perguntaid=p.perguntaid
+            ).exists():
+                resposta = Resposta.objects.get(
+                    inscriçãoid=inscricao, perguntaid=p.perguntaid
+                ).resposta
+            else:
+                resposta = ""
+            if pergunta_tipo == 2:
+                pergunta_length = 16
+            if pergunta_tipo == 3:
+                pergunta_length = 128
+            if pergunta_tipo == 4:
+                pergunta_length = 512
+
+        template = {
+            "str": p.perguntaid.pergunta,
+            "required": p.perguntaid.obrigatório,
+            "type": pergunta_tipo,
+            "max_choices": pergunta_max_choices,
+            "answer_options": pergunta_opcoes,
+            "answer_length": pergunta_length,
+            "answer": resposta,
+        }
+        perguntas.append(template)
+    return perguntas

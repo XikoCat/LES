@@ -11,12 +11,44 @@
 
 <body>
 
-  <h2>Inscrições de {{Nome pessoa}} em {{Nome evento}}</h2>
-  <h4>Id: {{id Inscrição}}</h4>
-  <div class="container">
-    
-  </div>
+  <h2>{{formulario.nome}}</h2>
 
+  {% if message != None %}
+  {{message}}
+  <br>
+  <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
+  {% else %}
+  
+  <form action="" method=POST>
+    {% csrf_token %}
+    {% for p in perguntas %}
+    <br>
+    <label for="{{p.str}}">{{p.str}}{% if p.type == 1 %}
+      <br>(Escolher {{p.max_choices}}){% endif %}
+    </label>
+    <br>
+    {% if p.type == 1 %}
+    {% for ans in p.answer_options %}
+    <input type="checkbox" id="{{p.str}}" name="{{p.str}}" value={{ans.str}}{% if ans.selected %} checked{% endif %}{% if metodo == 'visualizar'%} disabled{% endif %}>
+    <label for="{{ans.str}}">{{ans.str}}</label>
+    <br>
+    {% endfor %}
+    {% else %}
+    <input type="text" id="{{p.str}}" name="{{p.str}}" maxlength="{{p.answer_length}}" size="{{p.answer_length}}" value="{{p.answer}}"{% if p.required %} required{% endif %}{% if metodo == 'visualizar'%} disabled{% endif %}>
+    {% endif %}
+    <br>
+    {% endfor %}
+    {% if metodo == 'criar' %}
+    <input type="submit" value="Submeter" class="btn btn-success">
+    {% elif metodo == 'editar'%}
+    <input type="submit" value="Submeter" class="btn btn-success">
+    {% elif metodo == 'visualizar'%}
+    <a class="btn btn-primary" href="{% url 'Inscriçao:editar' inscricao.id %}" role="button">Editar</a>
+    {% endif %}
+    <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
+  </form>
+  
+  {% endif %}
 </body>
 
 </html>

@@ -24,33 +24,56 @@ urlpatterns = [
        
     # Consultar inscrições
     path(
-        "consultar_inscricoes_user/<user_id>",
+        "consultar_user/<user_id>",
         views.consultar_inscricoes_user,
         name="consultar_inscricoes_user",
     ),
     path(
-        "consultar_inscricoes_evento/<evento_id>",
+        "consultar_evento/<evento_id>",
         views.consultar_inscricoes_evento,
         name="consultar_inscricoes_evento",
     ),
     path(
-        "consultar_inscricoes",
+        "consultar_all",
         views.consultar_inscricoes_all,
         name="consultar_inscricoes_all",
     ),
 
+    # Consultar inscrição
+    path(
+        "consultar/<inscricao_id>",
+        views.consultar,
+        name="consultar",
+    ),
+    # Editar inscrição
+    path(
+        "editar/<inscricao_id>",
+        views.editar,
+        name="editar",
+    ),
     # Criar Inscrição
     path(
-        "criar_inscricao/<evento_id>",
-        views.criar_inscricao,
-        name="criar_inscricao",
+        "criar/<evento_id>",
+        views.criar,
+        name="criar",
     ),
-
     # Remover Inscrição
     path(
-        "remover_inscricao/<inscricao_id>",
-        views.remover_inscricao,
-        name="remover_inscricao",
+        "remover/<inscricao_id>",
+        views.remover,
+        name="remover",
+    ),
+    # Validar Inscrição
+    path(
+        "validar/<inscricao_id>",
+        views.validar,
+        name="validar",
+    ),
+    # Checkin Inscrição
+    path(
+        "checkin/<inscricao_id>",
+        views.checkin,
+        name="checkin",
     ),
 
 ]

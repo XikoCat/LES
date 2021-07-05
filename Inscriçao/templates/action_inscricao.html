@@ -15,10 +15,10 @@
   <br>
   <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
   {% else %}
-  Tem a certeza que pretende remover a inscrição de {{inscricao.participanteutilizadorid}} para o evento {{inscricao.eventoid}}?
+  Tem a certeza que pretende {{action}} a inscrição de {{inscricao.participanteutilizadorid}} para o evento {{inscricao.eventoid}}?
   <form method=POST>
     {% csrf_token %}
-    <input type="submit" value="Remover" class="btn btn-success">
+    <input type="submit" value="{{action}}" class="btn btn-success">
     <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
   </form>
   {% endif %}
