@@ -42,28 +42,27 @@
           </div>
         </div>
       {% elif user.TipoUtilizador == 'Participante'%}
-          <a href="" class="navbar-item">
-          </a>
+        <a href="{% url 'Evento:consultar_eventos_validados_all' %}" class="navbar-item">
+          Eventos
+        </a>
+        <a href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" class="navbar-item">
+          Inscrições
+        </a>
       {% elif user.TipoUtilizador == 'Proponente'%}
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
             Eventos
           </a>
           <div class="navbar-dropdown">
-            <a href="{% url 'Evento:consultar_eventos_all' %}" class="navbar-item">Consultar Eventos</a>
-            <a href="{% url 'Evento:consultar_eventos_proponente' %}" class="navbar-item">Consultar os meus Eventos</a>
+            <a href="{% url 'Evento:consultar_eventos_validados_all' %}" class="navbar-item">Consultar Eventos</a>
+            <a href="{% url 'Evento:consultar_eventos_proponente_all' %}" class="navbar-item">Consultar os meus Eventos</a>
             <a href="{% url 'Evento:criar_evento' %}" class="navbar-item">Criar Evento</a>
           </div>
         </div>
       {% else %}
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
-            Eventos
-          </a>
-          <div class="navbar-dropdown">
-            <a href="{% url 'Evento:consultar_eventos_all' %}" class="navbar-item">Consultar Eventos</a>
-          </div>
-        </div>
+        <a href="{% url 'Evento:consultar_eventos_validados_all' %}" class="navbar-item">
+          Eventos
+        </a>
       {% endif %}
     </div>
     <div class="navbar-end">
