@@ -44,7 +44,7 @@ def consultar_inscricoes_evento(request, evento_id):
 # Visualizar incrição de utilizadores no evento por user
 def consultar_inscricoes_user(request, user_id):
     if Participante.objects.filter(utilizadorid=user_id).exists():
-        user = Participante.objects.get(utilizadorid=user_id)
+        internal_user = Participante.objects.get(utilizadorid=user_id)
     else:
         message = "User invalido"
         return render(request, "remover_inscricao.html", {"message": message})
@@ -52,8 +52,8 @@ def consultar_inscricoes_user(request, user_id):
         request,
         "consultar_inscricoes.html",
         {
-            "Inscrição": Inscrição.objects.all().filter(participanteutilizadorid=user),
-            "user": user,
+            "Inscrição": Inscrição.objects.all().filter(participanteutilizadorid=internal_user),
+            "internal_user": internal_user,
             "Dividas": Pagamento.objects.all,
         },
     )
