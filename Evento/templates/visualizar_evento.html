@@ -25,7 +25,17 @@
     
   </ul>
   <div class="card-body">
-    <a href="{% url 'Evento:consultar_eventos_all' %}" class="card-link">Voltar</a>
+    {% if user.TipoUtilizador == 'Administrador' %}
+      <a href="{% url 'Evento:consultar_eventos_all' %}" class="card-link">Voltar</a>
+    {% elif user == Evento.proponenteutilizadorid.utilizadorid %}
+      <a href="{% url 'Evento:consultar_eventos_proponente_all' %}" class="card-link">Voltar</a>
+    {% elif user.TipoUtilizador == 'Participante' %}
+      <a href="{% url 'Inscriçao:criar' Evento.id %}" class="card-link">Inscrever-se</a>
+      <a>|</a>   
+      <a href="{% url 'Evento:consultar_eventos_validados_all' %}" class="card-link">Voltar</a> 
+    {% else %}
+      <a href="{% url 'Evento:consultar_eventos_validados_all' %}" class="card-link">Voltar</a>  
+    {% endif %}
   </div>
 </div>
 </div>

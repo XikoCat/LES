@@ -1,17 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+{% block title %}- Visualizar Evento {% endblock title %}
 
-<body>
+{% block content %}
+{% load static %}
+<div class="center">
 
-  <h2>{{formulario.nome}}</h2>
+  <h1>{{formulario.nome}}</h1>
 
   {% if message != None %}
   {{message}}
@@ -44,14 +39,15 @@
     <input type="submit" value="Submeter" class="btn btn-success">
     {% elif metodo == 'visualizar'%}
     <a class="btn btn-primary" href="{% url 'Inscriçao:editar' inscricao.id %}" role="button">Editar</a>
+    {% if user.TipoUtilizador == 'Administrador'%}
     {% if inscricao.valido == False %}
     <a class="btn btn-primary" href="{% url 'Inscriçao:validar' inscricao.id %}" role="button">Validar</a>
+    {% endif %}
     {% endif %}
     {% endif %}
     <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
   </form>
   
   {% endif %}
-</body>
-
-</html>
+</div>
+{% endblock content %}

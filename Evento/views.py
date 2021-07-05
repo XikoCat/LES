@@ -25,18 +25,38 @@ def consultar_eventos_all(request):
     return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
                                                       'TipoDeEvento' : categories})
 
-def consultar_eventos_proponente(request):
+def consultar_eventos_proponente_all(request):
     categories = TipoDeEvento.objects.all()
     proponente = Proponente.objects.get(utilizadorid = request.user)
     Eventos = Evento.objects.filter(proponenteutilizadorid = proponente).order_by('data')
     return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
                                                       'TipoDeEvento' : categories})
 
-def consultar_eventos_validados(request):
+def consultar_eventos_validados_all(request):
     categories = TipoDeEvento.objects.all()
     Eventos = Evento.objects.filter(estado = 'Validado').order_by('data')
+    estado = 'normal'
+    return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
+                                                      'TipoDeEvento' : categories,
+                                                      'estado' : estado})
+
+
+def consultar_eventos_proponente(request, cat_id):
+    categories = TipoDeEvento.objects.all()
+    category = get_object_or_404(TipoDeEvento, id = cat_id)
+    proponente = Proponente.objects.get(utilizadorid = request.user)
+    Eventos = Evento.objects.filter(proponenteutilizadorid = proponente, tipo_de_eventoid = category).order_by('data')
     return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
                                                       'TipoDeEvento' : categories})
+
+def consultar_eventos_validados(request, cat_id):
+    categories = TipoDeEvento.objects.all()
+    category = get_object_or_404(TipoDeEvento, id = cat_id)
+    Eventos = Evento.objects.filter(estado = 'Validado' , tipo_de_eventoid = category).order_by('data')
+    estado = 'normal'
+    return render(request, 'consultar_eventos.html', {'Eventos' : Eventos,
+                                                      'TipoDeEvento' : categories,
+                                                      'estado' : estado})
 
 def visualizar_evento(request, evento_id):
     Evento_view = Evento.objects.get(pk = evento_id)
@@ -78,7 +98,7 @@ def criar_evento(request):
 def cancelar_evento(request, evento_id):
     Evento_view = Evento.objects.get(pk = evento_id)
     Evento_view.delete()
-    return redirect('Evento:consultar_eventos_all')
+    return redirect('Evento:consultar_eventos_proponente_all')
 
 
 def editar_evento(request, evento_id):
@@ -86,7 +106,7 @@ def editar_evento(request, evento_id):
     form = evento_form(request.POST or None, instance = Evento_view)
     if form.is_valid():
         form.save()
-        return redirect('Evento:consultar_eventos_all')
+        return redirect('Evento:consultar_eventos_proponente_all')
     return render(request, 'editar_evento.html', {'Evento' : Evento_view, 
                                                   'form' : form})
                                                   
@@ -95,7 +115,7 @@ def submeter_evento(request, evento_id):
     Evento_view = Evento.objects.get(pk = evento_id)
     Evento_view.estado='Submetido'
     Evento_view.save()
-    return redirect('Evento:consultar_eventos_all')
+    return redirect('Evento:consultar_eventos_proponente_all')
 
 def validar_evento(request, evento_id):
     Evento_view = Evento.objects.get(pk = evento_id)
