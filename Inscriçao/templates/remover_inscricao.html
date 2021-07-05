@@ -12,6 +12,8 @@
 <body>
   {% if message != None %}
   {{message}}
+  <br>
+  <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
   {% else %}
   Tem a certeza que pretende remover a inscrição de {{inscricao.participanteutilizadorid}} para o evento {{inscricao.eventoid}}?
   <form method=POST>

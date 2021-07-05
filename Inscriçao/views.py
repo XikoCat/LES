@@ -1,3 +1,4 @@
+from Utilizadores.form import user_form
 from django.core.checks import messages
 from django.db.models.query_utils import Q
 from Formulario.models import Formulário
@@ -76,7 +77,7 @@ def querydict_to_dict(query_dict):
 # Visualizar todas as inscrições en todos os eventos
 def criar_inscricao(request, evento_id):
 
-    utilizador_id = 3  # Static needs to change
+    utilizador_id = request.user
 
     user = Participante.objects.get(utilizadorid=utilizador_id)
 
@@ -85,7 +86,7 @@ def criar_inscricao(request, evento_id):
         return render(
             request,
             "criar_inscricao.html",
-            {"message": message},
+            {"message": message, "user_id": utilizador_id},
         )
 
     evento = get_object_or_404(Evento, id=evento_id)
@@ -133,7 +134,7 @@ def criar_inscricao(request, evento_id):
         return render(
             request,
             "criar_inscricao.html",
-            {"formulario": formulario, "perguntas": perguntas, "user_id": utilizador_id},
+            {"formulario": formulario, "perguntas": perguntas},
         )
     else:
 
@@ -172,13 +173,14 @@ def criar_inscricao(request, evento_id):
 
 
 def remover_inscricao(request, inscricao_id):
+
     if not Inscrição.objects.filter(id=inscricao_id).exists():
         message = "A Inscrição que pretende remover não existe"
         return render(request, "remover_inscricao.html", {"message": message})
 
     inscricao = Inscrição.objects.get(id=inscricao_id)
     if request.method != "POST":
-        return render(request, "remover_inscricao.html", {"inscricao": inscricao, "user_id": utilizador_id})
+        return render(request, "remover_inscricao.html", {"inscricao": inscricao})
     else:
         Resposta.objects.filter(inscriçãoid=inscricao).delete()
         inscricao.delete()

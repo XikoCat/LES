@@ -24,7 +24,7 @@ urlpatterns = [
        
     # Consultar inscrições
     path(
-        "consultar_inscricoes/<user_id>",
+        "consultar_inscricoes_user/<user_id>",
         views.consultar_inscricoes_user,
         name="consultar_inscricoes_user",
     ),
