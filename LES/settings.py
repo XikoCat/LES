@@ -14,6 +14,8 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-7!%@@td42%$a9i1(1(2mw&4=wkr=!o+of3xhok_!gcw@jysg$z"
+SECRET_KEY = os.getenv("django_secret")
 
 # STATICFILES_DIRS is for development
 STATICFILES_DIRS = [
@@ -90,7 +92,7 @@ WSGI_APPLICATION = "LES.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-load_dotenv()
+
 DB_NAME = os.getenv("db_name")
 DB_HOST = os.getenv("db_host")
 DB_PORT = os.getenv("db_port")

@@ -337,21 +337,77 @@ def eliminar_formulario(request, formulario_id):
 
 def editar_formulario(request, formulario_id):
     formulario_edit = Formulário.objects.get(pk=formulario_id)
+    tipo_de_formulario = formulario_edit.tipo_de_formulárioid
     form = novo_formulario_form(request.POST or None, instance=formulario_edit)
+    state = True
+
     if form.is_valid():
+        formulario_edit2 = Formulário.objects.filter(
+            evento_id = formulario_edit.evento_id,
+            tipo_de_formulárioid=get_object_or_404(
+                    TipoDeFormulário,
+                    id=form.data["tipo_de_formulárioid"]
+                )
+            )
+
+        if get_object_or_404(TipoDeFormulário, id = form.data["tipo_de_formulárioid"]) !=  get_object_or_404(TipoDeFormulário, nome = "Proposta de evento"):
+            if get_object_or_404(TipoDeFormulário, id=form.data["tipo_de_formulárioid"]) == tipo_de_formulario:
+                form.save()
+                return redirect(f"/Formulario/add_pergunta_ao_formulario/{formulario_edit.id}")
+            elif formulario_edit2.exists():
+                message = "Este tipo de formulario já existe para este evento!"
+                return render(request, "add_formulario.html", {"form": form, "state": state, "evento_id": formulario_edit.evento_id.id, "error_message": message})
+        
+        else:
+            formulario_edit2 = Formulário.objects.filter(
+            tipo_de_eventoid=get_object_or_404(
+                    TipoDeEvento,
+                    id=form.data["tipo_de_eventoid"]
+                )
+            )
+            if formulario_edit2.exists():
+                message = "Já existe um formulário para propor eventos para este tipo de evento!"
+                return render(request, "add_formulario.html", {"form": form, "state": state, "evento_id": formulario_edit.evento_id.id, "error_message": message})
+            formulario_edit.delete()
+            new_form = Formulário(
+                tipo_de_eventoid=get_object_or_404(
+                    TipoDeEvento, id=form.data["tipo_de_eventoid"]
+                ),
+                tipo_de_formulárioid=get_object_or_404(
+                    TipoDeFormulário, id=form.data["tipo_de_formulárioid"]
+                ),
+                nome=form.data["nome"],
+                publico=False,
+            )
+            new_form.save()
+            return redirect(f"/Formulario/add_pergunta_ao_formulario/{new_form.id}")
         form.save()
         return redirect(f"/Formulario/add_pergunta_ao_formulario/{formulario_edit.id}")
-    state = True
     return render(request, "add_formulario.html", {"form": form, "state": state, "evento_id": formulario_edit.evento_id.id}) 
 
 
 def editar_formulario_special(request, formulario_id):
+    state = True
     formulario_edit = Formulário.objects.get(pk=formulario_id)
+    tipo_de_evento = formulario_edit.tipo_de_eventoid
     form = novo_formulario_2_form(request.POST or None, instance=formulario_edit)
     if form.is_valid():
+        formulario_edit2 = Formulário.objects.filter(
+            tipo_de_eventoid=get_object_or_404(
+                    TipoDeEvento,
+                    id=form.data["tipo_de_eventoid"]
+                )
+            )
+        if get_object_or_404(TipoDeEvento, id=form.data["tipo_de_eventoid"]) == tipo_de_evento:
+            form.save()
+            return redirect(f"/Formulario/add_pergunta_ao_formulario/{formulario_edit.id}")
+
+        elif formulario_edit2.exists():
+            message = "Já existe um formulário para propor eventos para este tipo de evento!"
+            return render(request, "add_formulario_special.html", {"form": form, "state": state, "error_message": message})
+
         form.save()
         return redirect(f"/Formulario/add_pergunta_ao_formulario/{formulario_edit.id}")
-    state = True
     return render(request, "add_formulario_special.html", {"form": form, "state": state})
 
 
