@@ -11,13 +11,14 @@
   {% if message != None %}
   {{message}}
   <br>
+  <br>
   <a class="btn btn-primary" href="{% url 'Inscriçao:consultar_inscricoes_user' user.id %}" role="button">Voltar</a>
   {% else %}
-  
+  <br>
+  <br>
   <form action="" method=POST>
     {% csrf_token %}
     {% for p in perguntas %}
-    <br>
     <label for="{{p.str}}">{{p.str}}{% if p.type == 1 %}
       <br>(Escolher {{p.max_choices}}){% endif %}
     </label>
@@ -30,6 +31,7 @@
     {% endfor %}
     {% else %}
     <input type="text" id="{{p.str}}" name="{{p.str}}" maxlength="{{p.answer_length}}" size="{{p.answer_length}}" value="{{p.answer}}"{% if p.required %} required{% endif %}{% if metodo == 'visualizar'%} disabled{% endif %}>
+    <br>
     {% endif %}
     <br>
     {% endfor %}

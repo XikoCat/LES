@@ -10,6 +10,13 @@
 		{% else %}
 			<h1>Criar Formulário</h1>
 		{% endif %}
+
+		{% if error_message %}
+		<br>
+		<br>
+		{{error_message}}
+		{% endif %}
+
 		<br><br>
 			<form action="" method=POST>
 				{% csrf_token %}
