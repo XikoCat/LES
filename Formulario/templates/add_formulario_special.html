@@ -1,0 +1,32 @@
+{% extends 'app.html' %}
+
+{% block title %}- Adicionar Formulário {% endblock title %}
+
+{% block content %}
+{% load static %}
+	<div class="center">
+		{% if state == True %}
+			<h1>Editar Formulário Proposta de Evento</h1>
+		{% else %}
+			<h1>Criar Formulário Proposta de Evento</h1>
+		{% endif %}
+
+		{% if error_message %}
+		<br>
+		<br>
+		{{error_message}}
+		{% endif %}
+
+		<br><br>
+			<form action="" method=POST>
+				{% csrf_token %}
+				{{ form.as_p }}
+
+				<br>	
+				<input type="submit" value="Next" class="btn btn-success">
+				<a href="{% url 'Formulario:consultar_formularios_special' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+				<br><br>
+					
+			</form>
+	</div>
+{% endblock content %}

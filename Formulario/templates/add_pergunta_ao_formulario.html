@@ -12,9 +12,15 @@
 			<a href="{% url 'Formulario:consultar_perguntas' 1 formulario.id %}">
 				<button type="button" class="btn btn-primary">Adicionar perguntas</button>
 			</a>
-			<a href="{% url 'Formulario:consultar_formularios' formulario.evento_id.id%}">
-				<button type="button" class="btn btn-primary" >Voltar</button>
-			</a>
+			{% if formulario.tipo_de_formulárioid.nome != 'Proposta de evento' %}
+				<a href="{% url 'Formulario:consultar_formularios' evento_id%}">
+					<button type="button" class="btn btn-primary" >Voltar</button>
+				</a>
+			{% else %}
+				<a href="{% url 'Formulario:consultar_formularios_special'%}">
+					<button type="button" class="btn btn-primary" >Voltar</button>
+				</a>
+			{% endif %}
 			<br><br>
 			<table class = "table">
 				<tr>
@@ -47,9 +53,9 @@
 							<span class="caret"></span></button>
 						<ul class="dropdown-menu">
 							{% for or in OpcaoResposta %}
-							{% if or.perguntaid == p %}
-							<li><a>{{or}}</a></li>
-							{% endif %}
+								{% if or.perguntaid == p.perguntaid %}
+									<li><a>{{or}}</a></li>
+								{% endif %}
 							{% endfor %}
 						</ul>
 						{% else %}

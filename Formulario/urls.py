@@ -27,10 +27,14 @@ urlpatterns = [
     path("editar_opcao_resposta/<pergunta_id>/<resposta_id>/<formulario_id>", views.editar_opcao_resposta, name="editar_opcao_resposta"),
     
     path("consultar_formularios/<evento_id>", views.consultar_formularios, name="consultar_formularios"),
+    path("consultar_formularios_special", views.consultar_formularios_special, name="consultar_formularios_special"),
     
     path("add_formulario/<evento_id>", views.add_formulario, name="add_formulario"),
+    path("add_formulario_special", views.add_formulario_special, name="add_formulario_special"),
+
     path("add_pergunta_ao_formulario/<formulario_id>", views.add_pergunta_ao_formulario, name="add_pergunta_ao_formulario"),
     path("editar_formulario/<formulario_id>", views.editar_formulario, name="editar_formulario"),
+    path("editar_formulario_special/<formulario_id>", views.editar_formulario_special, name="editar_formulario_special"),
     path("eliminar_formulario/<formulario_id>", views.eliminar_formulario, name="eliminar_formulario"),
     path("alterar_estado_formulario/<formulario_id>", views.alterar_estado_formulario, name="alterar_estado_formulario"),
     path("add_pergunta_ao_formulario_action/<pergunta_id>/<formulario_id>", views.add_pergunta_ao_formulario_action, name="add_pergunta_ao_formulario_action"),

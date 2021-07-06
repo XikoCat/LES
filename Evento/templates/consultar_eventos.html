@@ -78,8 +78,10 @@
               </svg></a>
               <br>
             {% endif %}
-            {% if e.estado == "Não submetido" %}
-              <a href="{% url 'Evento:submeter_evento' e.id %}">Submeter Evento</a><br>
+            {% if user.TipoUtilizador == 'Proponente' %}
+              {% if e.estado == "Não submetido" %}
+                <a href="{% url 'Evento:submeter_evento' e.id %}">Submeter Evento</a><br>
+              {% endif %}
             {% endif %}
             {% if user.TipoUtilizador == 'Administrador' %}
               {% if e.estado == "Submetido" %}

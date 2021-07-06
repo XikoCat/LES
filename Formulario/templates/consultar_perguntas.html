@@ -51,10 +51,18 @@
           {% endif %}
           <a href="{% url 'Formulario:editar_pergunta' p.id formulario_id %}" class="card-link">Editar</a>
           <a> | </a>
-          <a href="{% url 'Formulario:remover_pergunta' p.id formulario_id %}" class="card-link">Remover</a>  
+          <a href="{% url 'Formulario:remover_pergunta' p.id formulario_id %}" class="card-link" onclick="clicked(event)">Remover</a>  
         </td>
       </tr>
       {% endfor %}
     </table>
   </div>
+  <script>
+    function clicked(e)
+    {
+        if(!confirm('Tem a certeza que pretende eliminar esta pergunta?')) {
+            e.preventDefault();
+        }
+    }
+    </script>
 	{% endblock content %}

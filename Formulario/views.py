@@ -159,12 +159,28 @@ def editar_opcao_resposta(request, pergunta_id, resposta_id, formulario_id):
 def consultar_formularios(request, evento_id):
     evento = get_object_or_404(Evento, id = evento_id)
     formularios = Formulário.objects.all().filter(evento_id = evento)
+    state = 'evento'
     return render(
         request,
         "consultar_formularios.html",
         {
             "Formulario": formularios,
             "evento":evento,
+            "state":state
+        },
+    )
+
+def consultar_formularios_special(request):
+    formularios = Formulário.objects.all().filter(
+        tipo_de_formulárioid = get_object_or_404(
+            TipoDeFormulário, nome = 'Proposta de evento'))
+    state = 'false'
+    return render(
+        request,
+        "consultar_formularios.html",
+        {
+            "Formulario": formularios,
+            "state":state,
         },
     )
 
@@ -195,7 +211,6 @@ def add_formulario(request, evento_id):
                     nome=form.data["nome"],
                     publico=False,
                     evento_id=get_object_or_404(
-                        Evento, id= evento_id
                     ),
                 )
             else:
@@ -215,6 +230,34 @@ def add_formulario(request, evento_id):
         form = novo_formulario_form
     return render(request, "add_formulario.html", {"form": form, "state": state, "evento_id": evento_id})
 
+def add_formulario_special(request):
+    state = False
+    if request.method == "POST":
+        form = novo_formulario_2_form(request.POST)
+        if form.is_valid():
+            if Formulário.objects.filter(
+                tipo_de_eventoid=get_object_or_404(
+                        TipoDeEvento,
+                        id=form.data["tipo_de_eventoid"]
+                    )
+                ).exists():
+                message = "Já existe um formulário para propor eventos para este tipo de evento!"
+                return render(request, "add_formulario_special.html", {"form": form, "state": state, "error_message": message})
+
+            new_form = Formulário(
+                tipo_de_eventoid=get_object_or_404(
+                    TipoDeEvento, id=form.data["tipo_de_eventoid"]),
+                tipo_de_formulárioid=get_object_or_404(
+                    TipoDeFormulário, nome= 'Proposta de evento'),
+                nome=form.data["nome"],
+                publico=False,  
+            )
+            new_form.save()
+            return redirect(f"/Formulario/add_pergunta_ao_formulario/{new_form.id}")
+    else:
+        form = novo_formulario_2_form
+    return render(request, "add_formulario_special.html", {"form": form, "state": state})
+
 
 def add_pergunta_ao_formulario(request, formulario_id):
     formulario = Formulário.objects.get(pk=formulario_id)
@@ -224,6 +267,11 @@ def add_pergunta_ao_formulario(request, formulario_id):
     perguntas = []
     for p in perguntas_id:
         perguntas.append(p.perguntaid)
+
+    evento_id = None
+    if formulario.evento_id !=None : 
+        evento_id = formulario.evento_id.id
+
     return render(
         request,
         "add_pergunta_ao_formulario.html",
@@ -231,7 +279,8 @@ def add_pergunta_ao_formulario(request, formulario_id):
             "formulario": formulario,
             "perguntas": perguntas_id,
             "OpcaoResposta": OpçãoDeResposta.objects.all,
-            "count": count
+            "count": count,
+            "evento_id":evento_id
         },
     )
 
@@ -275,9 +324,11 @@ def eliminar_formulario(request, formulario_id):
         pergunta = Pergunta.objects.get(pk=fv.perguntaid.id)
         if pergunta.temporario == True:
             pergunta.delete()
+    if Formulario_view.evento_id !=None :
+        Formulario_view.delete() 
+        return redirect(f"/Formulario/consultar_formularios/{Formulario_view.evento_id.id}" )
     Formulario_view.delete()
-
-    return redirect(f"/Formulario/consultar_formularios/{Formulario_view.evento_id.id}" )
+    return redirect(f"/Formulario/consultar_formularios_special" )
 
 
 def editar_formulario(request, formulario_id):
@@ -287,14 +338,26 @@ def editar_formulario(request, formulario_id):
         form.save()
         return redirect(f"/Formulario/add_pergunta_ao_formulario/{formulario_edit.id}")
     state = True
-    return render(request, "add_formulario.html", {"form": form, "state": state, "evento_id": formulario_edit.evento_id.id})
+    return render(request, "add_formulario.html", {"form": form, "state": state, "evento_id": formulario_edit.evento_id.id}) 
+
+
+def editar_formulario_special(request, formulario_id):
+    formulario_edit = Formulário.objects.get(pk=formulario_id)
+    form = novo_formulario_2_form(request.POST or None, instance=formulario_edit)
+    if form.is_valid():
+        form.save()
+        return redirect(f"/Formulario/add_pergunta_ao_formulario/{formulario_edit.id}")
+    state = True
+    return render(request, "add_formulario_special.html", {"form": form, "state": state})
 
 
 def alterar_estado_formulario(request, formulario_id):
     formulario_edit = Formulário.objects.get(pk=formulario_id)
     formulario_edit.publico = not formulario_edit.publico
     formulario_edit.save()
-    return redirect(f"/Formulario/consultar_formularios/{formulario_edit.evento_id.id}" )
+    if formulario_edit.evento_id !=None :
+        return redirect(f"/Formulario/consultar_formularios/{formulario_edit.evento_id.id}" )
+    return redirect(f"/Formulario/consultar_formularios_special" )
 
 
 def add_pergunta_ao_formulario_action(request, pergunta_id, formulario_id):
@@ -331,7 +394,6 @@ def editar_pergunta_do_formulario(request, pergunta_id, formulario_id):
             if pergunta_edit.temporario == False:
                 obr = request.POST.get('obrigatório', pergunta_edit.obrigatório)      
                 formulario_pergunta = FormulárioPergunta.objects.all().filter( perguntaid = pergunta_edit, formulárioid = formulario)
-                formulario_pergunta.delete()
                 new_pergunta = Pergunta(
                     pergunta = p_form.data["pergunta"],
                     obrigatório = obr,
@@ -348,10 +410,13 @@ def editar_pergunta_do_formulario(request, pergunta_id, formulario_id):
                     new_pergunta.obrigatório = False
 
                 new_pergunta.save()
-                new_formulario_pergunta = FormulárioPergunta(
-                    formulárioid=get_object_or_404(Formulário, id=formulario_id),
-                    perguntaid=get_object_or_404(Pergunta, id=new_pergunta.id),
-                )
+                for fp in formulario_pergunta:
+                    new_formulario_pergunta = FormulárioPergunta(
+                        formulárioid=get_object_or_404(Formulário, id=formulario_id),
+                        perguntaid=get_object_or_404(Pergunta, id=new_pergunta.id),
+                        pos = fp.pos , 
+                    )
+                formulario_pergunta.delete()
 
                 new_formulario_pergunta.pk = None
                 new_formulario_pergunta.save()

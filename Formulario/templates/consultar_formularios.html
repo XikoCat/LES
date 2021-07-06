@@ -1,6 +1,6 @@
 {% extends 'app.html' %}
 
-{% block title %}- Editar Logistica {% endblock title %}
+{% block title %}- Consultar Formulários {% endblock title %}
 
 {% block content %}
 {% load static %}
@@ -9,8 +9,13 @@
       <h1>Formulários do evento {{evento.nome}}</h1>
     </div>
     <br>
-    <a href="{% url 'Formulario:add_formulario' evento.id %}"><button type="button" class="btn btn-primary">Add Formulário</button></a>
-    <a href="{% url 'Evento:consultar_eventos_all' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+    {% if state == 'evento' %}
+      <a href="{% url 'Formulario:add_formulario' evento.id %}"><button type="button" class="btn btn-primary">Add Formulário</button></a>
+    {% else %} 
+      <a href="{% url 'Formulario:add_formulario_special' %}"><button type="button" class="btn btn-primary">Add Formulário Proposta Evento</button></a>
+    {% endif %}
+      <a href="{% url 'Evento:consultar_eventos_all' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
+
     <br><br>
     <table class="table">
       <tr>
@@ -39,7 +44,11 @@
           {% endif %}
         </td>
         <td>
-          <a href="{% url 'Formulario:editar_formulario' f.id %}" class="card-link">Editar</a>
+          {% if f.evento_id %}
+            <a href="{% url 'Formulario:editar_formulario' f.id %}" class="card-link">Editar</a>
+          {% else %}
+            <a href="{% url 'Formulario:editar_formulario_special' f.id %}" class="card-link">Editar</a>
+          {% endif %}
           <a> | </a>
           <a href="{% url 'Formulario:eliminar_formulario' f.id %}" class="card-link">Remover</a>
           <a> | </a>
