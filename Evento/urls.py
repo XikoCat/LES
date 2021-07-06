@@ -38,7 +38,7 @@ urlpatterns = [
     path("submeter_evento/<evento_id>", views.submeter_evento, name="submeter_evento"),
     path("validar_evento/<evento_id>", views.validar_evento, name="validar_evento"),
 
-    path("criar_logistica", views.criar_logistica, name="criar_logistica"),
+    path("criar_logistica/<evento_id>", views.criar_logistica, name="criar_logistica"),
 
     path("visualizar_logistica/<evento_id>", views.visualizar_logistica, name="visualizar_logistica"),
 

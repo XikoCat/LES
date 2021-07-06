@@ -84,8 +84,8 @@ class TipoDeRecurso(models.Model):
     id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
     nome = models.CharField(db_column='Nome', unique=True,max_length=255, blank=True, null=True)  # Field name made lowercase.
 
-    def str(self):
-        return self.nome
+    def __str__(self):
+        return str(self.nome)
 
     class Meta:
         managed = True

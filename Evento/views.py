@@ -98,7 +98,12 @@ def criar_evento(request):
 def cancelar_evento(request, evento_id):
     Evento_view = Evento.objects.get(pk = evento_id)
     Evento_view.delete()
-    return redirect('Evento:consultar_eventos_proponente_all')
+
+    if request.user.TipoUtilizador == 'Proponente': 
+        return redirect('Evento:consultar_eventos_proponente_all')
+    elif request.user.TipoUtilizador == 'Administrador':
+        return redirect('Evento:consultar_eventos_all')
+
 
 
 def editar_evento(request, evento_id):
@@ -124,13 +129,28 @@ def validar_evento(request, evento_id):
     return redirect('Evento:consultar_eventos_all')
 
 
-def criar_logistica(request):
+def criar_logistica(request, evento_id):
     submitted = False
     if request.method == "POST":
         form = logistica_form(request.POST)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/Evento/criar_logistica?submitted=True')
+            capacidade=form.data["capacidade"]
+            if capacidade == '':
+                capacidade = None
+            new_form = PedidoDeRecurso(
+                    eventoid = get_object_or_404(Evento, id = evento_id),
+                    tipo_de_recursoid=get_object_or_404(
+                        TipoDeRecurso, id=form.data["tipo_de_recursoid"]
+                    ),
+                    quantidade=form.data["quantidade"],
+                    dia_inicial=form.data["dia_inicial"],
+                    hora_inicial=form.data["hora_inicial"],
+                    dia_final=form.data["dia_final"],
+                    hora_final=form.data["hora_final"],
+                    capacidade=capacidade
+                    )
+            new_form.save()
+            return HttpResponseRedirect('/Evento/criar_logistica/{evento_id}?submitted=True')
     else:
         form = logistica_form
         if 'submitted' in request.GET:

@@ -7,14 +7,14 @@
 <div class="center">
 <div class="card" style="width: 200px; text-align: center;">
   <div class="card-body">
-    <h5 class="card-title">{{Evento.nome}}</h5>
+    <h5 class="card-title">{{Evento.nome}}</h5><br>
     <p class="card-text">{{Evento.descrição}}</p>
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">{{Evento.tipo_de_eventoid.nome}}</li>
     <li class="list-group-item">{{Evento.data}}</li>
     <li class="list-group-item">{{Evento.hora}}</li>
-    <li class="list-group-item">Duração: {{Evento.duração}}</li>
+    <li class="list-group-item">Duração: {{Evento.duração}}h</li>
     <li class="list-group-item">Valor: {{Evento.valor}}€</li>
     
     <li class="list-group-item">Salas: {% for l in Local %}{{l.localId}},{% endfor %}</li>

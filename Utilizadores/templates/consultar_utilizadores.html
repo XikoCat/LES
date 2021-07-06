@@ -5,31 +5,26 @@
 {% endblock title %}
 
 {% block content %}
-<center>
+<div class="center">
+  <h1>Consultar Eventos</h1>
+</div>
+<br><br>
 <table class="table">
     <tr>
       <th>Nome</th>
-      <th>Tipo de evento</th>
-      <th>Estado</th>
-      <th>Descrição</th>
-      <th>Ações</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Tipo de Utilizador</th>
     </tr>
-    {% for e in Eventos %}
+    {% for u in utilizadores %}
     <tr>
-      <td>{{e.nome}}</td>
-      <td>{{e.tipo_de_eventoid.nome}}</td>
-      <td>{{e.estado}}</td>
-      <td>{{e.descrição}}</td>
-      <td><a href="{% url 'Evento:visualizar_evento' e.id %}">Visualizar Evento</a><br>
-          <a href="{% url 'Evento:cancelar_evento' e.id %}">Cancelar Evento</a><br>
-          <a href="{% url 'Evento:editar_evento' e.id %}">Editar Evento</a><br>
-          <a href="{% url 'Evento:submeter_evento' e.id %}">Submeter Evento</a><br>
-          <a href="{% url 'Evento:validar_evento' e.id %}">Validar Evento</a><br>
-          <a href="{% url 'Evento:visualizar_evento' e.id %}">Visualizar Evento</a><br>
-          <a href="{% url 'Evento:visualizar_logistica' e.id %}">Visualizar Logistica</a>      
-      </td>
+      <td>{{u.nome}}</td>
+      <td>{{u.username}}</td>
+      <td>{{u.email}}</td>
+      <td>{{u.telefone}}</td>
+      <td>{{u.TipoUtilizador}}</td>
     </tr>
     {% endfor %}
 </table>
-</center>
 {% endblock content %}

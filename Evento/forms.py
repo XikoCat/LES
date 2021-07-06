@@ -11,7 +11,8 @@ class evento_form(ModelForm):
 
 		labels = {
             'tipo_de_eventoid': ('Tipo de Evento'),
-            'duração' : ('Duração em horas')
+            'duração' : ('Duração em horas'),
+            'valor' : ('Preço do evento em €')
         }
 
 		widgets = {
@@ -28,18 +29,16 @@ class evento_form(ModelForm):
 class logistica_form(ModelForm):
 	class Meta:
 		model = PedidoDeRecurso
-		fields = ('eventoid', 'tipo_de_recursoid', 'quantidade', 'dia_inicial', 'hora_inicial','dia_final'
+		fields = ('tipo_de_recursoid', 'quantidade', 'dia_inicial', 'hora_inicial','dia_final'
 				 ,'hora_final', 'capacidade')
 
 		labels = {
-            'eventoid': ('Evento'),
             'tipo_de_recursoid': ('Tipo de Recurso'),
             'quantidade': ('Quantidade desejada'),
             'capacidade': ('Capacidade (caso seja uma sala)')
         }
 
 		widgets = {
-			'eventoid' : forms.Select(attrs={'class' : 'form-control'}),
 			'tipo_de_recursoid' : forms.Select(attrs={'class' : 'form-control'}),
 			'quantidade' : forms.NumberInput(attrs={'class' : 'form-control'}),
 			'dia_inicial' : forms.DateInput(attrs={'class' : 'form-control'}),
