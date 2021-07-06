@@ -184,7 +184,6 @@ def consultar_formularios_special(request):
         },
     )
 
-
 def add_formulario(request, evento_id):
     state = False
     if request.method == "POST":
@@ -200,20 +199,7 @@ def add_formulario(request, evento_id):
                 message = "Este tipo de formulario já existe para este evento!"
                 return render(request, "add_formulario.html", {"form": form, "state": state, "evento_id": evento_id, "error_message": message})
 
-            if form.data["tipo_de_eventoid"] != "":
-                new_form = Formulário(
-                    tipo_de_eventoid=get_object_or_404(
-                        TipoDeEvento, id=form.data["tipo_de_eventoid"]
-                    ),
-                    tipo_de_formulárioid=get_object_or_404(
-                        TipoDeFormulário, id=form.data["tipo_de_formulárioid"]
-                    ),
-                    nome=form.data["nome"],
-                    publico=False,
-                    evento_id=get_object_or_404(
-                    ),
-                )
-            else:
+            if get_object_or_404(TipoDeFormulário, id = form.data["tipo_de_formulárioid"]) !=  get_object_or_404(TipoDeFormulário, nome = "Proposta de evento"):
                 new_form = Formulário(
                     tipo_de_formulárioid=get_object_or_404(
                         TipoDeFormulário, id=form.data["tipo_de_formulárioid"]
@@ -223,6 +209,24 @@ def add_formulario(request, evento_id):
                     evento_id=get_object_or_404(
                         Evento, id= evento_id
                     ),
+                )
+            else:
+                if Formulário.objects.filter(
+                    tipo_de_eventoid=get_object_or_404(
+                        TipoDeEvento,id=form.data["tipo_de_eventoid"])
+                    ).exists():
+                    message = "Já existe um formulário para propor eventos para este tipo de evento!"
+                    return render(request, "add_formulario.html", {"form": form, "state": state, "evento_id": evento_id, "error_message": message})
+
+                new_form = Formulário(
+                    tipo_de_eventoid=get_object_or_404(
+                        TipoDeEvento, id=form.data["tipo_de_eventoid"]
+                    ),
+                    tipo_de_formulárioid=get_object_or_404(
+                        TipoDeFormulário, id=form.data["tipo_de_formulárioid"]
+                    ),
+                    nome=form.data["nome"],
+                    publico=False,
                 )
             new_form.save()
             return redirect(f"/Formulario/add_pergunta_ao_formulario/{new_form.id}")

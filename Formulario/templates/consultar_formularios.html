@@ -5,16 +5,20 @@
 {% block content %}
 {% load static %}
   <div class="container-fluid">
+    {% if state == 'evento' %}
     <div class="center">
       <h1>Formulários do evento {{evento.nome}}</h1>
     </div>
     <br>
-    {% if state == 'evento' %}
       <a href="{% url 'Formulario:add_formulario' evento.id %}"><button type="button" class="btn btn-primary">Add Formulário</button></a>
+      <a href="{% url 'Evento:consultar_eventos_all' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
     {% else %} 
+    <div class="center">
+      <h1>Formulários de proposta de evento</h1>
+    </div>
+    <br>
       <a href="{% url 'Formulario:add_formulario_special' %}"><button type="button" class="btn btn-primary">Add Formulário Proposta Evento</button></a>
     {% endif %}
-      <a href="{% url 'Evento:consultar_eventos_all' %}"><button type="button" class="btn btn-primary">Voltar</button></a>
 
     <br><br>
     <table class="table">
