@@ -5,7 +5,7 @@ from Formulario.models import Formulário
 from django.db.models.deletion import SET_NULL
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Inscrição, Pagamento
+from .models import *
 from Evento.models import Evento
 from Utilizadores.models import Participante
 
@@ -240,6 +240,8 @@ def criar(request, evento_id):
             eventoid=evento, participanteutilizadorid=user, checkin=False, valido=False
         )
 
+        Pagamento(divida = evento.valor, inscriçãoid = inscricao).save()
+
         post = querydict_to_dict(request.POST)
 
         for p in perguntas_list:
@@ -338,21 +340,6 @@ def checkin(request):
             "checkin.html",
             {"message": message},
         )
-        
-    #
-    #inscricao = Inscrição.objects.get(id=inscricao_id)
-    #if request.method != "POST":
-    #    return render(
-    #        request,
-    #        "action_inscricao.html",
-    #        {"inscricao": inscricao, "action": "checkin"},
-    #    )
-    #else:
-    #    inscricao.checkin = not inscricao.checkin
-    #    inscricao.save()
-    #
-    #    message = "Check in da inscrição efetuado com sucesso"
-    #    return render(request, "action_inscricao.html", {"message": message})
 
 def get_perguntas(perguntas_list, inscricao = None):
     perguntas = []
