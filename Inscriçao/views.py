@@ -305,7 +305,7 @@ def validar(request, inscricao_id):
         message = "A Inscrição foi validada com sucesso"
         return render(request, "action_inscricao.html", {"message": message})
 
-def checkin(request):
+def checkin(request, evento_id):
     if request.method != "POST":
         return render(
             request,
@@ -317,13 +317,13 @@ def checkin(request):
 
         inscricao_id = post["inscricao_id"]
 
-        if not Inscrição.objects.filter(id=inscricao_id).exists():
+        if not Inscrição.objects.filter(id=inscricao_id, eventoid=evento_id).exists():
             message = "ERRO! A Inscrição que pretende fazer o check-in não existe"
             return render(request,
                 "checkin.html",
                 {"message": message},
             )
-        inscricao = Inscrição.objects.get(id=inscricao_id)
+        inscricao = Inscrição.objects.get(id=inscricao_id, eventoid=evento_id)
 
         if inscricao.checkin == True:
             message = "Erro! A esta inscrição já tem o check in!"
