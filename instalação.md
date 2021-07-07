@@ -10,13 +10,13 @@ No diretório root do projeto,
 python3 -m virtualenv .venv
 ```
 
-### Entrar no virtual enviroment:
+### Entrar no virtual enviroment
 
 ```bash
 source .venv/bin/activate
 ```
 
-### Instalar as bibliotecas necessárias no virtual enviroment:
+### Instalar as bibliotecas necessárias no virtual enviroment
 
 ```bash
 make install
@@ -24,7 +24,7 @@ make install
 
 Importar o ficheiro `LES.sql` com o phpmyadmin ou diretamente no MySQL para criar a base de dados
 
-Gerar uma nova SECRET_KEY aleatória (https://djecrety.ir/) e substituí-la no `.env`
+Gerar uma nova SECRET_KEY aleatória [aqui](https://djecrety.ir/) e substituí-la no `.env`
 
 ### Fazer as migrações necessárias do django
 
